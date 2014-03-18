@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>MAG | Wickenburg Zoning</title>
+
+    <meta name="description" content="Town of Wickengurg Online Mapping Service">
+    <meta name="author" content="Maricopa Association of Governments vw">
+    <link type="text/plain" rel="author" href="http://geo.azmag.gov/maps/humans.txt">
+    <meta name="contact" content="www.azmag.gov">
+    <meta name="url" content="http://..../">
+    <meta name="creation-date" content="04/01/2013">
+    <meta name="revision-date" content="03/07/2014">
+    <meta name="version" content="2.2.1">
+
+    <!-- Apple-Specific Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="apple-touch-icon" type="image/png" sizes="144x144" href="app/resources/img/magicon_144.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="114x114" href="app/resources/img/magicon_114.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="72x72" href="app/resources/img/magicon_72.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="57x57" href="app/resources/img/magicon_57.png">
+    <link rel="shortcut icon" type="image-favorites-icon" href="app/resources/img/magfavicon.png">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="app/resources/css/bootstrap.min.css" >
+    <!-- ESRI CSS -->
+    <link rel="stylesheet" href="http://js.arcgis.com/3.8/js/dojo/dijit/themes/tundra/tundra.css">
+    <link rel="stylesheet" href="http://js.arcgis.com/3.8/js/esri/css/esri.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <!-- Bootstrap-map CSS -->
+    <link rel="stylesheet" href="app/resources/css/bootstrapmap.css">
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="app/resources/css/normalize.css">
+    <link rel="stylesheet" href="app/resources/css/main.css">
+
+<!--  removed once App goes into production -->
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+
+    <script src="vendor/modernizr-2.6.2.min.js"></script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="vendor/html5shiv.js"></script>
+      <script src="vendor/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body class="tundra">
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+<!-- NAVBAR
+==============================================================-->
+    <div id="navBar" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" role="button" href="#"><img class="navbar-brand-image" src="app/resources/img/townLogo_white_xsmall.png" title="zoning">Zoning</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="" role="button"><a href="http://www.ci.wickenburg.az.us/" title="home">Home</a></li>
+            <li id="contentsOpen" class="" role="button"><a href="#" title="contents">Contents</a></li>
+            <li class="" role="button" data-toggle="modal" data-target="#defModal"><a href="#" title="Definitions">Definitions</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="" role="button" data-toggle="modal" data-target="#aboutModal"><a href="#" title="About">About</a></li>
+          </ul>
+          <form id="geosearch-form" class="navbar-form navbar-right" role="search">
+            <input id="geosearch" type="text" class="form-control" placeholder="">
+          </form>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div><!--/end navbar -->
+
+    <!-- Bootstrap-map-js -->
+    <div id="mapDiv"></div>
+
+<!-- About Modal
+==============================================================-->
+<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h2 class="modal-title" id="myModalLabel">About the Wickenburg Zoning Viewer</h2>
+      </div>
+      <div class="modal-body">
+        <div id="aboutInfo" >
+          <p>The Wickenburg Zoning Viewer is an interactive mapping application that displays updated zoning information for the Town of Wickenburg.</p>
+            <h3>Navigate around the map using your mouse.</h3>
+            <ul class="">
+              <li>To <b>Pan</b> (move the map), simply click and hold your mouse, then drag the map.</li>
+              <li>To <b>Center and Zoom In </b>on a location, double click the location.</li>
+              <li>To <b>Zoom In </b>using the mouse scroll wheel, scroll forward.</li>
+              <li>To <b>Zoom Out </b>using the mouse scroll wheel, scroll backward.</li>
+              <li>Select an area to <b>Zoom </b>to by holding down the shift key while drawing a box.</li>
+              <li><b>Move </b>the map by holding the left mouse button while you drag.</li>
+              <li>Click on a <b>map feature </b>to reveal further information.</li>
+            </ul>
+            <hr>
+                <h3>Data Source</h3>
+                <ul class="legal">
+                  <li>Town of Wickenburg Zoning 2012</li>
+                  <li>Parcel data provided by the Maricopa and Yavapai County Assessors Office</li>
+                  <li>Floodways data from FEMA and The Flood Conrtrol District of Maricopa County</li>
+                  <li>Aerial Imagery provided by ESRI last updated December 2012</li>
+                  <li>Street map provided by ESRI last updated July 2012</li>
+                </ul>
+
+                <p class="legal">Please note that while every effort has been made to ensure the accuracy
+                  of this information, the Town of Wickenburg and Maricopa Association of Governments
+                  makes no warranty, express or implied, as to its accuracy and expressly disclaims
+                  liability for the accuracy thereof.</p>
+
+              <address>To provide comments or report problems please contact:
+                <a id="email" title="email link" role="navigation" href="mailto:sboyle@wickenburgaz.org?subject=Zoning Viewer">Steve Boyle</a>
+              </address>
+              <address>Vist our Website:
+                  <a id="mag" title="website link" role="navigation" target="_blank" href="http://www.ci.wickenburg.az.us">www.ci.wickenburg.az.us</a>
+              </address>
+              <footer id="footer">
+                <div class="container">
+                <p>Copyright &copy; 2014 by Town of Wickenburg</a> | <a href="#" data-toggle="modal" data-target="#legalModal">Legal Disclaimer</a></p>
+                </div>
+              </footer>
+          </div><!-- /end aboutInfo -->
+      </div>
+    </div>
+  </div>
+</div><!-- /end Modal -->
+
+<!-- Legal Disclaimer Modal -->
+<div id="legalModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h2 class="modal-title" id="myModalLabel"><strong>Legal Disclaimer</strong></h2>
+      </div>
+      <div id="legalDisclaimer" class="modal-body"></div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- Zoning Discriptions Modal -->
+<div id="defModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div id="defModalCon" class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h2 class="modal-title" id="myModalLabel"><strong>Zoning Definitions</strong></h2>
+      </div>
+      <div id="definitions" class="modal-body"></div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- Content
+==============================================================-->
+<div id="legend" class="panel panel-default legend">
+
+<button id="closeX" type="button" class="close" data-dismiss="panel" onclick="toggleContent()" aria-hidden="true">&times;</button>
+<button id="help" type="button" class="close" data-dismiss="panel" aria-hidden="true"><a href="#" data-toggle="modal" data-target="#helpModal"><img src="app/resources/img/help_icon.png"></a></button>
+
+  <div id="legendHeader" class="panelHeader panel-heading">
+    <h3>Contents</h3>
+  </div>
+
+  <div class="panel-group" id="accordion">
+
+    <div class="panel panel-default legend">
+      <div id="pHeader1" class="panel-heading">
+        <h3 class="panel-title">
+          <a id="pTitle1" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+            Layer Options
+          </a>
+        </h3>
+      </div>
+      <div id="collapseOne" class="panel-collapse collapse">
+        <div id="tocDiv" class="panel-body">
+          <div id="toggleDiv"></div>
+        </div>
+      </div>
+    </div><!-- /end layer panel -->
+
+    <div class="panel panel-default legend">
+    <div id="pHeader2" class="panel-heading">
+      <h3 class="panel-title">
+        <a id="pTitle2" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+          Transparency Options
+        </a>
+      </h3>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse">
+      <div id="slideDiv" class="panel-body">
+        <div class="sliderTitle">Flood Area Transparency Slider</div>
+            <div id="slider1" class="center">
+              <div data-dojo-type="dijit/form/HorizontalRule" container="bottomDecoration"></div>
+                <ol class="sliderLables" data-dojo-type="dijit/form/HorizontalRuleLabels" container="bottomDecoration">
+                  <li>100%</li>
+                  <li>50%</li>
+                  <li>0%</li>
+                </ol>
+            </div>
+            <br>
+            <div class="sliderTitle">Zoning Transparency Slider</div>
+            <div id="slider2" class="center">
+              <div data-dojo-type="dijit/form/HorizontalRule" container="bottomDecoration"></div>
+                <ol class="sliderLables" data-dojo-type="dijit/form/HorizontalRuleLabels" container="bottomDecoration">
+                  <li>100%</li>
+                  <li>50%</li>
+                  <li>0%</li>
+                </ol>
+            </div>
+      </div>
+    </div>
+    </div><!-- /end slider panel -->
+
+    <hr>
+
+    <div id="legendDiv" class="scroll"></div>
+
+  </div><!-- /end panel group-->
+</div><!-- /end legend panel-->
+
+<!-- Help Modal -->
+<div id="helpModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div id="helpModalCon" class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h2 class="modal-title" id="myModalLabel"><strong>Contents Help</strong></h2>
+      </div>
+      <div id="helpCont" class="modal-body"></div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<!-- JavaScript / Placed at the end of the document so the pages load faster
+============================================================================================================ -->
+<!-- Make sure Dojo can find our code, app folder and vendor code. -->
+  <script>
+      var dojoConfig = {
+        parseOnLoad: false,
+        async: true,
+        packages: [
+            { name: 'app', location: location.pathname.replace(/\/[^/]+$/, "/") + "app"},
+            { name: 'vendor', location: location.pathname.replace(/\/[^/]+$/, "/") + "vendor"}
+        ]
+      }
+  </script>
+  <!-- Global script definitions. -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+   <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <script>window.jQuery || document.write('<script src="vendor/jquery-1.10.2.min.js"><\/script>')</script>
+  <script src="http://js.arcgis.com/3.8/"></script>
+<!-- Bootstrap core JavaScript
+================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="vendor/bootstrap.min.js"></script>
+<!-- Custom JavaScript
+================================================== -->
+  <script src="vendor/plugins.js"></script>
+  <script src="config.js"></script>
+  <script src="app/model/main.js"></script>
+  <!-- Google Analytics -->
+  <!-- <script>
+  //     (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+  //     function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+  //     e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+  //     e.src='//www.google-analytics.com/analytics.js';
+  //     r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+  //     ga('create','');ga('send','pageview');
+  </script> -->
+  </body>
+</html>
