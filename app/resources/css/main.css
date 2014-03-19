@@ -15,7 +15,7 @@ button,
 input,
 select,
 textarea {
-    color: #222;
+    color: #222222;
 }
 
 html {
@@ -99,6 +99,8 @@ textarea {
 
 body {
     padding-top: 50px;
+    /*color is the main color from the ESRI streets basemap*/
+    background-color: #e7e1bd;
 }
 .starter-template {
       padding: 40px 15px;
