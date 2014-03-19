@@ -7,6 +7,8 @@
     "devDependencies" : {
         "grunt" :                   "~0.4.4",
         "grunt-contrib-cssmin":         "*",
+        "grunt-contrib-csslint":        "*",
+        "grunt-contrib-jshint":         "*",
         "grunt-contrib-uglify":         "*",
         "grunt-contrib-watch":          "*",
         "grunt-htmlhint":               "*",
