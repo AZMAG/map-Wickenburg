@@ -25,8 +25,8 @@ module.exports = function(grunt){
                     // Force special characters to be escaped
                     'id-unique': true,
                     // Prevent using the same ID multiple times in a document
-                    'head-script-disabled': false,
-                    // Prevent script tags being loaded in the  for performance reasons
+                    // 'head-script-disabled': false,
+                    // Prevent script tags being loaded in the head for performance reasons
                     'style-disabled': true
                     // Prevent style tags. CSS should be loaded through
                 },
