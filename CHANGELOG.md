@@ -1,5 +1,15 @@
 ### Change Log Wickenburg Zoning Website
 
+## 2.2.2 (03/19/2014)
+
+* linted index.html file and fixed errors
+* added README.md file
+* added CHANGELOG.md file
+* added Gruntfile.js file - Grunt
+* added package.json file - Grunt
+* added .gitattributes file - Git
+* added .gitignore file - Git
+
 ## 2.2.1 (03/07/2014)
 
 * changed maps extent
