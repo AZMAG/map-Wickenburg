@@ -3,6 +3,7 @@
 ## 2.2.2 (03/19/2014)
 
 * linted index.html file and fixed errors
+* changed body background color
 * added README.md file
 * added CHANGELOG.md file
 * added Gruntfile.js file - Grunt
@@ -87,3 +88,7 @@
 * http://apps.yavapai.us/taxinquiry/
 * http://gis.yavapai.us/v4/search.aspx
 * http://gis.yavapai.us/v4/map.aspx?search=201-10-023
+
+# Find Extent Tool
+
+* http://psstl.esri.com/apps/extenthelper/
