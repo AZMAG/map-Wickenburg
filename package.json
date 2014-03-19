@@ -1,17 +1,17 @@
 {
-    "name" : "SampleGrunt",
-    "version" : "0.1.0",
-    "author" : "Vern Wolfley",
-    "private" : true,
-
-    "devDependencies" : {
-        "grunt" :                   "~0.4.4",
-        "grunt-contrib-cssmin":         "*",
-        "grunt-contrib-csslint":        "*",
-        "grunt-contrib-jshint":         "*",
-        "grunt-contrib-uglify":         "*",
-        "grunt-contrib-watch":          "*",
-        "grunt-htmlhint":               "*",
-        "matchdep":                     "*"
-    }
+  "name": "SampleGrunt",
+  "version": "0.1.0",
+  "author": "Vern Wolfley",
+  "private": true,
+  "devDependencies": {
+    "grunt":                "~0.4.4",
+    "grunt-contrib-cssmin":     "*",
+    "grunt-contrib-csslint":    "*",
+    "grunt-contrib-jshint":     "*",
+    "grunt-contrib-uglify":     "*",
+    "grunt-contrib-watch":      "*",
+    "grunt-htmlhint":           "*",
+    "matchdep":                 "*",
+    "jshint-stylish":           "*"
+  }
 }

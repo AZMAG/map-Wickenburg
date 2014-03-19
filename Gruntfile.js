@@ -56,12 +56,14 @@ module.exports = function(grunt){
         jshint: {
             all: ['app/model/main.js', 'Gruntfile.js'],
                 options: {
-                    "strict": true,
-                    "sub": true,
-                    "quotmark": "double",
-                    "trailing": true,
-                    "dojo": true,
-                    "jquery": true
+                    strict: true,
+                    sub: true,
+                    quotmark: "double",
+                    trailing: true,
+                    dojo: true,
+                    jquery: true,
+                    force: true,
+                    reporter: require("jshint-stylish")
                 }
         },
 
@@ -91,4 +93,4 @@ module.exports = function(grunt){
 // ref
 // http://coding.smashingmagazine.com/2013/10/29/get-up-running-grunt/
 // http://csslint.net/about.html
-// test
+// test test test
