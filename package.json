@@ -5,6 +5,10 @@
     "private" : true,
 
     "devDependencies" : {
-        "grunt" :                   "~0.4.4"
+        "grunt" :                   "~0.4.4",
+        "grunt-contrib-cssmin":         "*",
+        "grunt-contrib-uglify":         "*",
+        "grunt-contrib-watch":          "*",
+        "grunt-htmlhint":               "*"
     }
 }
