@@ -1,0 +1,10 @@
+{
+    "name" : "SampleGrunt",
+    "version" : "0.1.0",
+    "author" : "Vern Wolfley",
+    "private" : true,
+
+    "devDependencies" : {
+        "grunt" :                   "~0.4.4"
+    }
+}
