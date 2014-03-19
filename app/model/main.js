@@ -94,8 +94,9 @@ require([
             value: '',
             maxLocations: 10,
             autoComplete: true,
-            arcgisGeocoder: true,
+            // arcgisGeocoder: true,
             arcgisGeocoder: {
+                sourceCountry: "USA",
                 placeholder: "155 N Tegner St, Wickenburg, AZ"
             },
             map: map
@@ -112,28 +113,28 @@ require([
         var aerial = map.addLayer(new ArcGISDynamicMapServiceLayer(aerialURL, {
             id: "aerial",
             visible: false,
-            opacity: 1
+            opacity: "1"
         }));
 
         var wiZoningURL = appConfig.wiZoningURL;
         var wiZoning = map.addLayer(new ArcGISDynamicMapServiceLayer(wiZoningURL, {
           id: "wiZoning",
           visible: true,
-          opacity: .65
+          opacity: ".65"
            }));
 
         var wiFloodURL = appConfig.wiFloodURL;
         var wiFlood = map.addLayer(new ArcGISDynamicMapServiceLayer(wiFloodURL, {
             id: "wiFlood",
             visible: false,
-            opacity: .65
+            opacity: ".65"
         }));
 
         var mParcelsURL = appConfig.mParcelsURL;
         var mParcels = map.addLayer(new ArcGISDynamicMapServiceLayer(mParcelsURL, {
           id: "mParcels",
           visible: false,
-          opacity: 1
+          opacity: "1"
          }));
 
        var content1 = ("Parcel ID: ${PARLABEL}<br>" +
@@ -147,7 +148,7 @@ require([
         var yParcels = new FeatureLayer(yParcelsURL, {
             id: "yParcels",
             visible: false,
-            opacity: 1,
+            opacity: "1",
             mode: FeatureLayer.MODE_ONDEMAND,
             outFields: ["*"],
             infoTemplate: infoTemplate1
@@ -158,14 +159,14 @@ require([
         var coBoundary = map.addLayer(new ArcGISDynamicMapServiceLayer(coBoundaryURL, {
             id: "coBoundary",
             visible: true,
-            opacity: 1
+            opacity: "1"
         }));
 
         var wiBoundaryURL = appConfig.wiBoundaryURL;
         var wiBoundary = map.addLayer(new ArcGISDynamicMapServiceLayer(wiBoundaryURL, {
             id: "wiBoundary",
             visible: true,
-            opacity: 1
+            opacity: "1"
         }));
 
         //TOC Layers
@@ -339,14 +340,16 @@ require([
         on(link, "click", function(evt) {
             var feature = map.infoWindow.getSelectedFeature();
             // console.log(feature.attributes);
+            var url = "";
+            var link = "";
             if (feature.attributes.layerName == "Parcels") {
-                var url = window.location;
-                var link = appConfig.MaricopaAssessor + feature.attributes.APN;
+                url = window.location;
+                link = appConfig.MaricopaAssessor + feature.attributes.APN;
                 window.open(link);
             }
             if (feature.attributes.COUNTY == "13") {
-                var url = window.location;
-                var link = appConfig.YavapaiAssessor + feature.attributes.PARNUMASR;
+                url = window.location;
+                link = appConfig.YavapaiAssessor + feature.attributes.PARNUMASR;
                 window.open(link);
             }
             else {
@@ -434,10 +437,10 @@ function executeIdentifyTask (event) {
             if(dojo.trim(feature.attributes["PHYSICAL_ZIP"]) !== "Null" && dojo.trim(feature.attributes["PHYSICAL_ZIP"]) !== ""){
                 parcelsContent += "<br>Zip: " + feature.attributes["PHYSICAL_ZIP"];
             }
-            //maricopa parcels
+            //Maricopa parcels
             var template = new InfoTemplate();
             template.setTitle("Maricopa Parcels");
-            template.setContent("Parcel APN: ${APN}" + parcelsContent)
+            template.setContent("Parcel APN: ${APN}" + parcelsContent);
 
         feature.setInfoTemplate(template);
 
