@@ -38,10 +38,9 @@ require([
 
         parser.parse();
 
-         var identifyTask, identifyParams;
+         var identifyParams;
          var tocLayers = [];
          var legendLayers = [];
-         var visibleLayerIds = [];
 
         //create a popup to replace the map's info window
         var fillSymbol3 = new SimpleFillSymbol(SimpleFillSymbol.STYLE_BACKWARD_DIAGONAL,
@@ -67,7 +66,8 @@ require([
 
         var scalebar = new Scalebar({
             map: map,
-            scalebarUnit: "dual"
+            // scalebarUnit: "dual"
+            scalebarUnit: "english"
         });
 
         // create div for homebutton
@@ -91,7 +91,7 @@ require([
 
         // create geosearch widget
         var geocoder = new Geocoder({
-            value: '',
+            value: "",
             maxLocations: 10,
             autoComplete: true,
             // arcgisGeocoder: true,
@@ -199,7 +199,7 @@ require([
                 name    : "checkBox" + layer.layer.id,
                 value   : layer.layer.id,
                 checked : layer.layer.visible,
-                onChange:function (evt) {
+                onChange:function () {
                     var clayer = map.getLayer(this.value);
                     clayer.setVisibility(!clayer.visible);
                     this.checked = clayer.visible;
@@ -208,8 +208,8 @@ require([
 
             //add the check box and label to the toc
             dc.place(checkBox.domNode, dom.byId("toggleDiv"));
-            var checkLabel = dc.create('label', {
-                'for':checkBox.name,
+            var checkLabel = dc.create("label", {
+                "for":checkBox.name,
                 innerHTML:"&nbsp;&nbsp;" + layerName
             }, checkBox.domNode, "after");
             dc.place("<br>", checkLabel, "after");
@@ -243,8 +243,6 @@ require([
                 wiZoning.setOpacity(value2);
             }
         }, "slider2");
-
-
 
         //=================================================================================>
         // Start Geocode Section
@@ -337,17 +335,17 @@ require([
             "href": "javascript: void(0);"
         }, query(".actionList", map.infoWindow.domNode)[0]);
 
-        on(link, "click", function(evt) {
+        on(link, "click", function() {
             var feature = map.infoWindow.getSelectedFeature();
             // console.log(feature.attributes);
             var url = "";
             var link = "";
-            if (feature.attributes.layerName == "Parcels") {
+            if (feature.attributes.layerName === "Parcels") {
                 url = window.location;
                 link = appConfig.MaricopaAssessor + feature.attributes.APN;
                 window.open(link);
             }
-            if (feature.attributes.COUNTY == "13") {
+            if (feature.attributes.COUNTY === "13") {
                 url = window.location;
                 link = appConfig.YavapaiAssessor + feature.attributes.PARNUMASR;
                 window.open(link);
@@ -388,7 +386,6 @@ function executeIdentifyTask (event) {
       // Let's return an array of features.
       return arrayUtils.map(response, function (result) {
         var feature = result.feature;
-        var layerName = result.layerName;
         feature.attributes.layerName = result.layerName;
 
        if (feature.attributes.OBJECTID !== 0) {
@@ -413,7 +410,6 @@ function executeIdentifyTask (event) {
       // Let's return an array of features.
       return arrayUtils.map(response, function (result) {
         var feature = result.feature;
-        var layerName = result.layerName;
         feature.attributes.layerName = result.layerName;
 
        if (feature.attributes.OBJECTID !== 0) {
@@ -456,13 +452,12 @@ function executeIdentifyTask (event) {
       // Let's return an array of features.
       return arrayUtils.map(response, function (result) {
         var feature = result.feature;
-        var layerName = result.layerName;
         feature.attributes.layerName = result.layerName;
 
        if (feature.attributes.OBJECTID !== 0) {
             var template = new InfoTemplate();
 
-            //wickenburg zoning
+            // Wickenburg zoning
             template.setTitle("Flood Zone");
             template.setContent("Flood Zone: ${ZONE}");
         feature.setInfoTemplate(template);
@@ -489,23 +484,23 @@ function executeIdentifyTask (event) {
 //=================================================================================>
 
 function toggleContent() {
-    if ($("#legend").is(':hidden')) {
+    if ($("#legend").is(":hidden")) {
         $("#legend").slideDown();
         $("#legend").draggable({
-            containment: '#mapDiv'
+            containment: "#mapDiv"
         });
-        $('#contentsOpen');
+        $("#contentsOpen");
     } else {
         $("#legend").slideUp();
-        $('#contentsOpen');
+        $("#contentsOpen");
     }
 }
 
 $(document).ready(function() {
-    $("#contentsOpen").fadeTo('slow');
-    $("#legend").fadeTo('slow');
+    $("#contentsOpen").fadeTo("slow");
+    $("#legend").fadeTo("slow");
     contentsOpen = $("#contentsOpen").height();
-    $("#legend").css('top', contentsOpen);
+    $("#legend").css("top", contentsOpen);
     $("#contentsOpen").click(function() {
         toggleContent();
     });
@@ -518,15 +513,15 @@ $(document).ready(function() {
 
 //*** Legal Disclaimer modal binding
  $(document).ready(function() {
-     $('#legalDisclaimer').load('app/views/legalDisclaimer.html');
+     $("#legalDisclaimer").load("app/views/legalDisclaimer.html");
  });
 
  //*** Definitions modal binding
  $(document).ready(function() {
-     $('#definitions').load('app/views/definitions.html');
+     $("#definitions").load("app/views/definitions.html");
  });
 
  //*** Help modal binding
  $(document).ready(function() {
-     $('#helpCont').load('app/views/help.html');
+     $("#helpCont").load("app/views/help.html");
  });
