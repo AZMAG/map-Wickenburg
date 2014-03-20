@@ -54,7 +54,7 @@ module.exports = function(grunt){
         },
 
         jshint: {
-            all: ["app/model/main.js", "Gruntfile.js"],
+            files: ["app/model/main.js", "Gruntfile.js"],
                 options: {
                     // strict: true,
                     sub: true,
@@ -74,6 +74,17 @@ module.exports = function(grunt){
                 }
         },
 
+        uglify: {
+            options: {
+                // the banner is inserted at the top of the output
+                banner: '/*! <%= pkg.name %> - main.js - <%= grunt.template.today("mm-dd-yyyy") %> */\n'
+            },
+            build: {
+                files: {
+                    "../deploy/build/main.min.js": ["app/model/main.js"]
+                }
+            }
+        },
 
         watch: {
             html: {
@@ -93,6 +104,11 @@ module.exports = function(grunt){
 
     });
 
+    // this would be run by typing "grunt test" on the command line
+    // grunt.registerTask("test", ["jshint", "csslint", "htmlhint"]);
+    grunt.registerTask("test", ["uglify"]);
+
+    // the default task can be run just by typing "grunt" on the command line
     grunt.registerTask("default", []);
 
 };
