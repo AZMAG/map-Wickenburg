@@ -130,12 +130,12 @@ require([
             opacity: ".65"
         }));
 
-        // var tParcelsURL = appConfig.tParcelsURL;
-        // var tParcels = map.addLayer(new ArcGISDynamicMapServiceLayer(tParcelsURL, {
-        //   id: "tParcels",
-        //   visible: false,
-        //   opacity: "1"
-        //  }));
+        var tParcelsURL = appConfig.tParcelsURL;
+        var tParcels = map.addLayer(new ArcGISDynamicMapServiceLayer(tParcelsURL, {
+          id: "tParcels",
+          visible: false,
+          opacity: "1"
+         }));
 
         // var mParcelsURL = appConfig.mParcelsURL;
         // var mParcels = map.addLayer(new ArcGISDynamicMapServiceLayer(mParcelsURL, {
@@ -180,7 +180,7 @@ require([
         tocLayers.push({layer: aerial, title: "Aerial Imagery"});
         // tocLayers.push({layer: yParcels, title: "Yavapai County Parcels"});
         // tocLayers.push({layer: mParcels, title: "Maricopa County Parcels"});
-        // tocLayers.push({layer: tParcels, title: "County Parcels"});
+        tocLayers.push({layer: tParcels, title: "County Parcels"});
         tocLayers.push({layer: wiBoundary, title: "Wickenburg Boundary"});
         tocLayers.push({layer: wiFlood, title: "Wickenburg Flood Zone"});
         tocLayers.push({layer: wiZoning, title: "Wickenburg Zoning"});
@@ -188,7 +188,7 @@ require([
         // Legend Layers
         // legendLayers.push({layer: yParcels, title: "Yavapai County Parcels"});
         // legendLayers.push({layer: mParcels, title: "Maricopa County Parcels"});
-        // legendLayers.push({layer: tParcels, title: "County Parcels"});
+        legendLayers.push({layer: tParcels, title: "County Parcels"});
         legendLayers.push({layer: coBoundary, title: "Maricopa County Boundary"});
         legendLayers.push({layer: wiBoundary, title: "Wickenburg Town Boundary"});
         legendLayers.push({layer: wiFlood, title: "Wickenburg Flood Zone"});
@@ -347,16 +347,16 @@ require([
         on(link, "click", function() {
             var feature = map.infoWindow.getSelectedFeature();
             // console.log(feature.attributes);
-            var url = "";
+            var url = window.location;
             var link = "";
-            if (feature.attributes.layerName === "Parcels") {
-                url = window.location;
-                link = appConfig.MaricopaAssessor + feature.attributes.APN;
+            if (feature.attributes.County_FIPS === "13") {
+                // url = window.location;
+                link = appConfig.MaricopaAssessor + feature.attributes.PARCEL;
                 window.open(link);
             }
-            if (feature.attributes.COUNTY === "13") {
-                url = window.location;
-                link = appConfig.YavapaiAssessor + feature.attributes.PARNUMASR;
+            if (feature.attributes.County_FIPS === "25") {
+                // url = window.location;
+                link = appConfig.YavapaiAssessor + feature.attributes.PARCEL;
                 window.open(link);
             }
             else {
@@ -371,7 +371,7 @@ function mapReady () {
     map.on("click", executeIdentifyTask);
     //create identify tasks and setup parameters
     identifyTask1 = new IdentifyTask(wiZoningURL);
-    // identifyTask2 = new IdentifyTask(yParcelsURL);
+    identifyTask2 = new IdentifyTask(tParcelsURL);
     identifyTask3 = new IdentifyTask(wiFloodURL);
 
     identifyParams = new IdentifyParameters();
@@ -412,47 +412,27 @@ function executeIdentifyTask (event) {
       });
     }); //end addCallback
 
-    // var deferred2 = identifyTask2
-    // .execute(identifyParams)
-    // .addCallback(function (response) {
-    //   // response is an array of identify result objects
-    //   // Let's return an array of features.
-    //   return arrayUtils.map(response, function (result) {
-    //     var feature = result.feature;
-    //     feature.attributes.layerName = result.layerName;
+    var deferred2 = identifyTask2
+    .execute(identifyParams)
+    .addCallback(function (response) {
+      // response is an array of identify result objects
+      // Let's return an array of features.
+      return arrayUtils.map(response, function (result) {
+        var feature = result.feature;
+        feature.attributes.layerName = result.layerName;
 
-    //    if (feature.attributes.OBJECTID !== 0) {
-    //         // looking for nulls in data fields if found they are removed from content string
-    //         // var parcelsContent = "";
-    //         // if(dojo.trim(feature.attributes["PHYSICAL_STREET_NUM"]) !== "Null" && dojo.trim(feature.attributes["PHYSICAL_STREET_NUM"]) !== ""){
-    //         //     parcelsContent += "<br>Address: " + feature.attributes["PHYSICAL_STREET_NUM"] + " ";
-    //         // }
-    //         // if(dojo.trim(feature.attributes["PHYSICAL_STREET_DIR"]) !== "Null" && dojo.trim(feature.attributes["PHYSICAL_STREET_DIR"]) !== ""){
-    //         //     parcelsContent += feature.attributes["PHYSICAL_STREET_DIR"] + " ";
-    //         // }
-    //         // if(dojo.trim(feature.attributes["PHYSICAL_STREET_NAME"]) !== "Null" && dojo.trim(feature.attributes["PHYSICAL_STREET_NAME"]) !== ""){
-    //         //     parcelsContent += feature.attributes["PHYSICAL_STREET_NAME"] + " ";
-    //         // }
-    //         // if(dojo.trim(feature.attributes["PHYSICAL_STREET_TYPE"]) !== "Null" && dojo.trim(feature.attributes["PHYSICAL_STREET_TYPE"]) !== ""){
-    //         //     parcelsContent += feature.attributes["PHYSICAL_STREET_TYPE"];
-    //         // }
-    //         // if(dojo.trim(feature.attributes["PHYSICAL_CITY"]) !== "Null" && dojo.trim(feature.attributes["PHYSICAL_CITY"]) !== ""){
-    //         //     parcelsContent += "<br>City: " + feature.attributes["PHYSICAL_CITY"];
-    //         // }
-    //         // if(dojo.trim(feature.attributes["PHYSICAL_ZIP"]) !== "Null" && dojo.trim(feature.attributes["PHYSICAL_ZIP"]) !== ""){
-    //         //     parcelsContent += "<br>Zip: " + feature.attributes["PHYSICAL_ZIP"];
-    //         // }
-    //         //Maricopa parcels
-    //         var template = new InfoTemplate();
-    //         template.setTitle("County Parcels");
-    //         template.setContent("Parcel APN: ${APN}" + parcelsContent);
+       if (feature.attributes.OBJECTID !== 0) {
+            var template = new InfoTemplate();
 
-    //     feature.setInfoTemplate(template);
+            //Maricopa and Yavapi parcels
+            template.setTitle("County Parcels");
+            template.setContent("County: ${COUNTY}<br>" + "Parcel: ${PARCEL_LABEL}<br>" + "Address: ${PHYSICAL_ADDRESS}");
+        feature.setInfoTemplate(template);
 
-    //     } // end if
-    //     return feature;
-    //   });
-    // }); //end addCallback
+        } // end if
+        return feature;
+      });
+    }); //end addCallback
 
     var deferred3 = identifyTask3
     .execute(identifyParams)
@@ -480,8 +460,7 @@ function executeIdentifyTask (event) {
     // above is not an array of features, then you need to add a callback
     // like the one above to post-process the response and return an
     // array of features.
-    // map.infoWindow.setFeatures([deferred1, deferred2, deferred3]);
-    map.infoWindow.setFeatures([deferred1, deferred3]);
+    map.infoWindow.setFeatures([deferred1, deferred2, deferred3]);
     map.infoWindow.show(event.mapPoint);
 
 }  // end executeIdentifyTask

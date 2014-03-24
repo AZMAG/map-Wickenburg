@@ -12,7 +12,7 @@ var appConfig = new function() {
         this.mParcelsURL = "http://gis.mcassessor.maricopa.gov/ArcGIS/rest/services/Parcels/MapServer";
         this.yParcelsURL = "http://gis.yavapai.us/arcgis/rest/services/Property/MapServer/6";
         // total parcels a subset of Maricopa and Yavapi parcels
-        // this.tParcelsURL = "http://geo.azmag.gov/gismag/rest/services/maps/WI_Parcels/MapServer";
+        this.tParcelsURL = "http://geo.azmag.gov/gismag/rest/services/maps/WI_Parcels/MapServer";
         this.aerialURL = "http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer";
         this.streetsURL = "http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer";
 
