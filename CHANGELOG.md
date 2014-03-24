@@ -1,9 +1,12 @@
 # Change Log Wickenburg Zoning Website
 
+<<<<<<< HEAD
 ### 2.2.3 (03/24/2014)
 
 
 
+=======
+>>>>>>> cc9b8846d1b8aafb4aeaf5a1a1edf1966c410332
 ### 2.2.2 (03/19/2014)
 
 * linted index.html file and fixed errors
@@ -71,21 +74,33 @@
 * Posted to geo.azmag server
 * Used basic frame work from MAG EXLU Viewer
 
-## Example Links
+### Example Links
 
+<<<<<<< HEAD
 ### TOC Examples
+=======
+#### TOC Examples
+>>>>>>> cc9b8846d1b8aafb4aeaf5a1a1edf1966c410332
 
 * https://developers.arcgis.com/javascript/jssamples/map_explicitlayerlist.html
 * http://www.roktech.net/_blog/ROK_Blog/post/ArcGIS_Server_JS_API_-_Table_of_Contents_%28TOC%29_Example/
 * http://maps.roktech.net/demo/toc_example/index.htm
 
+<<<<<<< HEAD
 ### Sample Examples
+=======
+#### Sample Examples
+>>>>>>> cc9b8846d1b8aafb4aeaf5a1a1edf1966c410332
 
 * http://help.arcgis.com/en/webapi/javascript/arcgis/jssamples/find_popup.html
 * https://developers.arcgis.com/javascript/jssamples/fl_ondemand.html
 * http://jsfiddle.net/blordcastillo/mULcz/
 
+<<<<<<< HEAD
 ### Links to Assessors Sites
+=======
+#### Links to Assessors Sites
+>>>>>>> cc9b8846d1b8aafb4aeaf5a1a1edf1966c410332
 
 * http://mcassessor.maricopa.gov/?s=111-42-094
 * http://gis.yavapai.us/v4/print_parcel.aspx?qs=20111002b
@@ -93,6 +108,10 @@
 * http://gis.yavapai.us/v4/search.aspx
 * http://gis.yavapai.us/v4/map.aspx?search=201-10-023
 
+<<<<<<< HEAD
 ### Find Extent Tool
+=======
+#### Find Extent Tool
+>>>>>>> cc9b8846d1b8aafb4aeaf5a1a1edf1966c410332
 
 * http://psstl.esri.com/apps/extenthelper/
