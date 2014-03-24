@@ -130,30 +130,37 @@ require([
             opacity: ".65"
         }));
 
-        var mParcelsURL = appConfig.mParcelsURL;
-        var mParcels = map.addLayer(new ArcGISDynamicMapServiceLayer(mParcelsURL, {
-          id: "mParcels",
+         var tParcelsURL = appConfig.tParcelsURL;
+        var tParcels = map.addLayer(new ArcGISDynamicMapServiceLayer(tParcelsURL, {
+          id: "tParcels",
           visible: false,
           opacity: "1"
          }));
 
-       var content1 = ("Parcel ID: ${PARLABEL}<br>" +
-                        "Address: ${ADDRESS}<br>" +
-                        "City: ${CITY}<br>" +
-                        "State: ${STATE}<br>" +
-                        "Zip: ${ZIP}"
-        );
-        var infoTemplate1 = new InfoTemplate("Yavapai Assessor Info", content1);
-        var yParcelsURL = appConfig.yParcelsURL;
-        var yParcels = new FeatureLayer(yParcelsURL, {
-            id: "yParcels",
-            visible: false,
-            opacity: "1",
-            mode: FeatureLayer.MODE_ONDEMAND,
-            outFields: ["*"],
-            infoTemplate: infoTemplate1
-        });
-        map.addLayer(yParcels);
+        // var mParcelsURL = appConfig.mParcelsURL;
+        // var mParcels = map.addLayer(new ArcGISDynamicMapServiceLayer(mParcelsURL, {
+        //   id: "mParcels",
+        //   visible: false,
+        //   opacity: "1"
+         // }));
+
+       // var content1 = ("Parcel ID: ${PARLABEL}<br>" +
+       //                  "Address: ${ADDRESS}<br>" +
+       //                  "City: ${CITY}<br>" +
+       //                  "State: ${STATE}<br>" +
+       //                  "Zip: ${ZIP}"
+       //  );
+       //  var infoTemplate1 = new InfoTemplate("Yavapai Assessor Info", content1);
+       //  var yParcelsURL = appConfig.yParcelsURL;
+       //  var yParcels = new FeatureLayer(yParcelsURL, {
+       //      id: "yParcels",
+       //      visible: false,
+       //      opacity: "1",
+       //      mode: FeatureLayer.MODE_ONDEMAND,
+       //      outFields: ["*"],
+       //      infoTemplate: infoTemplate1
+       //  });
+       //  map.addLayer(yParcels);
 
         var coBoundaryURL = appConfig.coBoundaryURL;
         var coBoundary = map.addLayer(new ArcGISDynamicMapServiceLayer(coBoundaryURL, {
@@ -171,15 +178,17 @@ require([
 
         //TOC Layers
         tocLayers.push({layer: aerial, title: "Aerial Imagery"});
-        tocLayers.push({layer: yParcels, title: "Yavapai County Parcels"});
-        tocLayers.push({layer: mParcels, title: "Maricopa County Parcels"});
+        // tocLayers.push({layer: yParcels, title: "Yavapai County Parcels"});
+        // tocLayers.push({layer: mParcels, title: "Maricopa County Parcels"});
+        tocLayers.push({layer: tParcels, title: "County Parcels"});
         tocLayers.push({layer: wiBoundary, title: "Wickenburg Boundary"});
         tocLayers.push({layer: wiFlood, title: "Wickenburg Flood Zone"});
         tocLayers.push({layer: wiZoning, title: "Wickenburg Zoning"});
 
         // Legend Layers
-        legendLayers.push({layer: yParcels, title: "Yavapai County Parcels"});
-        legendLayers.push({layer: mParcels, title: "Maricopa County Parcels"});
+        // legendLayers.push({layer: yParcels, title: "Yavapai County Parcels"});
+        // legendLayers.push({layer: mParcels, title: "Maricopa County Parcels"});
+        legendLayers.push({layer: tParcels, title: "County Parcels"});
         legendLayers.push({layer: coBoundary, title: "Maricopa County Boundary"});
         legendLayers.push({layer: wiBoundary, title: "Wickenburg Town Boundary"});
         legendLayers.push({layer: wiFlood, title: "Wickenburg Flood Zone"});
@@ -362,7 +371,7 @@ function mapReady () {
     map.on("click", executeIdentifyTask);
     //create identify tasks and setup parameters
     identifyTask1 = new IdentifyTask(wiZoningURL);
-    identifyTask2 = new IdentifyTask(mParcelsURL);
+    identifyTask2 = new IdentifyTask(yParcelsURL);
     identifyTask3 = new IdentifyTask(wiFloodURL);
 
     identifyParams = new IdentifyParameters();
@@ -435,7 +444,7 @@ function executeIdentifyTask (event) {
             }
             //Maricopa parcels
             var template = new InfoTemplate();
-            template.setTitle("Maricopa Parcels");
+            template.setTitle("County Parcels");
             template.setContent("Parcel APN: ${APN}" + parcelsContent);
 
         feature.setInfoTemplate(template);

@@ -96,7 +96,7 @@ module.exports = function(grunt){
                 tasks: ["csslint"]
             },
             js: {
-                files: ["app/model/main.js", "Gruntfile.js"],
+                files: ["app/model/main.js", "Gruntfile.js", "config.js"],
                 tasks: ["jshint"]
             }
         }
@@ -117,4 +117,4 @@ module.exports = function(grunt){
 // http://coding.smashingmagazine.com/2013/10/29/get-up-running-grunt/
 // http://csslint.net/about.html
 // http://www.jshint.com/docs/options/
-// test test test test test
+// test test test test test test
