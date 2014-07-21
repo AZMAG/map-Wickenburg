@@ -8,7 +8,6 @@
     * zoom issue with geocoder
     * turn off measurement tool when window closes
 
-### Version 3.4.0 (07/21/2014)
 
 ### Version 3.3.0 (06/30/2014)
 
