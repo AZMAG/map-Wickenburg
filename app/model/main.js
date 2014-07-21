@@ -21,7 +21,6 @@ require([
         "dojo/_base/array",
         "dojo/_base/Color",
         "esri/layers/ArcGISDynamicMapServiceLayer",
-        "esri/layers/FeatureLayer",
         "esri/dijit/Legend",
         "dijit/form/CheckBox",
         "dijit/form/HorizontalSlider",
@@ -34,7 +33,7 @@ require([
     function(dc, dom, on, parser, query, Map, Scalebar, HomeButton, LocateButton, Geocoder, InfoTemplate,
         Graphic, Multipoint, PictureMarkerSymbol, SimpleFillSymbol,
         SimpleLineSymbol, IdentifyTask, IdentifyParameters, Popup, arrayUtils, Color, ArcGISDynamicMapServiceLayer,
-        FeatureLayer, Legend, CheckBox, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, BootstrapMap) {
+        Legend, CheckBox, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, BootstrapMap) {
 
         parser.parse();
 
@@ -136,6 +135,7 @@ require([
           visible: false,
           opacity: "1"
          }));
+<<<<<<< HEAD
 
         // var mParcelsURL = appConfig.mParcelsURL;
         // var mParcels = map.addLayer(new ArcGISDynamicMapServiceLayer(mParcelsURL, {
@@ -161,6 +161,8 @@ require([
        //      infoTemplate: infoTemplate1
        //  });
        //  map.addLayer(yParcels);
+=======
+>>>>>>> Changes to Parcels Rest End Point
 
         var coBoundaryURL = appConfig.coBoundaryURL;
         var coBoundary = map.addLayer(new ArcGISDynamicMapServiceLayer(coBoundaryURL, {
@@ -178,16 +180,22 @@ require([
 
         //TOC Layers
         tocLayers.push({layer: aerial, title: "Aerial Imagery"});
+<<<<<<< HEAD
         // tocLayers.push({layer: yParcels, title: "Yavapai County Parcels"});
         // tocLayers.push({layer: mParcels, title: "Maricopa County Parcels"});
+=======
+>>>>>>> Changes to Parcels Rest End Point
         tocLayers.push({layer: tParcels, title: "County Parcels"});
         tocLayers.push({layer: wiBoundary, title: "Wickenburg Boundary"});
         tocLayers.push({layer: wiFlood, title: "Wickenburg Flood Zone"});
         tocLayers.push({layer: wiZoning, title: "Wickenburg Zoning"});
 
         // Legend Layers
+<<<<<<< HEAD
         // legendLayers.push({layer: yParcels, title: "Yavapai County Parcels"});
         // legendLayers.push({layer: mParcels, title: "Maricopa County Parcels"});
+=======
+>>>>>>> Changes to Parcels Rest End Point
         legendLayers.push({layer: tParcels, title: "County Parcels"});
         legendLayers.push({layer: coBoundary, title: "Maricopa County Boundary"});
         legendLayers.push({layer: wiBoundary, title: "Wickenburg Town Boundary"});
@@ -347,15 +355,24 @@ require([
         on(link, "click", function() {
             var feature = map.infoWindow.getSelectedFeature();
             // console.log(feature.attributes);
+<<<<<<< HEAD
             var url = window.location;
             var link = "";
             if (feature.attributes.County_FIPS === "13") {
                 // url = window.location;
+=======
+            var url = window.location;;
+            var link = "";
+            if (feature.attributes.County_FIPS === "13") {
+>>>>>>> Changes to Parcels Rest End Point
                 link = appConfig.MaricopaAssessor + feature.attributes.PARCEL;
                 window.open(link);
             }
             if (feature.attributes.County_FIPS === "25") {
+<<<<<<< HEAD
                 // url = window.location;
+=======
+>>>>>>> Changes to Parcels Rest End Point
                 link = appConfig.YavapaiAssessor + feature.attributes.PARCEL;
                 window.open(link);
             }
@@ -424,7 +441,10 @@ function executeIdentifyTask (event) {
        if (feature.attributes.OBJECTID !== 0) {
             var template = new InfoTemplate();
 
+<<<<<<< HEAD
             //Maricopa and Yavapi parcels
+=======
+>>>>>>> Changes to Parcels Rest End Point
             template.setTitle("County Parcels");
             template.setContent("County: ${COUNTY}<br>" + "Parcel: ${PARCEL_LABEL}<br>" + "Address: ${PHYSICAL_ADDRESS}");
         feature.setInfoTemplate(template);

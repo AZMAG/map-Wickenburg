@@ -5,7 +5,10 @@
 * removed Yavapi parcels rest end point
 * removed Maricopa parcels rest end point
 * combined Yavapi and Maricopa Parcels to one rest end point
+<<<<<<< HEAD
 
+=======
+>>>>>>> Changes to Parcels Rest End Point
 
 ### 2.2.2 (03/19/2014)
 
