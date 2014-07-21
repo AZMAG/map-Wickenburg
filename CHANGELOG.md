@@ -1,16 +1,94 @@
-# Change Log Wickenburg Zoning Website
+# CHANGELOG Wickenburg Zoning Website
 
-### 2.2.3 (03/24/2014)
+[![Semver](http://img.shields.io/SemVer/2.0.0.png)](http://semver.org/spec/v2.0.0.html)
+
+`Major/Minor/Patch 0.0.0`
+
+### Outstanding Items
+    * zoom issue with geocoder
+    * turn off measurement tool when window closes
+
+### Version 3.3.0 (06/30/2014)
+
+* changed size and location of basemap toggle
+* added version number and date to about.html - configurable in appConfig file
+* added print button
+* added print functionality
+* changed the style of panels and modals to dark
+* added source reference to employer data
+* made print legend static graphic to fit to size
+
+### Version 3.2.1 (06/04/2014)
+
+* added Wickenburg Employers, 5+ employees as a feature layer
+* added Google Analytics code to index files `UA-40006601-1`
+* added Google Webmaster Tools `google14c4dad344d14f91.html` file to root directory
+
+### Version 3.2.0 (05/27/2014)
+
+* moved `About` modal from index.html to views `about.html`
+* moved `Measurement` html from index.html to views `measureTool.html`
+* moved `Content` html from index.html to views `contents.html`
+
+### Version 3.1.0 (05/12/2014)
+
+* made changes to boundary and zoning
+
+### Version 3.0.0 (05/09/2014)
+
+* updating zoning - new annexation area
+* updating boundary - new annexation area
+* reordered zoning layer
+* use `<!doctype html>` instead of `<!DOCTYPE html>`
+* remove IE conditional classes per HTML5 Boilerplate
+* update to [HTML5 Boilerplate v4.3.0] (https://github.com/h5bp/html5-boilerplate) features
+* update to [Normalize.css v3.0.1] (https://github.com/h5bp/html5-boilerplate) per HTML5bp
+* update the [HTML5 Shiv] (https://github.com/aFarkas/html5shiv)
+* update the [respond.min.js] (https://github.com/scottjehl/Respond)
+* update to [jquery-1.11.0] (http://jquery.com/)
+* update to [Modernizr v2.7.1] (http://modernizr.com/)
+* changed file structure
+* fixed scrollwheel issue - `https://github.com/Esri/bootstrap-map-js/issues/3`
+* changed title css to static color
+* changed style color of `HomeButton` `LocateButton` `esriSimpleSlider` - `color: #fff` `background-color: #5b5b5`
+* removed 2 LOD levels to restrict zoom out
+
+### Version 2.4.0 (04/21/2014)
+
+* added measurement tool
+* added function to prevent popups when measure tool is active
+* added help menu for measurement tool
+* renamed help content
+* help button not working in IE or Firefox - fix by changing from <button></button> to <a></a> - http://stackoverflow.com/questions/13074693/
+* made changes to all html files added tags <html></html>, <head></head>, <body></body>
+* switched geometry services from ESRI test to MAGs service
+* changed the default color of drop-down arrow in measurement tool
+
+### Version 2.3.0 (04/08/2014)
+
+* updated to ArcGIS JavaScript API 3.9
+* updated to jQuery 1.11.0
+* added basemap toggle to fix aerial image issue
+
+### Version 2.2.4 (04/04/2014)
+
+* fixed some css issues with popup
+* added bootstrapmap.css to concat.min.css
+* cleaned up some issues in index.html
+
+### Version 2.2.3 (03/24/2014)
 
 * removed Yavapi parcels rest end point
 * removed Maricopa parcels rest end point
 * combined Yavapi and Maricopa Parcels to one rest end point
-<<<<<<< HEAD
+* fixed Gruntfiles
+* fixed spelling errors in html files
+* changed contacts window to be open on load
+* minified normalize and main css files
+* concatenated normalize and main css files
+* minified main js file
 
-=======
->>>>>>> Changes to Parcels Rest End Point
-
-### 2.2.2 (03/19/2014)
+### Version 2.2.2 (03/19/2014)
 
 * linted index.html file and fixed errors
 * changed body background color
@@ -21,7 +99,7 @@
 * added .gitattributes file - Git
 * added .gitignore file - Git
 
-### 2.2.1 (03/07/2014)
+### Version 2.2.1 (03/07/2014)
 
 * changed maps extent
 * updated About menu items
@@ -36,7 +114,7 @@
 * added a help button to the contents menu
 * added a help model window
 
-### 2.2.0 (01/30/2014)
+### Version 2.2.0 (01/30/2014)
 
 * major change to bootstrap layout
 * added modal about window
@@ -45,26 +123,26 @@
 * added homebutton dijit
 * added geolocation button dijit
 
-### 2.0.0 (01/08/2014)
+### Version 2.0.0 (01/08/2014)
 
 * major change to format - change to kendo layout
 * update ESRI javascript API to version 3.8
 
-### 1.2.1 (12/05/2013)
+### Version 1.2.1 (12/05/2013)
 
 * added humans.txt file (html5 boilerplate)
-* adderobots.txt file (html5 boilerplate)
+* added robots.txt file (html5 boilerplate)
 * added 404.html file (html5 boilerplate)
 * added modernizer-2.6.2.min (html5 boilerplate)
 * added crossdomian.xml (html5 boilerplate)
 * added HTML5 enabling script (Remy Sharp)
 * added normalize.css (html5 boilerplate)
 * updated url's for MAG services
-* updated url's for Yavapai serivces
+* updated url's for Yavapai services
 * updated ESRI javascript API from 3.4 to 3.7
 * updated jquery libary from 1.9.1 to 1.10.2
 
-### 1.2.0 (04/08/2013)
+### Version 1.2.0 (04/08/2013)
 
 * Added Google Analytics code ###(Wickenburg Zoning Viewer)-UA-40006601-1
 * Updated ESRI Javascript API from 3.2 to 3.4
@@ -72,33 +150,38 @@
 * Updated jquery from 1.8.3 to 1.9.1
 	* <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-### 1.0.0 (04/01/2013)
+### Version 1.0.0 (04/01/2013)
 
 * Posted to geo.azmag server
 * Used basic frame work from MAG EXLU Viewer
 
-### Example Links
+## Resources / Examples
 
-#### TOC Examples
+- ***TOC Examples***
 
-* https://developers.arcgis.com/javascript/jssamples/map_explicitlayerlist.html
-* http://www.roktech.net/_blog/ROK_Blog/post/ArcGIS_Server_JS_API_-_Table_of_Contents_%28TOC%29_Example/
-* http://maps.roktech.net/demo/toc_example/index.htm
+    * https://developers.arcgis.com/javascript/jssamples/map_explicitlayerlist.html
+    * http://www.roktech.net/_blog/ROK_Blog/post/ArcGIS_Server_JS_API_-_Table_of_Contents_%28TOC%29_Example/
+    * http://maps.roktech.net/demo/toc_example/index.htm
 
-#### Sample Examples
+- ***Sample Examples***
 
-* http://help.arcgis.com/en/webapi/javascript/arcgis/jssamples/find_popup.html
-* https://developers.arcgis.com/javascript/jssamples/fl_ondemand.html
-* http://jsfiddle.net/blordcastillo/mULcz/
+    * http://help.arcgis.com/en/webapi/javascript/arcgis/jssamples/find_popup.html
+    * https://developers.arcgis.com/javascript/jssamples/fl_ondemand.html
+    * http://jsfiddle.net/blordcastillo/mULcz/
 
-#### Links to Assessors Sites
+- ***Links to Assessors Sites***
 
-* http://mcassessor.maricopa.gov/?s=111-42-094
-* http://gis.yavapai.us/v4/print_parcel.aspx?qs=20111002b
-* http://apps.yavapai.us/taxinquiry/
-* http://gis.yavapai.us/v4/search.aspx
-* http://gis.yavapai.us/v4/map.aspx?search=201-10-023
+    * http://mcassessor.maricopa.gov/?s=111-42-094
+    * http://gis.yavapai.us/v4/print_parcel.aspx?qs=20111002b
+    * http://apps.yavapai.us/taxinquiry/
+    * http://gis.yavapai.us/v4/search.aspx
+    * http://gis.yavapai.us/v4/map.aspx?search=201-10-023
 
-#### Find Extent Tool
+- ***Find Extent Tool***
 
-* http://psstl.esri.com/apps/extenthelper/
+    * http://psstl.esri.com/apps/extenthelper/
+
+- ***Measurement Tool***
+
+    * https://developers.arcgis.com/javascript/jssamples/widget_measurement.html
+    * http://developers.arcgis.com/javascript/samples/util_distance/

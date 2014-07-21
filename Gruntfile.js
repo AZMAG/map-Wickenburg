@@ -7,54 +7,24 @@ module.exports = function(grunt){
     grunt.initConfig({
 
         pkg: grunt.file.readJSON("package.json"),
+        bannercss: '/*!\n' +
+                        '*@concat.min.css\n' +
+                        '*@CSS Document for Wickenburg Zoning Map Viewer @ MAG\n' +
+                        '*@For Production\n' +
+                        '*@<%= pkg.name %> - v<%= pkg.version %> | <%= grunt.template.today("mm-dd-yyyy") %>\n' +
+                        '*@author <%= pkg.author %>\n' +
+                    '*/\n',
 
-        htmlhint: {
-            build: {
-                options: {
-                    "tag-pair": true,
-                    // Force tags to have a closing pair
-                    "tagname-lowercase": true,
-                    // Force tags to be lowercase
-                    "attr-lowercase": true,
-                    // Force attribute names to be lowercase e.g. <div id="header"> is invalid
-                    "attr-value-double-quotes": true,
-                    // Force attributes to have double quotes rather than single
-                    "doctype-first": true,
-                    // Force the DOCTYPE declaration to come first in the document
-                    "spec-char-escape": true,
-                    // Force special characters to be escaped
-                    "id-unique": true,
-                    // Prevent using the same ID multiple times in a document
-                    // "head-script-disabled": false,
-                    // Prevent script tags being loaded in the head for performance reasons
-                    "style-disabled": true
-                    // Prevent style tags. CSS should be loaded through
-                },
-                src: ["index.html", "app/views/*html"]
-            }
-        },
-
-        // CSSLint. Tests CSS code quality
-        // https://github.com/gruntjs/grunt-contrib-csslint
-        csslint: {
-            // define the files to lint
-            files: ["app/resources/css/main.css"],
-                strict: {
-                    options: {
-                        "import": 0,
-                        "empty-rules": 0,
-                        "display-property-grouping": 0,
-                        "shorthand": 0,
-                        "font-sizes": 0,
-                        "zero-units": 0,
-                        "important": 0,
-                        "duplicate-properties": 0,
-                    }
-            }
-        },
+        bannerjs: '/*!\n' +
+                        '*@main.min.js\n' +
+                        '*@JavaScript document for Wickenburg Zoning Map Viewer @ MAG\n' +
+                        '*@For Production\n' +
+                        '*@<%= pkg.name %> - v<%= pkg.version %> | <%= grunt.template.today("mm-dd-yyyy") %>\n' +
+                        '*@author <%= pkg.author %>\n' +
+                    '*/\n',
 
         jshint: {
-            files: ["app/model/main.js", "Gruntfile.js"],
+            files: ["js/config.js", "js/main.js"],
                 options: {
                     // strict: true,
                     sub: true,
@@ -63,50 +33,70 @@ module.exports = function(grunt){
                     curly: true,
                     eqeqeq: true,
                     unused: true,
-                    scripturl: true,
-                    // This option defines globals exposed by the Dojo Toolkit.
-                    dojo: true,
-                    // This option defines globals exposed by the jQuery JavaScript library.
-                    jquery: true,
-                    // Set force to true to report JSHint errors but not fail the task.
+                    scripturl: true,    // This option defines globals exposed by the Dojo Toolkit.
+                    dojo: true,        // This option defines globals exposed by the jQuery JavaScript library.
+                    jquery: true,     // Set force to true to report JSHint errors but not fail the task.
                     force: true,
-                    reporter: require("jshint-stylish")
+                    reporter: require("jshint-stylish-ex")
                 }
         },
 
         uglify: {
             options: {
-                // the banner is inserted at the top of the output
-                banner: '/*! <%= pkg.name %> - main.js - <%= grunt.template.today("mm-dd-yyyy") %> */\n'
+                // add banner to top of output file
+                banner: '<%= bannerjs %>\n'
             },
             build: {
                 files: {
-                    "../deploy/build/main.min.js": ["app/model/main.js"]
+                    "js/main.min.js": ["js/main.js"],
                 }
             }
         },
 
-        watch: {
-            html: {
-                files: ["index.html", "app/views/*html"],
-                tasks: ["htmlhint"]
-            },
-            css: {
-                files: ["app/resources/css/main.css"],
-                tasks: ["csslint"]
-            },
-            js: {
-                files: ["app/model/main.js", "Gruntfile.js", "config.js"],
-                tasks: ["jshint"]
+        cssmin: {
+            add_banner: {
+                options: {
+                // add banner to top of output file
+                    banner: '/* <%= pkg.name %> - v<%= pkg.version %> | <%= grunt.template.today("mm-dd-yyyy") %> */\n'
+                },
+                files: {
+                    "css/main.min.css": ["css/main.css"],
+                    "css/normalize.min.css": ["css/normalize.css"],
+                    "css/bootstrapmap.min.css": ["css/bootstrapmap.css"]
+                }
             }
-        }
+        },
 
+        concat: {
+            options: {
+              stripBanners: true,
+              banner: '<%= bannercss %>\n'
+            },
+            dist: {
+              src: ["css/normalize.min.css", "css/bootstrapmap.min.css", "css/main.min.css"],
+              dest: 'css/concat.min.css'
+            }
+        },
+
+        watch: {
+          scripts: {
+            files: ["js/main.js", "js/config.js", "Gruntfile.js"],
+            tasks: ["jshint"],
+            options: {
+              spawn: false,
+              interrupt: true,
+            },
+          },
+        },
 
     });
 
     // this would be run by typing "grunt test" on the command line
-    // grunt.registerTask("test", ["jshint", "csslint", "htmlhint"]);
-    grunt.registerTask("test", ["uglify"]);
+    grunt.registerTask("work", ["jshint"]);
+    grunt.registerTask("build", ["uglify", "cssmin", "concat"]);
+
+    grunt.registerTask("buildcss", ["cssmin", "concat"]);
+    grunt.registerTask("buildjs", ["uglify"]);
 
     // the default task can be run just by typing "grunt" on the command line
     grunt.registerTask("default", []);
@@ -117,4 +107,4 @@ module.exports = function(grunt){
 // http://coding.smashingmagazine.com/2013/10/29/get-up-running-grunt/
 // http://csslint.net/about.html
 // http://www.jshint.com/docs/options/
-// test test test test test test
+

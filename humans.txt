@@ -36,16 +36,15 @@
 
 # TECHNOLOGY COLOPHON
 
-    HTML5, CSS3,
-    html5-boilerplate-4.3.0,
-    ArcGIS Javascript API v3.8,
-    Bootstrap v3.1.1,
-    Bootstrap Map JS v3.0.0,
-    Normalize.css, jQuery v1.10.2, Modernizr
+    Standars: HTML5, CSS3,
+    Components: html5-boilerplate, ArcGIS Javascript API, Bootstrap, Bootstrap Map JS,
+    Normalize.css, jQuery, Modernizr
 
 # SITE
-    Version: 2.2.1
-    Last updated: 2014/03/07
+    Site Name: Wickenburg Zoning Map Viewer
+    Site URL: http://geo.azmag.gov/maps/wickenburg/
+    Version: 3.3.0
+    Last updated: 06/30/2014
     Language: English
     Doctype: HTML5
-    IDE: Sublime Text, Notepad++
+    IDE: Sublime Text

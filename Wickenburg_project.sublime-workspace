@@ -4,6 +4,70 @@
 		"selected_items":
 		[
 			[
+				"backr",
+				"background"
+			],
+			[
+				"mapOnly",
+				"mapOnlyRemove  (variable)"
+			],
+			[
+				"template",
+				"templateNames  (variable)"
+			],
+			[
+				"ba",
+				"background"
+			],
+			[
+				"wiEmpl",
+				"wiEmployers"
+			],
+			[
+				"Feature",
+				"FeatureLayer"
+			],
+			[
+				"wiEmployer",
+				"wiEmployerURL"
+			],
+			[
+				"pa",
+				"padding-top"
+			],
+			[
+				"h",
+				"h1	Tag"
+			],
+			[
+				"con",
+				"console.log(message);"
+			],
+			[
+				"execute",
+				"executeIdentifyTask"
+			],
+			[
+				"distance",
+				"distanceToggleButton"
+			],
+			[
+				"basemap",
+				"BasemapToggle"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"nav",
+				"navbar-brand"
+			],
+			[
+				"grunt-contrib-css",
+				"grunt-contrib-cssmin"
+			],
+			[
 				"be",
 				"before"
 			],
@@ -18,10 +82,6 @@
 			[
 				"tex",
 				"text-decoration"
-			],
-			[
-				"pa",
-				"padding-bottom"
 			],
 			[
 				"fo",
@@ -56,20 +116,12 @@
 				"small  (value)"
 			],
 			[
-				"font",
-				"font-weight"
-			],
-			[
 				"Mulipoint",
 				"Multipoint"
 			],
 			[
 				"slideD",
 				"slideDuration  (variable)"
-			],
-			[
-				"nav",
-				"navbar-form"
 			],
 			[
 				"min-",
@@ -148,14 +200,6 @@
 				"console.	console.log()"
 			],
 			[
-				"con",
-				"console.	console.log()"
-			],
-			[
-				"execute",
-				"executeForCount"
-			],
-			[
 				"wit",
 				"width"
 			],
@@ -228,10 +272,6 @@
 				"layersTOC"
 			],
 			[
-				"h",
-				"height"
-			],
-			[
 				"margin-to",
 				"margin-top:   (property)"
 			],
@@ -246,10 +286,6 @@
 			[
 				"co",
 				"color"
-			],
-			[
-				"ba",
-				"background-color"
 			],
 			[
 				"border-bo",
@@ -478,47 +514,22 @@
 			[
 				"ico",
 				"icons"
-			],
-			[
-				"icons",
-				"iconsid"
-			],
-			[
-				"inp",
-				"input"
-			],
-			[
-				"check",
-				"checked"
-			],
-			[
-				"ac",
-				"actionList"
-			],
-			[
-				"email",
-				"emailLink"
-			],
-			[
-				"emai",
-				"emailLink"
-			],
-			[
-				"info",
-				"infoWindow"
-			],
-			[
-				"f",
-				"feature"
-			],
-			[
-				"C",
-				"Comments"
 			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"contents": "/*! main.js | Wickenburg Zoning Website @ MAG */\n\nrequire([\n        \"dojo/dom-construct\",\n        \"dojo/dom\",\n        \"dojo/on\",\n        \"dojo/parser\",\n        \"dojo/query\",\n        \"dojo/keys\",\n        \"esri/sniff\",\n        \"esri/map\",\n        \"esri/SnappingManager\",\n        \"esri/dijit/Measurement\",\n        \"esri/dijit/Scalebar\",\n        \"esri/dijit/HomeButton\",\n        \"esri/dijit/LocateButton\",\n        \"esri/dijit/Geocoder\",\n        \"esri/graphic\",\n        \"esri/geometry/Multipoint\",\n        \"esri/symbols/PictureMarkerSymbol\",\n        \"esri/symbols/SimpleFillSymbol\",\n        \"esri/symbols/SimpleLineSymbol\",\n        \"esri/tasks/IdentifyTask\",\n        \"esri/tasks/IdentifyParameters\",\n        \"esri/dijit/Popup\",\n        \"dojo/_base/array\",\n        \"dojo/_base/Color\",\n        \"esri/layers/ArcGISDynamicMapServiceLayer\",\n        \"esri/dijit/Legend\",\n        \"dijit/form/CheckBox\",\n        \"dijit/form/HorizontalSlider\",\n        \"dijit/form/HorizontalRule\",\n        \"dijit/form/HorizontalRuleLabels\",\n        \"js/vendor/bootstrapmap.min.js\",\n        \"esri/dijit/BasemapToggle\",\n\n        \"esri/layers/FeatureLayer\",\n        \"esri/dijit/PopupTemplate\",\n        \"esri/InfoTemplate\",\n        \"esri/symbols/SimpleMarkerSymbol\",\n\n        \"esri/dijit/Print\",\n        \"esri/tasks/PrintTemplate\",\n        \"esri/request\",\n        \"esri/config\",\n\n        \"dojo/domReady!\"\n    ],\n\n    function(dc, dom, on, parser, query, keys, has, Map, SnappingManager, Measurement, Scalebar, HomeButton, LocateButton, Geocoder,\n        Graphic, Multipoint, PictureMarkerSymbol, SimpleFillSymbol, SimpleLineSymbol, IdentifyTask, IdentifyParameters, Popup, arrayUtils, Color, ArcGISDynamicMapServiceLayer, Legend, CheckBox, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, BootstrapMap, BasemapToggle, FeatureLayer, PopupTemplate, InfoTemplate, SimpleMarkerSymbol, Print, PrintTemplate, esriRequest, esriConfig) {\n\n        parser.parse();\n\n        esri.config.defaults.io.proxyUrl = \"proxy/proxy.ashx\";\n        esri.config.defaults.io.alwaysUseProxy = false;\n\n        // add version and date to about.html, changed in config.js\n        dom.byId(\"version\").innerHTML = appConfig.Version;\n\n        var identifyParams;\n        var tocLayers = [];\n        var legendLayers = [];\n\n        // line set up for measurement tool\n        var sfs = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,\n            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,\n                new Color([0, 128, 255]), 3), null);\n\n        // create a popup to replace the map's info window\n        var fillSymbol3 = new SimpleFillSymbol(SimpleFillSymbol.STYLE_BACKWARD_DIAGONAL,\n            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,\n                new Color([0, 255, 255]), 2), new Color([0, 255, 255, 0.25]));\n\n        var pointSymbol = new SimpleMarkerSymbol(\"circle\", 26, null,\n            new Color([0, 0, 0, 0.25]));\n\n        var popup = new Popup({\n            fillSymbol: fillSymbol3,\n            // lineSymbol:\n            markerSymbol: pointSymbol\n        }, dc.create(\"div\"));\n\n        // create the map and specify the custom info window as the info window that will be used by the map\n        // <!-- Get a reference to the ArcGIS Map class -->\n        var map = BootstrapMap.create(\"mapDiv\", {\n            extent: new esri.geometry.Extent(appConfig.initExtent),\n            lods: appConfig.lods,\n            basemap: \"streets\",\n            showAttribution: false,\n            logo: false,\n            infoWindow: popup,\n            sliderPosition: \"top-right\",\n            scrollWheelZoom: true\n        });\n\n        map.on(\"load\", mapReady);\n\n        var identifyHandler = map.on(\"click\", executeIdentifyTask);\n        // remove event listener on map close\n        map.on(\"unload\", executeIdentifyTask);\n\n        var scalebar = new Scalebar({\n            map: map,\n            // scalebarUnit: \"dual\"\n            scalebarUnit: \"english\"\n        });\n\n        // create div for homebutton\n        var homeButton = new HomeButton({\n            map: map,\n            visible: true //show the button\n        }, dc.create(\"div\", {\n            id: \"HomeButton\"\n        }, \"mapDiv\", \"last\"));\n        homeButton._homeNode.title = \"Original Extent\";\n        homeButton.startup();\n\n        // create div for geolocatebutton\n        var geoLocateButton = new LocateButton({\n            map: map,\n            visible: true,\n        }, dc.create(\"div\", {\n            id: \"LocateButton\"\n        }, \"mapDiv\", \"last\"));\n        geoLocateButton.startup();\n\n        var toggle = new BasemapToggle({\n            // theme: \"basemapToggle\",\n            map: map,\n            visible: true,\n            basemap: \"satellite\"\n        }, dc.create(\"div\", {\n            id: \"BasemapToggle\"\n        }, \"mapDiv\", \"last\"));\n        toggle.startup();\n\n        // trying to add to geocoder widget?\n        // var geocoders = [{\n        //     url: \"http://geo.azmag.gov/gismag/rest/services/maps/WI_Employers/MapServer/0\",\n        //     name: \"employers\"\n        //     singleLineFieldName:\n        // }];\n\n        // create geosearch widget\n        var geocoder = new Geocoder({\n            value: \"\",\n            zoomScale: 10,\n            maxLocations: 10,\n            autoComplete: true,\n            // arcgisGeocoder: true,\n            arcgisGeocoder: {\n                sourceCountry: \"USA\",\n                placeholder: \"155 N Tegner St, Wickenburg, AZ\"\n            },\n            // geocoders:\n            map: map\n        }, \"geosearch\");\n        geocoder.startup();\n        geocoder.on(\"select\", geocodeSelect);\n        geocoder.on(\"findResults\", geocodeResults);\n        geocoder.on(\"clear\", clearFindGraphics);\n\n        // Print Functions for Print dijit\n        //=================================================================================>\n        // get print templates from the export web map task\n        var printInfo = esriRequest({\n            \"url\": appConfig.printUrl,\n            \"content\": {\n                \"f\": \"json\"\n            }\n        });\n        printInfo.then(handlePrintInfo, handleError);\n\n        function handlePrintInfo(resp) {\n            var layoutTemplate, templateNames, mapOnlyIndex, templates;\n\n            layoutTemplate = arrayUtils.filter(resp.parameters, function(param, idx) {\n                return param.name === \"Layout_Template\";\n            });\n\n            if (layoutTemplate.length === 0) {\n                console.log(\"print service parameters name for templates must be \\\"Layout_Template\\\"\");\n                return;\n            }\n            templateNames = layoutTemplate[0].choiceList;\n\n            // // remove the MAP_ONLY template then add it to the end of the list of templates\n            // mapOnlyIndex = arrayUtils.indexOf(templateNames, \"MAP_ONLY\");\n            // if ( mapOnlyIndex > -1 ) {\n            //     var mapOnly = templateNames.splice(mapOnlyIndex, mapOnlyIndex + 1)[0];\n            //     templateNames.push(mapOnly);\n            // }\n\n            // remove the MAP_ONLY template from the dropdown list\n            mapOnlyRemove = arrayUtils.indexOf(templateNames, \"MAP_ONLY\");\n            if (mapOnlyRemove > -1) {\n                templateNames.splice(mapOnlyRemove, mapOnlyRemove);\n            }\n\n            // create a print template for each choice\n            templates = arrayUtils.map(templateNames, function(ch) {\n                var plate = new PrintTemplate();\n                plate.layout = plate.label = ch;\n                plate.format = \"PDF\";\n                plate.layoutOptions = {\n                    // \"authorText\": \"Made by:  MAG's JS API Team\",\n                    // \"copyrightText\": \"<copyright info here>\",\n                    // \"legendLayers\": [],\n                    \"titleText\": \"Wickenburg Zoning\"\n                    // \"scalebarUnit\": \"Miles\"\n                };\n                return plate;\n            });\n\n            // create the print dijit\n            printer = new Print({\n                \"map\": map,\n                \"templates\": templates,\n                url: appConfig.printUrl\n            }, dom.byId(\"printButton\"));\n            printer.startup();\n        }\n\n        function handleError(err) {\n            console.log(\"Something broke: \", err);\n        }\n\n\n        //=================================================================================>\n        // add layers to map\n\n        var wiZoningURL = appConfig.wiZoningURL;\n        var wiZoning = map.addLayer(new ArcGISDynamicMapServiceLayer(wiZoningURL, {\n            id: \"wiZoning\",\n            visible: true,\n            opacity: \".65\"\n        }));\n\n        var wiFloodURL = appConfig.wiFloodURL;\n        var wiFlood = map.addLayer(new ArcGISDynamicMapServiceLayer(wiFloodURL, {\n            id: \"wiFlood\",\n            visible: false,\n            opacity: \".65\"\n        }));\n\n        var tParcelsURL = appConfig.tParcelsURL;\n        var tParcels = map.addLayer(new ArcGISDynamicMapServiceLayer(tParcelsURL, {\n            id: \"tParcels\",\n            visible: false,\n            opacity: \"1\"\n        }));\n\n        var coBoundaryURL = appConfig.coBoundaryURL;\n        var coBoundary = map.addLayer(new ArcGISDynamicMapServiceLayer(coBoundaryURL, {\n            id: \"coBoundary\",\n            visible: true,\n            opacity: \"1\"\n        }));\n\n        var wiBoundaryURL = appConfig.wiBoundaryURL;\n        var wiBoundary = map.addLayer(new ArcGISDynamicMapServiceLayer(wiBoundaryURL, {\n            id: \"wiBoundary\",\n            visible: true,\n            opacity: \"1\"\n        }));\n\n        // add new info window for employers\n        var empTemplate = new InfoTemplate();\n        empTemplate.setTitle(\"${EMPNAME}\");\n        empTemplate.setContent(\"${ADDRESS}</br>\" +\n            \"${CITY}, ${STATE} ${ZIP}</br>\" +\n            \"Type:  ${CLUSTER}\"\n        );\n\n        var wiEmployerURL = appConfig.wiEmployerURL;\n        var wiEmployers = map.addLayer(new FeatureLayer(wiEmployerURL, {\n            id: \"Wickenburg Employers\",\n            visible: false,\n            opacity: \"1\",\n            mode: FeatureLayer.MODE_ONDEMAND,\n            infoTemplate: empTemplate,\n            outFields: [\"*\"]\n        }));\n\n        // Measurement Tool\n        //=================================================================================>\n        //dojo.keys.copyKey maps to CTRL on windows and Cmd on Mac., but has wrong code for Chrome on Mac\n        var snapManager = map.enableSnapping({\n            snapKey: has(\"mac\") ? keys.META : keys.CTRL\n        });\n        var layerInfos = [{\n            layer: tParcels\n        }];\n        snapManager.setLayerInfos(layerInfos);\n\n        var measurement = new Measurement({\n            map: map,\n            lineSymbol: sfs\n            // pointSymbol: ,\n        }, dom.byId(\"measurementDiv\"));\n        measurement.startup();\n        on(measurement.area, \"click\", killPopUp);\n        on(measurement.distance, \"click\", killPopUp);\n        on(measurement.location, \"click\", killPopUp);\n\n        function killPopUp() {\n            var toolName = this.dojoAttachPoint;\n            var activeTool = measurement[toolName].checked;\n            if (activeTool === true) {\n                // kill the popup\n                identifyHandler.remove();\n            }\n            if (activeTool !== true) {\n                // turn popups back on\n                identifyHandler = map.on(\"click\", executeIdentifyTask);\n            }\n        }\n\n        // toggleMTool.on(\"click\", killMeasureTool);\n        // function killMeasureTool () {\n        //     console.log(\"Done\");\n        // }\n\n\n        //TOC Layers\n        // tocLayers.push({layer: aerial, title: \"Aerial Imagery\"});\n        tocLayers.push({\n            layer: tParcels,\n            title: \"Wickenburg Parcels\"\n        });\n        tocLayers.push({\n            layer: wiBoundary,\n            title: \"Wickenburg Boundary\"\n        });\n        tocLayers.push({\n            layer: wiFlood,\n            title: \"Wickenburg Flood Zone\"\n        });\n        tocLayers.push({\n            layer: wiZoning,\n            title: \"Wickenburg Zoning\"\n        });\n        tocLayers.push({\n            layer: wiEmployers,\n            title: \"Wickenburg Employers, 5+ employees\"\n        });\n\n        // Legend Layers\n        // legendLayers.push({layer: wiEmployers, title: \"Wickenburg Employers\"});\n        legendLayers.push({\n            layer: tParcels,\n            title: \"Wickenburg Parcels\"\n        });\n        legendLayers.push({\n            layer: coBoundary,\n            title: \"Maricopa County Boundary\"\n        });\n        legendLayers.push({\n            layer: wiBoundary,\n            title: \"Wickenburg Town Boundary\"\n        });\n        legendLayers.push({\n            layer: wiFlood,\n            title: \"Wickenburg Flood Zone\"\n        });\n        legendLayers.push({\n            layer: wiZoning,\n            title: \"Wickenburg Zoning\"\n        });\n\n        // create legend dijit\n        var legend = new Legend({\n            map: map,\n            layerInfos: legendLayers\n        }, \"legendDiv\");\n        legend.startup();\n\n        //add check boxes\n        arrayUtils.forEach(tocLayers, function(layer) {\n            var layerName = layer.title;\n            var checkBox = new CheckBox({\n                name: \"checkBox\" + layer.layer.id,\n                value: layer.layer.id,\n                checked: layer.layer.visible,\n                onChange: function() {\n                    var clayer = map.getLayer(this.value);\n                    clayer.setVisibility(!clayer.visible);\n                    this.checked = clayer.visible;\n                }\n            });\n\n            //add the check box and label to the toc\n            dc.place(checkBox.domNode, dom.byId(\"toggleDiv\"));\n            var checkLabel = dc.create(\"label\", {\n                \"for\": checkBox.name,\n                innerHTML: \"&nbsp;&nbsp;\" + layerName\n            }, checkBox.domNode, \"after\");\n            dc.place(\"<br>\", checkLabel, \"after\");\n\n        });\n\n        // wiFlood Transparency Slider\n        var slider1 = new HorizontalSlider({\n            name: \"slider1\",\n            value: wiFlood.opacity,\n            minimum: 0,\n            maximum: 1,\n            intermediateChanges: true,\n            discreteValues: 11,\n            style: \"width:250px;\",\n            onChange: function(value1) {\n                wiFlood.setOpacity(value1);\n            }\n        }, \"slider1\");\n\n        // wiZoning Transparency Slider\n        var slider2 = new HorizontalSlider({\n            name: \"slider2\",\n            value: wiZoning.opacity,\n            minimum: 0,\n            maximum: 1,\n            intermediateChanges: true,\n            discreteValues: 11,\n            style: \"width:250px;\",\n            onChange: function(value2) {\n                wiZoning.setOpacity(value2);\n            }\n        }, \"slider2\");\n\n        //=================================================================================>\n        // Start Geocode Section\n\n        function geosearch() {\n            var def = geocoder.find();\n            def.then(function(res) {\n                geocodeResults(res);\n            });\n        }\n\n        function geocodeSelect(item) {\n            var g = (item.graphic ? item.graphic : item.result.feature);\n            g.setSymbol(sym);\n            addPlaceGraphic(item.result, g.symbol);\n        }\n\n        function geocodeResults(places) {\n            places = places.results;\n            if (places.length > 0) {\n                clearFindGraphics();\n                var symbol = sym;\n                // Create and add graphics with pop-ups\n                for (var i = 0; i < places.length; i++) {\n                    addPlaceGraphic(places[i], symbol);\n                }\n                zoomToPlaces(places);\n            } else {\n                alert(\"Sorry, address or place not found.\");\n            }\n        }\n\n        function addPlaceGraphic(item, symbol) {\n            var place = {};\n            var attributes, infoTemplate, pt, graphic;\n            pt = item.feature.geometry;\n            place.address = item.name;\n            place.score = item.feature.attributes.Score;\n            // Graphic components\n            attributes = {\n                address: place.address,\n                score: place.score,\n                lat: pt.getLatitude().toFixed(2),\n                lon: pt.getLongitude().toFixed(2)\n            };\n            infoTemplate = new InfoTemplate(\"${address}\", \"Latitude: ${lat}<br/>Longitude: ${lon}<br/>Score: ${score}\");\n            graphic = new Graphic(pt, symbol, attributes, infoTemplate);\n            // Add to map\n            map.graphics.add(graphic);\n        }\n\n        function zoomToPlaces(places) {\n            var multiPoint = new Multipoint(map.spatialReference);\n            for (var i = 0; i < places.length; i++) {\n                //multiPoint.addPoint(places[i].location);\n                multiPoint.addPoint(places[i].feature.geometry);\n            }\n            map.setExtent(multiPoint.getExtent().expand(2.0));\n        }\n\n        function clearFindGraphics() {\n            map.infoWindow.hide();\n            map.graphics.clear();\n        }\n\n        function createPictureSymbol(url, xOffset, yOffset) {\n            return new PictureMarkerSymbol({\n                \"angle\": 0,\n                \"xoffset\": xOffset,\n                \"yoffset\": yOffset,\n                \"type\": \"esriPMS\",\n                \"url\": url,\n                \"contentType\": \"image/png\",\n                \"width\": 12,\n                \"height\": 24\n            });\n        }\n\n        var sym = createPictureSymbol(\"img/blue-pin.png\", 0, 12, 35);\n\n        // End Geocode Section\n        //=================================================================================>\n\n        //create a link in the popup window.\n        var link = dc.create(\"a\", {\n            \"class\": \"action\",\n            \"id\": \"infoLink\",\n            \"innerHTML\": \"Assessor Info\", //text that appears in the popup for the link\n            \"href\": \"javascript: void(0);\"\n        }, query(\".actionList\", map.infoWindow.domNode)[0]);\n\n        on(link, \"click\", function() {\n            var feature = map.infoWindow.getSelectedFeature();\n            // console.log(feature.attributes);\n            var url = window.location;\n            var link = \"\";\n            if (feature.attributes.COUNTY_FIPS === \"13\") {\n                link = appConfig.MaricopaAssessor + feature.attributes.PARCEL;\n                window.open(link);\n            }\n            if (feature.attributes.COUNTY_FIPS === \"25\") {\n                link = appConfig.YavapaiAssessor + feature.attributes.PARCEL;\n                window.open(link);\n            } else {\n                // *** do nothing ***\n            }\n\n        });\n\n        // Identify Features\n        //=================================================================================>\n        function mapReady() {\n            // map.on(\"click\", executeIdentifyTask);\n\n            //create identify tasks and setup parameters\n            identifyTask1 = new IdentifyTask(wiZoningURL);\n            identifyTask2 = new IdentifyTask(tParcelsURL);\n            identifyTask3 = new IdentifyTask(wiFloodURL);\n\n            identifyParams = new IdentifyParameters();\n            identifyParams.tolerance = 3;\n            identifyParams.returnGeometry = true;\n            identifyParams.layerIds = [0];\n            identifyParams.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;\n            identifyParams.width = map.width;\n            identifyParams.height = map.height;\n\n        } // end mapReady\n\n        function executeIdentifyTask(event) {\n            identifyParams.geometry = event.mapPoint;\n            identifyParams.mapExtent = map.extent;\n\n            var deferred1 = identifyTask1\n                .execute(identifyParams)\n                .addCallback(function(response) {\n                    // response is an array of identify result objects\n                    // Let's return an array of features.\n                    return arrayUtils.map(response, function(result) {\n                        var feature = result.feature;\n                        feature.attributes.layerName = result.layerName;\n\n                        if (feature.attributes.OBJECTID !== 0) {\n                            var template = new InfoTemplate();\n\n                            //wickenburg zoning\n                            template.setTitle(\"Wickenburg Zoning\");\n                            template.setContent(\"Zoning Code: ${CODE}\" + \"<br>Zoning Description: ${Description}\");\n                            feature.setInfoTemplate(template);\n\n                        } // end if\n                        return feature;\n                    });\n                }); //end addCallback\n\n            var deferred2 = identifyTask2\n                .execute(identifyParams)\n                .addCallback(function(response) {\n                    // response is an array of identify result objects\n                    // Let's return an array of features.\n                    return arrayUtils.map(response, function(result) {\n                        var feature = result.feature;\n                        feature.attributes.layerName = result.layerName;\n\n                        if (feature.attributes.OBJECTID !== 0) {\n                            var template = new InfoTemplate();\n\n                            template.setTitle(\"County Parcels\");\n                            template.setContent(\"County: ${COUNTY}<br>\" + \"Parcel: ${PARCEL_LABEL}<br>\" + \"Address: ${PHYSICAL_ADDRESS}\");\n                            feature.setInfoTemplate(template);\n\n                        } // end if\n                        return feature;\n                    });\n                }); //end addCallback\n\n            var deferred3 = identifyTask3\n                .execute(identifyParams)\n                .addCallback(function(response) {\n                    // response is an array of identify result objects\n                    // Let's return an array of features.\n                    return arrayUtils.map(response, function(result) {\n                        var feature = result.feature;\n                        feature.attributes.layerName = result.layerName;\n\n                        if (feature.attributes.OBJECTID !== 0) {\n                            var template = new InfoTemplate();\n\n                            // Wickenburg zoning\n                            template.setTitle(\"Flood Zone\");\n                            template.setContent(\"Flood Zone: ${ZONE}\");\n                            feature.setInfoTemplate(template);\n                        } // end if\n                        return feature;\n                    });\n                }); //end addCallback\n\n            // InfoWindow expects an array of features from each deferred\n            // object that you pass. If the response from the task execution\n            // above is not an array of features, then you need to add a callback\n            // like the one above to post-process the response and return an\n            // array of features.\n            map.infoWindow.setFeatures([deferred1, deferred2, deferred3]);\n            map.infoWindow.show(event.mapPoint);\n\n        } // end executeIdentifyTask\n\n\n\n\n\n    }); // end Main Function\n\n// contents open\n//=================================================================================>\nfunction toggleContent() {\n    if ($(\"#legend\").is(\":hidden\")) {\n        $(\"#legend\").slideDown();\n        $(\"#legend\").draggable({\n            containment: \"#mapDiv\"\n        });\n        $(\"#contentsOpen\");\n    } else {\n        $(\"#legend\").slideUp();\n        $(\"#contentsOpen\");\n    }\n}\n\n$(document).ready(function() {\n    $(\"#contentsOpen\").fadeTo(\"slow\");\n    $(\"#legend\").fadeTo(\"slow\");\n    contentsOpen = $(\"#contentsOpen\").height();\n    $(\"#legend\").css(\"top\", contentsOpen);\n    $(\"#contentsOpen\").click(function() {\n        toggleContent();\n    });\n});\n\n//sets original position of dropdown\n// $(document).ready(function() {\n//     $(\"#legend\").hide();\n// });\n\n// Measurement Tool open\n//=================================================================================>\nfunction toggleMTool() {\n    if ($(\"#mTool\").is(\":hidden\")) {\n        $(\"#mTool\").slideDown();\n        $(\"#mTool\").draggable({\n            containment: \"#mapDiv\"\n        });\n        $(\"#measureOpen\");\n    } else {\n        $(\"#mTool\").slideUp();\n        $(\"#measureOpen\");\n    }\n}\n\n$(document).ready(function() {\n    $(\"#measureOpen\").fadeTo(\"slow\");\n    $(\"#mTool\").fadeTo(\"slow\");\n    measureOpen = $(\"#measureOpen\").height();\n    $(\"#mTool\").css(\"top\", measureOpen);\n    $(\"#measureOpen\").click(function() {\n        toggleMTool();\n    });\n});\n\n//sets original position of dropdown for measurement tool\n$(document).ready(function() {\n    $(\"#mTool\").hide();\n});\n\n// Print Tool open\n//=================================================================================>\nfunction togglePrint() {\n    if ($(\"#printTool\").is(\":hidden\")) {\n        $(\"#printTool\").slideDown();\n        $(\"#printTool\").draggable({\n            containment: \"#mapDiv\"\n        });\n        $(\"#printOpen\");\n    } else {\n        $(\"#printTool\").slideUp();\n        $(\"#printOpen\");\n    }\n}\n\n$(document).ready(function() {\n    $(\"#printOpen\").fadeTo(\"slow\");\n    $(\"#printTool\").fadeTo(\"slow\");\n    printOpen = $(\"#printOpen\").height();\n    $(\"#printTool\").css(\"top\", printOpen);\n    $(\"#printOpen\").click(function() {\n        togglePrint();\n    });\n});\n\n//sets original position of dropdown for measurement tool\n$(document).ready(function() {\n    $(\"#printTool\").hide();\n});\n// Bindings\n//=================================================================================>\n//\n$(document).ready(function() {\n    //*** Content binding\n    $(\"#legend\").load(\"views/contents.html\");\n    //*** Content Help modal binding\n    $(\"#helpContent\").load(\"views/helpContent.html\");\n    //*** About modal binding\n    $(\"#aboutInfo\").load(\"views/about.html\");\n    //*** Legal Disclaimer modal binding\n    $(\"#legalDisclaimer\").load(\"views/legalDisclaimer.html\");\n    //*** Definitions modal binding\n    $(\"#definitions\").load(\"views/definitions.html\");\n    //*** Measurement Tool binding\n    $(\"#mTool\").load(\"views/measureTool.html\");\n    //*** Measurement Tool Help modal binding\n    $(\"#helpTool\").load(\"views/helpTool.html\");\n    // *** Print Tool modal binding\n    $(\"#printTool\").load(\"views/printTool.html\");\n    //*** Print Tool Help modal binding\n    $(\"#helpPrint\").load(\"views/helpPrint.html\");\n});",
+			"file": "js/main.js",
+			"file_size": 27225,
+			"file_write_time": 130498544110005744,
+			"settings":
+			{
+				"buffer_size": 26472,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "Packages/JSHint/JSHint.sublime-build",
 	"command_palette":
@@ -580,15 +591,53 @@
 	},
 	"file_history":
 	[
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/config.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/app/model/main.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/.git/COMMIT_EDITMSG",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/README.md",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/css/main.css",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/helpPrint.html",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/CHANGELOG.md",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/Gruntfile.js",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/index.html",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/package.json",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/humans.txt",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/js/config.js",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/js/main.js",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/printTool.html",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/measureTool.html",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/about.html",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/proxy/proxy.config",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/Gruntfile.js",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/node_modules/jshint-stylish-ex/stylish.js",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Bikemap/bikemap_project/node_modules/jshint-stylish-ex/stylish.js",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/legalDisclaimer.html",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/helpContent.html",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/contents.html",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/definitions.html",
+		"/Z/d3.js_example/README.md",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/measure.html",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/about",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/css/bootstrapmap.css",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/js/vendor/bootstrapmap.js",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/app/resources/css/normalize.css",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/app/model/main.js",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/app/views/definitions.html",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/app/resources/css/main.css",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/config.js",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/app/views/legalDisclaimer.html",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/app/views/helpTool.html",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/app/views/helpContent.html",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/app/views/help.html",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/deploy/_old/build_2.2.3/index.html",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/deploy/build_2.2.4/index.html",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/vendor/bootstrapmap.js",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/robots.txt",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/app/resources/css/bootstrapmap.css",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/app/resources/css/bootstrapmap (2).css",
+		"/C/Users/vwolfley/AppData/Roaming/Sublime Text 2/Packages/User/JavaScript.sublime-settings",
+		"/C/Users/vwolfley/AppData/Roaming/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/C/Users/vwolfley/AppData/Roaming/Sublime Text 2/Packages/User/CSS.sublime-settings",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/deploy/build/main.min.css",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/deploy/build/normalize.css",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/deploy/build/main.min.js",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/.git/COMMIT_EDITMSG",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/package.jason",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/deploy/build_2.2.1/app/resources/css/main.css",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/deploy/build_2.2.1/index.html",
@@ -669,49 +718,11 @@
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/views/legendHelp-view.html",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/views/mainHelp-view.html",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/views/socialHelp-view.html",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/views/printHelp-view.html",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/views/panelHelp-view.html",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/views/classBreaksHelp-view.html",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/views/colorRampHelp-view.html",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/views/cbrHelp-view.html",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working_rd/demographics.sublime-project",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/vm/socialLaunchbar-vm.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/views/legend-view.html",
-		"/C/Users/vwolfley/AppData/Roaming/Sublime Text 2/Packages/sublime-jslint/sublime-jslint.sublime-settings",
-		"/C/Users/vwolfley/AppData/Roaming/Sublime Text 2/Packages/User/sublime-jslint.sublime-settings",
-		"/C/Users/vwolfley/AppData/Roaming/Sublime Text 2/Packages/User/Preferences.sublime-settings",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/config/cbrConfig.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/config/colorRampConfig.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/config/queryBuilderConfig.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/main.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/run.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/vm/alert2-vm.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/vm/alert1-vm.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/vm/cbrlaunchbar-vm.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/vm/email-vm.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/vm/helpLaunchbar-vm.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/vm/interactiveTools-vm.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/vm/legendLaunchbar-vm.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/vm/panelLaunchbar-vm.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/vm/window-vm.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/vm/printLaunchbar-vm.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/demographic-vm.js",
-		"/C/Users/vwolfley/AppData/Roaming/Sublime Text 2/Packages/User/FileDiffs.sublime-settings",
-		"/C/Users/vwolfley/AppData/Roaming/Sublime Text 2/Packages/FileDiffs/FileDiffs.sublime-settings",
-		"/C/Users/vwolfley/AppData/Roaming/Sublime Text 2/Packages/User/Default (Windows).sublime-keymap",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/views/panel-view.html",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/helpers/printMap-delegate.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/reference.txt",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/views/colorRamp-view.html",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/views/demographic-view.html",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/views/demographicChartHelp-view.html",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/helpers/layer-delegate.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/views/demographicSelFeaturesHelp-view.html",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/views/selectedFeaturesTabPage-view.html"
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/views/printHelp-view.html"
 	],
 	"find":
 	{
-		"height": 92.0
+		"height": 43.0
 	},
 	"find_in_files":
 	{
@@ -725,6 +736,57 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			".esri",
+			".esriSimpleSlider",
+			"SimpleSlider",
+			"wiZoningURL",
+			"identifyHandler",
+			"mapReady",
+			"printOpen",
+			"mapReady",
+			"esriConfig",
+			"measureOpen",
+			"GeometryService",
+			"esriConfig",
+			"app",
+			"panelHeader",
+			"cnt",
+			"modal-header",
+			"panelHeader",
+			"legend",
+			"mTool",
+			"mColor",
+			"modal-header",
+			"defModal",
+			"HomeButton",
+			"scroll",
+			"views",
+			"img",
+			"scroll",
+			"contents",
+			"font-size",
+			"simpleGeo",
+			"geosearch",
+			"geo",
+			"identifyHandler",
+			"console.log",
+			"map.centerAndZoom",
+			"sym",
+			"fade",
+			"helpModal",
+			"close",
+			"help",
+			"helpModal",
+			"helpModel",
+			"clickHandler",
+			"contentsOpen",
+			"legend",
+			"legendDiv",
+			"map",
+			"toggle",
+			"actions",
+			"title",
+			"popup",
 			"'",
 			"#myModalLabel",
 			"myModalLabel",
@@ -801,58 +863,7 @@
 			"self.groupedItems",
 			"legend",
 			"chart legend",
-			"fieldCategory",
-			"?",
-			"li",
-			"k-widget",
-			"k-w",
-			"class",
-			"pdf",
-			"excel",
-			"style",
-			"k-splitbar",
-			"tab",
-			"tam",
-			"dem",
-			"chart",
-			"numFeatures",
-			"fcount",
-			"fcount1",
-			"fcount2",
-			"query",
-			"z-index",
-			"magNumberFormatter",
-			"on(",
-			"on",
-			"self.progressText",
-			"interactiveClearSelectionBtn",
-			"Clear",
-			"ClearSelection",
-			"interactiveClearSelection",
-			"interactiveClearSelectionBtn",
-			"ClearSelection",
-			"CBRStateO",
-			"NewColorRamp",
-			"tp.",
-			"publish",
-			"percentValue",
-			"NaN",
-			"percentOfField",
-			"alert",
-			"warning",
-			"value",
-			"query",
-			"button",
-			"fCount",
-			"colorRamp",
-			"var dataItem = self.breaksCountList.dataItem(e.node);",
-			"tp.publish",
-			"colorRamp",
-			"query",
-			"queary",
-			"ramp",
-			"Ramp",
-			"colorramp"
+			"fieldCategory"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -860,6 +871,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"measureOpen",
+			"mTool",
 			"\"",
 			"",
 			"legendLayers",
@@ -951,8 +964,141 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "js/main.js",
+					"settings":
+					{
+						"buffer_size": 26472,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								22666,
+								22683
+							]
+						],
+						"settings":
+						{
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"sublime_auto_complete": true,
+							"syntax": "Packages/Better JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 639.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -989,7 +1135,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 217.0
+		"height": 63.0
 	},
 	"output.git":
 	{
@@ -1036,6 +1182,6 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 272.0,
+	"side_bar_width": 303.0,
 	"status_bar_visible": true
 }
