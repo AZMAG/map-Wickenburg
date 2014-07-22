@@ -43,8 +43,8 @@
 # SITE
     Site Name: Wickenburg Zoning Map Viewer
     Site URL: http://geo.azmag.gov/maps/wickenburg/
-    Version: 3.3.0
-    Last updated: 06/30/2014
+    Version: 3.4.0
+    Last updated: 07/22/2014
     Language: English
     Doctype: HTML5
     IDE: Sublime Text

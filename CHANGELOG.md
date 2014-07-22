@@ -8,6 +8,9 @@
     * zoom issue with geocoder
     * turn off measurement tool when window closes
 
+### Version 3.4.0 (07/22/2014)
+
+updated to [ArcGIS API 3.10] (https://developers.arcgis.com/javascript/index.html)
 
 ### Version 3.3.0 (06/30/2014)
 
