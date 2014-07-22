@@ -580,16 +580,16 @@
 	},
 	"file_history":
 	[
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/js/main.js",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/CHANGELOG.md",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/node_modules/jshint-stylish-ex/stylish.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/README.md",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/css/main.css",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/helpPrint.html",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/index.html",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/js/main.js",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/js/config.js",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/README.md",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/package.json",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/humans.txt",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/js/config.js",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/node_modules/jshint-stylish-ex/stylish.js",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/css/main.css",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/helpPrint.html",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/printTool.html",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/measureTool.html",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/about.html",
@@ -725,6 +725,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"tocLayers",
+			"layerIds",
+			"visible",
 			".esri",
 			".esriSimpleSlider",
 			"SimpleSlider",
@@ -849,10 +852,7 @@
 			"place names",
 			"American Community Survey",
 			"American Community Survey 2007 - 2011",
-			"self.groupedItems",
-			"legend",
-			"chart legend",
-			"fieldCategory"
+			"self.groupedItems"
 		],
 		"highlight": false,
 		"in_selection": false,

@@ -161,6 +161,15 @@ updated to [ArcGIS API 3.10] (https://developers.arcgis.com/javascript/index.htm
 
 ## Resources / Examples
 
+- ***identifyParms Issue ***
+
+    * [Link] (https://geonet.esri.com/thread/44797)
+    * [Example] (https://developers.arcgis.com/javascript/jssamples/map_explicitlayerlist.html)
+    * [Link] (http://forums.esri.com/Thread.asp?c=158&f=2396&t=261892)
+    * [fiddle] (http://jsfiddle.net/blordcastillo/mULcz/)
+
+
+
 - ***TOC Examples***
 
     * https://developers.arcgis.com/javascript/jssamples/map_explicitlayerlist.html

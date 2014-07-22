@@ -58,7 +58,7 @@ require([
         // add version and date to about.html, changed in config.js
         dom.byId("version").innerHTML = appConfig.Version;
 
-        var identifyParams;
+        // var identifyParams;
         var tocLayers = [];
         var legendLayers = [];
 
@@ -234,35 +234,35 @@ require([
         var wiZoning = map.addLayer(new ArcGISDynamicMapServiceLayer(wiZoningURL, {
             id: "wiZoning",
             visible: true,
-            opacity: ".65"
+            opacity: 0.65
         }));
 
         var wiFloodURL = appConfig.wiFloodURL;
         var wiFlood = map.addLayer(new ArcGISDynamicMapServiceLayer(wiFloodURL, {
             id: "wiFlood",
             visible: false,
-            opacity: ".65"
+            opacity: 0.65
         }));
 
         var tParcelsURL = appConfig.tParcelsURL;
         var tParcels = map.addLayer(new ArcGISDynamicMapServiceLayer(tParcelsURL, {
             id: "tParcels",
             visible: false,
-            opacity: "1"
+            opacity: 1
         }));
 
         var coBoundaryURL = appConfig.coBoundaryURL;
         var coBoundary = map.addLayer(new ArcGISDynamicMapServiceLayer(coBoundaryURL, {
             id: "coBoundary",
             visible: true,
-            opacity: "1"
+            opacity: 1
         }));
 
         var wiBoundaryURL = appConfig.wiBoundaryURL;
         var wiBoundary = map.addLayer(new ArcGISDynamicMapServiceLayer(wiBoundaryURL, {
             id: "wiBoundary",
             visible: true,
-            opacity: "1"
+            opacity: 1
         }));
 
         // add new info window for employers
@@ -275,9 +275,9 @@ require([
 
         var wiEmployerURL = appConfig.wiEmployerURL;
         var wiEmployers = map.addLayer(new FeatureLayer(wiEmployerURL, {
-            id: "Wickenburg Employers",
+            id: "wiEmployers",
             visible: false,
-            opacity: "1",
+            opacity: 1,
             mode: FeatureLayer.MODE_ONDEMAND,
             infoTemplate: empTemplate,
             outFields: ["*"]
@@ -327,22 +327,27 @@ require([
         // tocLayers.push({layer: aerial, title: "Aerial Imagery"});
         tocLayers.push({
             layer: tParcels,
+            id: "tParcels",
             title: "Wickenburg Parcels"
         });
         tocLayers.push({
             layer: wiBoundary,
+            id: "wiBoundary",
             title: "Wickenburg Boundary"
         });
         tocLayers.push({
             layer: wiFlood,
+            id: "wiFlood",
             title: "Wickenburg Flood Zone"
         });
         tocLayers.push({
             layer: wiZoning,
+            id: "wiZoning",
             title: "Wickenburg Zoning"
         });
         tocLayers.push({
             layer: wiEmployers,
+            id: "wiEmployers",
             title: "Wickenburg Employers, 5+ employees"
         });
 
@@ -350,22 +355,27 @@ require([
         // legendLayers.push({layer: wiEmployers, title: "Wickenburg Employers"});
         legendLayers.push({
             layer: tParcels,
+            id: "tParcels",
             title: "Wickenburg Parcels"
         });
         legendLayers.push({
             layer: coBoundary,
+            id: "coBoundary",
             title: "Maricopa County Boundary"
         });
         legendLayers.push({
             layer: wiBoundary,
+            id: "wiBoundary",
             title: "Wickenburg Town Boundary"
         });
         legendLayers.push({
             layer: wiFlood,
+            id: "wiFlood",
             title: "Wickenburg Flood Zone"
         });
         legendLayers.push({
             layer: wiZoning,
+            id: "wiZoning",
             title: "Wickenburg Zoning"
         });
 
@@ -387,8 +397,11 @@ require([
                     var clayer = map.getLayer(this.value);
                     clayer.setVisibility(!clayer.visible);
                     this.checked = clayer.visible;
+                    console.log(clayer.id + " = " + clayer.visible);
                 }
-            });
+            }); //end CheckBox
+            console.log(layer.layer.id);
+            console.log(layer.layer.visible);
 
             //add the check box and label to the toc
             dc.place(checkBox.domNode, dom.byId("toggleDiv"));
@@ -538,8 +551,8 @@ require([
 
         // Identify Features
         //=================================================================================>
+
         function mapReady() {
-            // map.on("click", executeIdentifyTask);
 
             //create identify tasks and setup parameters
             identifyTask1 = new IdentifyTask(wiZoningURL);
@@ -549,7 +562,7 @@ require([
             identifyParams = new IdentifyParameters();
             identifyParams.tolerance = 3;
             identifyParams.returnGeometry = true;
-            identifyParams.layerIds = [0];
+            // identifyParams.layerIds = [0];
             identifyParams.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
             identifyParams.width = map.width;
             identifyParams.height = map.height;
@@ -557,6 +570,21 @@ require([
         } // end mapReady
 
         function executeIdentifyTask(event) {
+            var layers = map.layerIds;
+            console.log(layers);
+            // var visible = [];
+            var vis = tocLayers;
+            console.log(vis);
+            // console.log(vis.id);
+            // if (vis.layers.visible = true) {
+            //     visible.push(vis.layer.id)
+            // }
+            // console.log(visible);
+
+
+
+
+
             identifyParams.geometry = event.mapPoint;
             identifyParams.mapExtent = map.extent;
 
