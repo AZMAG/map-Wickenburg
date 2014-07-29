@@ -186,12 +186,12 @@ color: #fff;
 }
 @media(min-width:992px){
     .navbar-form {
-        width: 350px;
+        width: 200px;
     }
 }
 @media(min-width:1200px){
     .navbar-form {
-        width: 400px;
+        width: 250px;
     }
 }
 

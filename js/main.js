@@ -85,8 +85,10 @@ require([
         // <!-- Get a reference to the ArcGIS Map class -->
         var map = BootstrapMap.create("mapDiv", {
             extent: new esri.geometry.Extent(appConfig.initExtent),
-            lods: appConfig.lods,
+            // lods: appConfig.lods,
             basemap: "streets",
+            minZoom: 9,
+            maxZoom: 19,
             showAttribution: false,
             logo: false,
             infoWindow: popup,
@@ -397,11 +399,12 @@ require([
                     var clayer = map.getLayer(this.value);
                     clayer.setVisibility(!clayer.visible);
                     this.checked = clayer.visible;
-                    console.log(clayer.id + " = " + clayer.visible);
+                    // console.log(clayer.id + " = " + clayer.visible);
+                    // console.log(layer.layer.visible);
                 }
             }); //end CheckBox
-            console.log(layer.layer.id);
-            console.log(layer.layer.visible);
+            // console.log(layer.layer.id);
+            // console.log(layer.layer.visible);
 
             //add the check box and label to the toc
             dc.place(checkBox.domNode, dom.byId("toggleDiv"));
@@ -556,40 +559,77 @@ require([
 
             //create identify tasks and setup parameters
             identifyTask1 = new IdentifyTask(wiZoningURL);
+            identifyParamsTask1 = new IdentifyParameters();
+            // identifyParamsTask1.layerIds = [0];
+            identifyParamsTask1.tolerance = 3;
+            identifyParamsTask1.returnGeometry = true;
+            identifyParamsTask1.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
+            identifyParamsTask1.width = map.width;
+            identifyParamsTask1.height = map.height;
+
             identifyTask2 = new IdentifyTask(tParcelsURL);
+            identifyParamsTask2 = new IdentifyParameters();
+            // identifyParamsTask2.layerIds = [0];
+            identifyParamsTask2.tolerance = 3;
+            identifyParamsTask2.returnGeometry = true;
+            identifyParamsTask2.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
+            identifyParamsTask2.width = map.width;
+            identifyParamsTask2.height = map.height;
+
             identifyTask3 = new IdentifyTask(wiFloodURL);
-
-            identifyParams = new IdentifyParameters();
-            identifyParams.tolerance = 3;
-            identifyParams.returnGeometry = true;
-            // identifyParams.layerIds = [0];
-            identifyParams.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
-            identifyParams.width = map.width;
-            identifyParams.height = map.height;
-
+            identifyParamsTask3 = new IdentifyParameters();
+            // identifyParamsTask3.layerIds = [0];
+            identifyParamsTask3.tolerance = 3;
+            identifyParamsTask3.returnGeometry = true;
+            identifyParamsTask3.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
+            identifyParamsTask3.width = map.width;
+            identifyParamsTask3.height = map.height;
         } // end mapReady
 
         function executeIdentifyTask(event) {
             var layers = map.layerIds;
-            console.log(layers);
-            // var visible = [];
             var vis = tocLayers;
-            console.log(vis);
-            // console.log(vis.id);
-            // if (vis.layers.visible = true) {
-            //     visible.push(vis.layer.id)
-            // }
-            // console.log(visible);
+
+            // find out what layers are visible
+            for (var i = 0; i < vis.length; i++) {
+                var visible = vis[i].layer.visible;
+                var name = vis[i].id;
+                console.log(name + " - " + visible);
+
+            if (name === "wiZoning" && visible === true) {
+                identifyParamsTask1.layerIds = [0];
+            }
+            if (name === "wiZoning" && visible === false) {
+                identifyParamsTask1.layerIds = [-1];
+            }
+
+            if (name === "tParcels" && visible === true) {
+                identifyParamsTask2.layerIds = [0];
+            }
+            if (name === "tParcels" && visible === false) {
+                identifyParamsTask2.layerIds = [-1];
+            }
+
+            if (name === "wiFlood" && visible === true) {
+                identifyParamsTask3.layerIds = [0];
+            }
+            if (name === "wiFlood" && visible === false) {
+                identifyParamsTask3.layerIds = [-1];
+            }
+            }
+            identifyParamsTask1.geometry = event.mapPoint;
+            identifyParamsTask1.mapExtent = map.extent;
+
+            identifyParamsTask2.geometry = event.mapPoint;
+            identifyParamsTask2.mapExtent = map.extent;
+
+            identifyParamsTask3.geometry = event.mapPoint;
+            identifyParamsTask3.mapExtent = map.extent;
 
 
-
-
-
-            identifyParams.geometry = event.mapPoint;
-            identifyParams.mapExtent = map.extent;
 
             var deferred1 = identifyTask1
-                .execute(identifyParams)
+                .execute(identifyParamsTask1)
                 .addCallback(function(response) {
                     // response is an array of identify result objects
                     // Let's return an array of features.
@@ -611,7 +651,7 @@ require([
                 }); //end addCallback
 
             var deferred2 = identifyTask2
-                .execute(identifyParams)
+                .execute(identifyParamsTask2)
                 .addCallback(function(response) {
                     // response is an array of identify result objects
                     // Let's return an array of features.
@@ -632,7 +672,7 @@ require([
                 }); //end addCallback
 
             var deferred3 = identifyTask3
-                .execute(identifyParams)
+                .execute(identifyParamsTask3)
                 .addCallback(function(response) {
                     // response is an array of identify result objects
                     // Let's return an array of features.

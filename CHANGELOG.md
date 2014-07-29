@@ -10,7 +10,9 @@
 
 ### Version 3.4.0 (07/22/2014)
 
-updated to [ArcGIS API 3.10] (https://developers.arcgis.com/javascript/index.html)
+* changed size of search box (reduced)
+* changed lods to minZoom & maxZoom
+* fixed layer options to only display popup when layer is visible
 
 ### Version 3.3.0 (06/30/2014)
 
