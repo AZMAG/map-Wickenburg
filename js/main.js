@@ -268,12 +268,12 @@ require([
         }));
 
         // add new info window for employers
-        var empTemplate = new InfoTemplate();
-        empTemplate.setTitle("${EMPNAME}");
-        empTemplate.setContent("${ADDRESS}</br>" +
-            "${CITY}, ${STATE} ${ZIP}</br>" +
-            "Type:  ${CLUSTER}"
-        );
+        var empTemplate = new InfoTemplate("${EMPNAME}", "${ADDRESS}</br>" + "${CITY}, ${STATE} ${ZIP}</br>" + "Type:  ${CLUSTER}");
+        // empTemplate.setTitle("${EMPNAME}");
+        // empTemplate.setContent("${ADDRESS}</br>" +
+        //     "${CITY}, ${STATE} ${ZIP}</br>" +
+        //     "Type:  ${CLUSTER}"
+        // );
 
         var wiEmployerURL = appConfig.wiEmployerURL;
         var wiEmployers = map.addLayer(new FeatureLayer(wiEmployerURL, {
@@ -594,28 +594,28 @@ require([
             for (var i = 0; i < vis.length; i++) {
                 var visible = vis[i].layer.visible;
                 var name = vis[i].id;
-                console.log(name + " - " + visible);
+                // console.log(name + " - " + visible);
 
-            if (name === "wiZoning" && visible === true) {
-                identifyParamsTask1.layerIds = [0];
-            }
-            if (name === "wiZoning" && visible === false) {
-                identifyParamsTask1.layerIds = [-1];
-            }
+                if (name === "wiZoning" && visible === true) {
+                    identifyParamsTask1.layerIds = [0];
+                }
+                if (name === "wiZoning" && visible === false) {
+                    identifyParamsTask1.layerIds = [-1];
+                }
 
-            if (name === "tParcels" && visible === true) {
-                identifyParamsTask2.layerIds = [0];
-            }
-            if (name === "tParcels" && visible === false) {
-                identifyParamsTask2.layerIds = [-1];
-            }
+                if (name === "tParcels" && visible === true) {
+                    identifyParamsTask2.layerIds = [0];
+                }
+                if (name === "tParcels" && visible === false) {
+                    identifyParamsTask2.layerIds = [-1];
+                }
 
-            if (name === "wiFlood" && visible === true) {
-                identifyParamsTask3.layerIds = [0];
-            }
-            if (name === "wiFlood" && visible === false) {
-                identifyParamsTask3.layerIds = [-1];
-            }
+                if (name === "wiFlood" && visible === true) {
+                    identifyParamsTask3.layerIds = [0];
+                }
+                if (name === "wiFlood" && visible === false) {
+                    identifyParamsTask3.layerIds = [-1];
+                }
             }
             identifyParamsTask1.geometry = event.mapPoint;
             identifyParamsTask1.mapExtent = map.extent;
@@ -625,8 +625,6 @@ require([
 
             identifyParamsTask3.geometry = event.mapPoint;
             identifyParamsTask3.mapExtent = map.extent;
-
-
 
             var deferred1 = identifyTask1
                 .execute(identifyParamsTask1)

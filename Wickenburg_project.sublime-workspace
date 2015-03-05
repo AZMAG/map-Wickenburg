@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"identifyParams",
+				"identifyParamsTask1  (variable)"
+			],
+			[
 				"backr",
 				"background"
 			],
@@ -510,31 +514,11 @@
 			[
 				"layer",
 				"layerInfos"
-			],
-			[
-				"ico",
-				"icons"
 			]
 		]
 	},
 	"buffers":
 	[
-		{
-			"file": "CHANGELOG.md",
-			"settings":
-			{
-				"buffer_size": 6952,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "js/main.js",
-			"settings":
-			{
-				"buffer_size": 27222,
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "Packages/JSHint/JSHint.sublime-build",
 	"command_palette":
@@ -597,14 +581,16 @@
 	"file_history":
 	[
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/CHANGELOG.md",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/index.html",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/js/main.js",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/css/main.css",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/index.html",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/js/config.js",
+		"/C/Users/vwolfley/Desktop/test.html",
+		"/C/Users/vwolfley/Desktop/test2.js",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/README.md",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/package.json",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/humans.txt",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/node_modules/jshint-stylish-ex/stylish.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/css/main.css",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/helpPrint.html",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/printTool.html",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/measureTool.html",
@@ -721,9 +707,7 @@
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/views/queryBuilderHelp-view.html",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/vm/print-vm.js",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/views/legendHelp-view.html",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/views/mainHelp-view.html",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/views/socialHelp-view.html",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/views/printHelp-view.html"
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Demographics/deploy/build_working/app/views/mainHelp-view.html"
 	],
 	"find":
 	{
@@ -741,6 +725,13 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"sliderLables",
+			"Print",
+			"createPrintDijit",
+			"print",
+			"tocLayers",
+			"console.log",
+			".navbar-form",
 			"tocLayers",
 			"layerIds",
 			"visible",
@@ -861,14 +852,7 @@
 			"home",
 			"url",
 			"home",
-			"communityName",
-			"place",
-			"cat",
-			"===",
-			"place names",
-			"American Community Survey",
-			"American Community Survey 2007 - 2011",
-			"self.groupedItems"
+			"communityName"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -969,65 +953,8 @@
 	"groups":
 	[
 		{
-			"selected": 1,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "CHANGELOG.md",
-					"settings":
-					{
-						"buffer_size": 6952,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Markdown/Markdown.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "js/main.js",
-					"settings":
-					{
-						"buffer_size": 27222,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								18332,
-								18377
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Better JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 10414.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],
