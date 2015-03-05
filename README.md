@@ -1,4 +1,5 @@
-# Town of Wickenburg Zoning Viewer
+Town of Wickenburg Zoning Viewer
+================================
 
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 [![Semver](http://img.shields.io/SemVer/2.0.0.png)](http://semver.org/spec/v2.0.0.html)
@@ -7,14 +8,16 @@ This JavaScript web app viewer was developed by MAG staff for the Town of Wicken
 
 #### Version
 
-#### `3.4.0 - 07/22/2014`
+#### `3.5.0 - 03/05/2015`
 
 ### Keywords
 
 `Zoning` `Flood Areas` `Parcels` `Employers` `Wickenburg` `Town` `Maricopa County` `Yavapai County` `Maps` `MAG` `ESRI` `#MAGmaps`
 
 ### Site URL's
-* [Live Site] (http://geo.azmag.gov/maps/wickenburg)
+* [Live Site] (http://geo.azmag.gov/maps/wickenburg/)
+
+* [Test Site] (http://mag1113/maps/wickenburg/)
 
 ### Documentation
 

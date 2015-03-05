@@ -1,4 +1,5 @@
-# CHANGELOG Wickenburg Zoning Website
+CHANGELOG Wickenburg Zoning Website
+===================================
 
 [![Semver](http://img.shields.io/SemVer/2.0.0.png)](http://semver.org/spec/v2.0.0.html)
 
@@ -7,6 +8,15 @@
 ### Outstanding Items
     * zoom issue with geocoder
     * turn off measurement tool when window closes
+
+
+### Version 3.5.0 (03/05/2015)
+
+* made changes to popup style
+* updated MXD
+* updates to data
+* update to [ArcGIS API for JavaScript 3.12] (https://developers.arcgis.com/javascript/index.html)
+* update jQuery and jQuery UI
 
 ### Version 3.4.0 (07/22/2014)
 

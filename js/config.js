@@ -1,25 +1,10 @@
 var appConfig = new function() {
 
-    this.Version = "v3.4.0 | 07/22/2014";
+    this.Version = "v3.5.0 | 03/05/2015";
 
-    this.jasonemail = "https://www.azmag.gov/EmailPages/JasonHoward.asp";
+    this.emailLink = "https://www.azmag.gov/EmailPages/JasonHoward.asp";
 
-    //  layers
-    this.wiBoundaryURL = "http://geo.azmag.gov/gismag/rest/services/maps/WI_Boundary/MapServer";
-    this.coBoundaryURL = "http://geo.azmag.gov/GISMAG/rest/services/maps/MaricopaCountyBoundary/MapServer";
-    this.wiFloodURL = "http://geo.azmag.gov/gismag/rest/services/maps/WI_Floodways/MapServer";
-    this.wiZoningURL = "http://geo.azmag.gov/gismag/rest/services/maps/WI_Zoning/MapServer";
-
-    this.wiEmployerURL = "http://geo.azmag.gov/gismag/rest/services/maps/WI_Employers/MapServer/0";
-
-
-    this.mParcelsURL = "http://gis.mcassessor.maricopa.gov/ArcGIS/rest/services/Parcels/MapServer";
-    this.yParcelsURL = "http://gis.yavapai.us/arcgis/rest/services/Property/MapServer/6";
-
-    // total parcels a subset of Maricopa and Yavapi parcels
-    this.tParcelsURL = "http://geo.azmag.gov/gismag/rest/services/maps/WI_Parcels/MapServer";
-    this.aerialURL = "http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer";
-    this.streetsURL = "http://services.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer";
+    this.mainURL = "http://geo.azmag.gov/gismag/rest/services/maps/WickenburgData/MapServer";
 
     this.MaricopaAssessor = "http://mcassessor.maricopa.gov/?s=";
     this.YavapaiAssessor = "http://gis.yavapai.us/v4/print_parcel.aspx?qs=";

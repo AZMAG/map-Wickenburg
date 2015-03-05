@@ -26,6 +26,7 @@ require([
         "dojo/_base/array",
         "dojo/_base/Color",
         "esri/layers/ArcGISDynamicMapServiceLayer",
+        "esri/layers/ImageParameters",
         "esri/dijit/Legend",
         "dijit/form/CheckBox",
         "dijit/form/HorizontalSlider",
@@ -48,7 +49,7 @@ require([
     ],
 
     function(dc, dom, on, parser, query, keys, has, Map, SnappingManager, Measurement, Scalebar, HomeButton, LocateButton, Geocoder,
-        Graphic, Multipoint, PictureMarkerSymbol, SimpleFillSymbol, SimpleLineSymbol, IdentifyTask, IdentifyParameters, Popup, arrayUtils, Color, ArcGISDynamicMapServiceLayer, Legend, CheckBox, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, BootstrapMap, BasemapToggle, FeatureLayer, PopupTemplate, InfoTemplate, SimpleMarkerSymbol, Print, PrintTemplate, esriRequest, esriConfig) {
+        Graphic, Multipoint, PictureMarkerSymbol, SimpleFillSymbol, SimpleLineSymbol, IdentifyTask, IdentifyParameters, Popup, arrayUtils, Color, ArcGISDynamicMapServiceLayer, ImageParameters, Legend, CheckBox, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, BootstrapMap, BasemapToggle, FeatureLayer, PopupTemplate, InfoTemplate, SimpleMarkerSymbol, Print, PrintTemplate, esriRequest, esriConfig) {
 
         parser.parse();
 
@@ -85,7 +86,6 @@ require([
         // <!-- Get a reference to the ArcGIS Map class -->
         var map = BootstrapMap.create("mapDiv", {
             extent: new esri.geometry.Extent(appConfig.initExtent),
-            // lods: appConfig.lods,
             basemap: "streets",
             minZoom: 9,
             maxZoom: 19,
@@ -136,13 +136,6 @@ require([
             id: "BasemapToggle"
         }, "mapDiv", "last"));
         toggle.startup();
-
-        // trying to add to geocoder widget?
-        // var geocoders = [{
-        //     url: "http://geo.azmag.gov/gismag/rest/services/maps/WI_Employers/MapServer/0",
-        //     name: "employers"
-        //     singleLineFieldName:
-        // }];
 
         // create geosearch widget
         var geocoder = new Geocoder({
@@ -232,51 +225,61 @@ require([
         //=================================================================================>
         // add layers to map
 
-        var wiZoningURL = appConfig.wiZoningURL;
-        var wiZoning = map.addLayer(new ArcGISDynamicMapServiceLayer(wiZoningURL, {
+        var wiZoningParms = new ImageParameters();
+        wiZoningParms.layerIds = [5];
+        wiZoningParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
+
+        var wiZoning = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
             id: "wiZoning",
+            imageParameters: wiZoningParms,
+            outFields: ["*"],
             visible: true,
             opacity: 0.65
         }));
 
-        var wiFloodURL = appConfig.wiFloodURL;
-        var wiFlood = map.addLayer(new ArcGISDynamicMapServiceLayer(wiFloodURL, {
+        var wiFloodParms = new ImageParameters();
+        wiFloodParms.layerIds = [4];
+        wiFloodParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
+
+        var wiFlood = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
             id: "wiFlood",
+            imageParameters: wiFloodParms,
+            outFields: ["*"],
             visible: false,
             opacity: 0.65
         }));
 
-        var tParcelsURL = appConfig.tParcelsURL;
-        var tParcels = map.addLayer(new ArcGISDynamicMapServiceLayer(tParcelsURL, {
+        var tParcelsParms = new ImageParameters();
+        tParcelsParms.layerIds = [1];
+        tParcelsParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
+
+        var tParcels = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
             id: "tParcels",
+            imageParameters: tParcelsParms,
+            outFields: ["*"],
             visible: false,
             opacity: 1
         }));
 
-        var coBoundaryURL = appConfig.coBoundaryURL;
-        var coBoundary = map.addLayer(new ArcGISDynamicMapServiceLayer(coBoundaryURL, {
+        var coBoundary = map.addLayer(new FeatureLayer(appConfig.mainURL + "/3", {
             id: "coBoundary",
+            mode: FeatureLayer.MODE_ONDEMAND,
             visible: true,
             opacity: 1
         }));
 
-        var wiBoundaryURL = appConfig.wiBoundaryURL;
-        var wiBoundary = map.addLayer(new ArcGISDynamicMapServiceLayer(wiBoundaryURL, {
+        var wiBoundary = map.addLayer(new FeatureLayer(appConfig.mainURL + "/2", {
             id: "wiBoundary",
+            mode: FeatureLayer.MODE_ONDEMAND,
             visible: true,
             opacity: 1
         }));
 
         // add new info window for employers
-        var empTemplate = new InfoTemplate("${EMPNAME}", "${ADDRESS}</br>" + "${CITY}, ${STATE} ${ZIP}</br>" + "Type:  ${CLUSTER}");
-        // empTemplate.setTitle("${EMPNAME}");
-        // empTemplate.setContent("${ADDRESS}</br>" +
-        //     "${CITY}, ${STATE} ${ZIP}</br>" +
-        //     "Type:  ${CLUSTER}"
-        // );
+        var empContent = "<strong>${EMPNAME}</strong><hr class='pLine'>${ADDRESS}</br>" + "${CITY}, ${STATE} ${ZIP}<br>" + "Type:  ${CLUSTER}";
+        var empTemplate = new InfoTemplate("Employers", empContent);
 
-        var wiEmployerURL = appConfig.wiEmployerURL;
-        var wiEmployers = map.addLayer(new FeatureLayer(wiEmployerURL, {
+        var wiEmployers = map.addLayer(new FeatureLayer(appConfig.mainURL + "/0", {
             id: "wiEmployers",
             visible: false,
             opacity: 1,
@@ -318,12 +321,6 @@ require([
                 identifyHandler = map.on("click", executeIdentifyTask);
             }
         }
-
-        // toggleMTool.on("click", killMeasureTool);
-        // function killMeasureTool () {
-        //     console.log("Done");
-        // }
-
 
         //TOC Layers
         // tocLayers.push({layer: aerial, title: "Aerial Imagery"});
@@ -558,27 +555,28 @@ require([
         function mapReady() {
 
             //create identify tasks and setup parameters
-            identifyTask1 = new IdentifyTask(wiZoningURL);
+            // zoning Layer
+            identifyTask1 = new IdentifyTask(appConfig.mainURL);
             identifyParamsTask1 = new IdentifyParameters();
-            // identifyParamsTask1.layerIds = [0];
+            identifyParamsTask1.layerIds = [5];
             identifyParamsTask1.tolerance = 3;
             identifyParamsTask1.returnGeometry = true;
             identifyParamsTask1.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
             identifyParamsTask1.width = map.width;
             identifyParamsTask1.height = map.height;
-
-            identifyTask2 = new IdentifyTask(tParcelsURL);
+            // parcel layer
+            identifyTask2 = new IdentifyTask(appConfig.mainURL);
             identifyParamsTask2 = new IdentifyParameters();
-            // identifyParamsTask2.layerIds = [0];
+            identifyParamsTask2.layerIds = [1];
             identifyParamsTask2.tolerance = 3;
             identifyParamsTask2.returnGeometry = true;
             identifyParamsTask2.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
             identifyParamsTask2.width = map.width;
             identifyParamsTask2.height = map.height;
-
-            identifyTask3 = new IdentifyTask(wiFloodURL);
+            // flood zone layer
+            identifyTask3 = new IdentifyTask(appConfig.mainURL);
             identifyParamsTask3 = new IdentifyParameters();
-            // identifyParamsTask3.layerIds = [0];
+            identifyParamsTask3.layerIds = [4];
             identifyParamsTask3.tolerance = 3;
             identifyParamsTask3.returnGeometry = true;
             identifyParamsTask3.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
@@ -597,21 +595,21 @@ require([
                 // console.log(name + " - " + visible);
 
                 if (name === "wiZoning" && visible === true) {
-                    identifyParamsTask1.layerIds = [0];
+                    identifyParamsTask1.layerIds = [5];
                 }
                 if (name === "wiZoning" && visible === false) {
                     identifyParamsTask1.layerIds = [-1];
                 }
 
                 if (name === "tParcels" && visible === true) {
-                    identifyParamsTask2.layerIds = [0];
+                    identifyParamsTask2.layerIds = [1];
                 }
                 if (name === "tParcels" && visible === false) {
                     identifyParamsTask2.layerIds = [-1];
                 }
 
                 if (name === "wiFlood" && visible === true) {
-                    identifyParamsTask3.layerIds = [0];
+                    identifyParamsTask3.layerIds = [4];
                 }
                 if (name === "wiFlood" && visible === false) {
                     identifyParamsTask3.layerIds = [-1];
@@ -699,8 +697,6 @@ require([
             map.infoWindow.show(event.mapPoint);
 
         } // end executeIdentifyTask
-
-
 
 
 

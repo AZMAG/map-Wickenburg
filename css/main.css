@@ -281,6 +281,10 @@ color: #fff;
 .esriPopup .titleButton.maximize {
     display: none;
 }
+.pLine {
+    margin-top: 0.5px;
+    margin-bottom: 0.5px;
+}
 .sliderTitle {
     text-align: center;
 }
