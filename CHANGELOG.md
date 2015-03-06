@@ -12,6 +12,7 @@ CHANGELOG Wickenburg Zoning Website
 
 ### Version 3.5.0 (03/05/2015)
 
+* added code to hide popup when info not found
 * made changes to definitions table
 * made changes to popup style
 * updated MXD

@@ -79,7 +79,9 @@ require([
         var popup = new Popup({
             fillSymbol: fillSymbol3,
             // lineSymbol:
-            markerSymbol: pointSymbol
+            markerSymbol: pointSymbol,
+            visibleWhenEmpty: false,
+            hideDelay: -1
         }, dc.create("div"));
 
         // create the map and specify the custom info window as the info window that will be used by the map
