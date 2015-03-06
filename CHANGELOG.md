@@ -12,11 +12,10 @@ CHANGELOG Wickenburg Zoning Website
 
 ### Version 3.5.0 (03/05/2015)
 
+* made changes to definitions table
 * made changes to popup style
 * updated MXD
-* updates to data
-* update to [ArcGIS API for JavaScript 3.12] (https://developers.arcgis.com/javascript/index.html)
-* update jQuery and jQuery UI
+* updates to data - Zoning Info
 
 ### Version 3.4.0 (07/22/2014)
 

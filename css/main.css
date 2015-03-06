@@ -360,6 +360,10 @@ color: #fff;
 .cnt {
     text-align: center;
 }
+#zoneTable {
+    max-height: 600px;
+    overflow-y: scroll;
+}
 /*.striped {
     background: #383838;
 }*/
