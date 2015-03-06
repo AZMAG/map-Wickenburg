@@ -57,33 +57,28 @@ color: #fff;
 
 .esriPopup .titlePane, .esriPopup .contentPane, .esriPopup .actionsPane  {
   padding: 8px 14px;
-  /*border: none;*/
-  max-height: 70px;
-  /*background-color: #f7f7f7;*/
+  max-height: 110px;
 }
-
 .esriPopup .titlePane, {
   padding-top: 10px;
   color: #333333;
 }
-
 .esriPopup .title {
   /*color: #333333;*/
 }
-
 .esriPopup .titleButton {
   /*background: url(../img/popup.png) no-repeat;*/
 }
-
 .esriPopup .titlePane .spinner {
   display: none;
 }
-
+.esriPopup .actionsPane {
+  padding-top: 2px;
+  font-size: small;
+}
 .esriPopup .contentPane {
-  /*border-top: 1px solid #ebebeb;*/
-  /*color: #333333;*/
-  /*margin-bottom: 5px;*/
-  font-size: 0.90em;
+  padding-bottom: 2px;
+  font-size: 0.85em;
 }
 
 .esriViewPopup .mainSection .attrTable td.attrName {
@@ -93,13 +88,6 @@ color: #fff;
 .esriViewPopup .mainSection .attrTable td {
   color: #888888;
 }
-
-
-.esriPopup .actionsPane {
-  /*display: none;*/
-  /*margin-bottom: 15px;*/
-}
-
 .esriButton.close {
   width: 21px;
   line-height: inherit;
@@ -109,6 +97,12 @@ color: #fff;
 .esriPopup .titleButton.prev, .esriPopup .titleButton.next, .titleButton.restore {
   margin-top: 8px;
   margin-right: 5px;
+}
+.esriPopup .titleButton.next {
+    right: 26px;
+}
+.esriPopup .titleButton.prev {
+    right: 44px;
 }
 
 /*** Restyle Geocoder widget ***/

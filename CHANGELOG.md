@@ -1,4 +1,5 @@
-# CHANGELOG Wickenburg Zoning Website
+CHANGELOG Wickenburg Zoning Website
+===================================
 
 [![Semver](http://img.shields.io/SemVer/2.0.0.png)](http://semver.org/spec/v2.0.0.html)
 
@@ -7,6 +8,15 @@
 ### Outstanding Items
     * zoom issue with geocoder
     * turn off measurement tool when window closes
+
+
+### Version 3.5.0 (03/05/2015)
+
+* added code to hide popup when info not found
+* made changes to definitions table
+* made changes to popup style
+* updated MXD
+* updates to data - Zoning Info
 
 ### Version 3.4.0 (07/22/2014)
 
