@@ -26,6 +26,7 @@ require([
         "dojo/_base/array",
         "dojo/_base/Color",
         "esri/layers/ArcGISDynamicMapServiceLayer",
+        "esri/layers/ImageParameters",
         "esri/dijit/Legend",
         "dijit/form/CheckBox",
         "dijit/form/HorizontalSlider",
@@ -48,7 +49,7 @@ require([
     ],
 
     function(dc, dom, on, parser, query, keys, has, Map, SnappingManager, Measurement, Scalebar, HomeButton, LocateButton, Geocoder,
-        Graphic, Multipoint, PictureMarkerSymbol, SimpleFillSymbol, SimpleLineSymbol, IdentifyTask, IdentifyParameters, Popup, arrayUtils, Color, ArcGISDynamicMapServiceLayer, Legend, CheckBox, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, BootstrapMap, BasemapToggle, FeatureLayer, PopupTemplate, InfoTemplate, SimpleMarkerSymbol, Print, PrintTemplate, esriRequest, esriConfig) {
+        Graphic, Multipoint, PictureMarkerSymbol, SimpleFillSymbol, SimpleLineSymbol, IdentifyTask, IdentifyParameters, Popup, arrayUtils, Color, ArcGISDynamicMapServiceLayer, ImageParameters, Legend, CheckBox, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, BootstrapMap, BasemapToggle, FeatureLayer, PopupTemplate, InfoTemplate, SimpleMarkerSymbol, Print, PrintTemplate, esriRequest, esriConfig) {
 
         parser.parse();
 
@@ -58,7 +59,7 @@ require([
         // add version and date to about.html, changed in config.js
         dom.byId("version").innerHTML = appConfig.Version;
 
-        var identifyParams;
+        // var identifyParams;
         var tocLayers = [];
         var legendLayers = [];
 
@@ -78,15 +79,18 @@ require([
         var popup = new Popup({
             fillSymbol: fillSymbol3,
             // lineSymbol:
-            markerSymbol: pointSymbol
+            markerSymbol: pointSymbol,
+            visibleWhenEmpty: false,
+            hideDelay: -1
         }, dc.create("div"));
 
         // create the map and specify the custom info window as the info window that will be used by the map
         // <!-- Get a reference to the ArcGIS Map class -->
         var map = BootstrapMap.create("mapDiv", {
             extent: new esri.geometry.Extent(appConfig.initExtent),
-            lods: appConfig.lods,
             basemap: "streets",
+            minZoom: 9,
+            maxZoom: 19,
             showAttribution: false,
             logo: false,
             infoWindow: popup,
@@ -134,13 +138,6 @@ require([
             id: "BasemapToggle"
         }, "mapDiv", "last"));
         toggle.startup();
-
-        // trying to add to geocoder widget?
-        // var geocoders = [{
-        //     url: "http://geo.azmag.gov/gismag/rest/services/maps/WI_Employers/MapServer/0",
-        //     name: "employers"
-        //     singleLineFieldName:
-        // }];
 
         // create geosearch widget
         var geocoder = new Geocoder({
@@ -230,54 +227,64 @@ require([
         //=================================================================================>
         // add layers to map
 
-        var wiZoningURL = appConfig.wiZoningURL;
-        var wiZoning = map.addLayer(new ArcGISDynamicMapServiceLayer(wiZoningURL, {
+        var wiZoningParms = new ImageParameters();
+        wiZoningParms.layerIds = [5];
+        wiZoningParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
+
+        var wiZoning = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
             id: "wiZoning",
+            imageParameters: wiZoningParms,
+            outFields: ["*"],
             visible: true,
-            opacity: ".65"
+            opacity: 0.65
         }));
 
-        var wiFloodURL = appConfig.wiFloodURL;
-        var wiFlood = map.addLayer(new ArcGISDynamicMapServiceLayer(wiFloodURL, {
+        var wiFloodParms = new ImageParameters();
+        wiFloodParms.layerIds = [4];
+        wiFloodParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
+
+        var wiFlood = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
             id: "wiFlood",
+            imageParameters: wiFloodParms,
+            outFields: ["*"],
             visible: false,
-            opacity: ".65"
+            opacity: 0.65
         }));
 
-        var tParcelsURL = appConfig.tParcelsURL;
-        var tParcels = map.addLayer(new ArcGISDynamicMapServiceLayer(tParcelsURL, {
+        var tParcelsParms = new ImageParameters();
+        tParcelsParms.layerIds = [1];
+        tParcelsParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
+
+        var tParcels = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
             id: "tParcels",
+            imageParameters: tParcelsParms,
+            outFields: ["*"],
             visible: false,
-            opacity: "1"
+            opacity: 1
         }));
 
-        var coBoundaryURL = appConfig.coBoundaryURL;
-        var coBoundary = map.addLayer(new ArcGISDynamicMapServiceLayer(coBoundaryURL, {
+        var coBoundary = map.addLayer(new FeatureLayer(appConfig.mainURL + "/3", {
             id: "coBoundary",
+            mode: FeatureLayer.MODE_ONDEMAND,
             visible: true,
-            opacity: "1"
+            opacity: 1
         }));
 
-        var wiBoundaryURL = appConfig.wiBoundaryURL;
-        var wiBoundary = map.addLayer(new ArcGISDynamicMapServiceLayer(wiBoundaryURL, {
+        var wiBoundary = map.addLayer(new FeatureLayer(appConfig.mainURL + "/2", {
             id: "wiBoundary",
+            mode: FeatureLayer.MODE_ONDEMAND,
             visible: true,
-            opacity: "1"
+            opacity: 1
         }));
 
         // add new info window for employers
-        var empTemplate = new InfoTemplate();
-        empTemplate.setTitle("${EMPNAME}");
-        empTemplate.setContent("${ADDRESS}</br>" +
-            "${CITY}, ${STATE} ${ZIP}</br>" +
-            "Type:  ${CLUSTER}"
-        );
+        var empContent = "<strong>${EMPNAME}</strong><hr class='pLine'>${ADDRESS}</br>" + "${CITY}, ${STATE} ${ZIP}<br>" + "Type:  ${CLUSTER}";
+        var empTemplate = new InfoTemplate("Employers", empContent);
 
-        var wiEmployerURL = appConfig.wiEmployerURL;
-        var wiEmployers = map.addLayer(new FeatureLayer(wiEmployerURL, {
-            id: "Wickenburg Employers",
+        var wiEmployers = map.addLayer(new FeatureLayer(appConfig.mainURL + "/0", {
+            id: "wiEmployers",
             visible: false,
-            opacity: "1",
+            opacity: 1,
             mode: FeatureLayer.MODE_ONDEMAND,
             infoTemplate: empTemplate,
             outFields: ["*"]
@@ -317,32 +324,31 @@ require([
             }
         }
 
-        // toggleMTool.on("click", killMeasureTool);
-        // function killMeasureTool () {
-        //     console.log("Done");
-        // }
-
-
         //TOC Layers
         // tocLayers.push({layer: aerial, title: "Aerial Imagery"});
         tocLayers.push({
             layer: tParcels,
+            id: "tParcels",
             title: "Wickenburg Parcels"
         });
         tocLayers.push({
             layer: wiBoundary,
+            id: "wiBoundary",
             title: "Wickenburg Boundary"
         });
         tocLayers.push({
             layer: wiFlood,
+            id: "wiFlood",
             title: "Wickenburg Flood Zone"
         });
         tocLayers.push({
             layer: wiZoning,
+            id: "wiZoning",
             title: "Wickenburg Zoning"
         });
         tocLayers.push({
             layer: wiEmployers,
+            id: "wiEmployers",
             title: "Wickenburg Employers, 5+ employees"
         });
 
@@ -350,22 +356,27 @@ require([
         // legendLayers.push({layer: wiEmployers, title: "Wickenburg Employers"});
         legendLayers.push({
             layer: tParcels,
+            id: "tParcels",
             title: "Wickenburg Parcels"
         });
         legendLayers.push({
             layer: coBoundary,
+            id: "coBoundary",
             title: "Maricopa County Boundary"
         });
         legendLayers.push({
             layer: wiBoundary,
+            id: "wiBoundary",
             title: "Wickenburg Town Boundary"
         });
         legendLayers.push({
             layer: wiFlood,
+            id: "wiFlood",
             title: "Wickenburg Flood Zone"
         });
         legendLayers.push({
             layer: wiZoning,
+            id: "wiZoning",
             title: "Wickenburg Zoning"
         });
 
@@ -387,8 +398,12 @@ require([
                     var clayer = map.getLayer(this.value);
                     clayer.setVisibility(!clayer.visible);
                     this.checked = clayer.visible;
+                    // console.log(clayer.id + " = " + clayer.visible);
+                    // console.log(layer.layer.visible);
                 }
-            });
+            }); //end CheckBox
+            // console.log(layer.layer.id);
+            // console.log(layer.layer.visible);
 
             //add the check box and label to the toc
             dc.place(checkBox.domNode, dom.byId("toggleDiv"));
@@ -538,30 +553,81 @@ require([
 
         // Identify Features
         //=================================================================================>
+
         function mapReady() {
-            // map.on("click", executeIdentifyTask);
 
             //create identify tasks and setup parameters
-            identifyTask1 = new IdentifyTask(wiZoningURL);
-            identifyTask2 = new IdentifyTask(tParcelsURL);
-            identifyTask3 = new IdentifyTask(wiFloodURL);
-
-            identifyParams = new IdentifyParameters();
-            identifyParams.tolerance = 3;
-            identifyParams.returnGeometry = true;
-            identifyParams.layerIds = [0];
-            identifyParams.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
-            identifyParams.width = map.width;
-            identifyParams.height = map.height;
-
+            // zoning Layer
+            identifyTask1 = new IdentifyTask(appConfig.mainURL);
+            identifyParamsTask1 = new IdentifyParameters();
+            identifyParamsTask1.layerIds = [5];
+            identifyParamsTask1.tolerance = 3;
+            identifyParamsTask1.returnGeometry = true;
+            identifyParamsTask1.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
+            identifyParamsTask1.width = map.width;
+            identifyParamsTask1.height = map.height;
+            // parcel layer
+            identifyTask2 = new IdentifyTask(appConfig.mainURL);
+            identifyParamsTask2 = new IdentifyParameters();
+            identifyParamsTask2.layerIds = [1];
+            identifyParamsTask2.tolerance = 3;
+            identifyParamsTask2.returnGeometry = true;
+            identifyParamsTask2.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
+            identifyParamsTask2.width = map.width;
+            identifyParamsTask2.height = map.height;
+            // flood zone layer
+            identifyTask3 = new IdentifyTask(appConfig.mainURL);
+            identifyParamsTask3 = new IdentifyParameters();
+            identifyParamsTask3.layerIds = [4];
+            identifyParamsTask3.tolerance = 3;
+            identifyParamsTask3.returnGeometry = true;
+            identifyParamsTask3.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
+            identifyParamsTask3.width = map.width;
+            identifyParamsTask3.height = map.height;
         } // end mapReady
 
         function executeIdentifyTask(event) {
-            identifyParams.geometry = event.mapPoint;
-            identifyParams.mapExtent = map.extent;
+            var layers = map.layerIds;
+            var vis = tocLayers;
+
+            // find out what layers are visible
+            for (var i = 0; i < vis.length; i++) {
+                var visible = vis[i].layer.visible;
+                var name = vis[i].id;
+                // console.log(name + " - " + visible);
+
+                if (name === "wiZoning" && visible === true) {
+                    identifyParamsTask1.layerIds = [5];
+                }
+                if (name === "wiZoning" && visible === false) {
+                    identifyParamsTask1.layerIds = [-1];
+                }
+
+                if (name === "tParcels" && visible === true) {
+                    identifyParamsTask2.layerIds = [1];
+                }
+                if (name === "tParcels" && visible === false) {
+                    identifyParamsTask2.layerIds = [-1];
+                }
+
+                if (name === "wiFlood" && visible === true) {
+                    identifyParamsTask3.layerIds = [4];
+                }
+                if (name === "wiFlood" && visible === false) {
+                    identifyParamsTask3.layerIds = [-1];
+                }
+            }
+            identifyParamsTask1.geometry = event.mapPoint;
+            identifyParamsTask1.mapExtent = map.extent;
+
+            identifyParamsTask2.geometry = event.mapPoint;
+            identifyParamsTask2.mapExtent = map.extent;
+
+            identifyParamsTask3.geometry = event.mapPoint;
+            identifyParamsTask3.mapExtent = map.extent;
 
             var deferred1 = identifyTask1
-                .execute(identifyParams)
+                .execute(identifyParamsTask1)
                 .addCallback(function(response) {
                     // response is an array of identify result objects
                     // Let's return an array of features.
@@ -583,7 +649,7 @@ require([
                 }); //end addCallback
 
             var deferred2 = identifyTask2
-                .execute(identifyParams)
+                .execute(identifyParamsTask2)
                 .addCallback(function(response) {
                     // response is an array of identify result objects
                     // Let's return an array of features.
@@ -604,7 +670,7 @@ require([
                 }); //end addCallback
 
             var deferred3 = identifyTask3
-                .execute(identifyParams)
+                .execute(identifyParamsTask3)
                 .addCallback(function(response) {
                     // response is an array of identify result objects
                     // Let's return an array of features.
@@ -633,8 +699,6 @@ require([
             map.infoWindow.show(event.mapPoint);
 
         } // end executeIdentifyTask
-
-
 
 
 

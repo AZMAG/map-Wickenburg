@@ -1,4 +1,5 @@
-# CHANGELOG Wickenburg Zoning Website
+CHANGELOG Wickenburg Zoning Website
+===================================
 
 [![Semver](http://img.shields.io/SemVer/2.0.0.png)](http://semver.org/spec/v2.0.0.html)
 
@@ -8,6 +9,20 @@
     * zoom issue with geocoder
     * turn off measurement tool when window closes
 
+
+### Version 3.5.0 (03/05/2015)
+
+* added code to hide popup when info not found
+* made changes to definitions table
+* made changes to popup style
+* updated MXD
+* updates to data - Zoning Info
+
+### Version 3.4.0 (07/22/2014)
+
+* changed size of search box (reduced)
+* changed lods to minZoom & maxZoom
+* fixed layer options to only display popup when layer is visible
 
 ### Version 3.3.0 (06/30/2014)
 
@@ -157,6 +172,15 @@
 * Used basic frame work from MAG EXLU Viewer
 
 ## Resources / Examples
+
+- ***identifyParms Issue ***
+
+    * [Link] (https://geonet.esri.com/thread/44797)
+    * [Example] (https://developers.arcgis.com/javascript/jssamples/map_explicitlayerlist.html)
+    * [Link] (http://forums.esri.com/Thread.asp?c=158&f=2396&t=261892)
+    * [fiddle] (http://jsfiddle.net/blordcastillo/mULcz/)
+
+
 
 - ***TOC Examples***
 

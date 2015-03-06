@@ -186,12 +186,12 @@ color: #fff;
 }
 @media(min-width:992px){
     .navbar-form {
-        width: 350px;
+        width: 200px;
     }
 }
 @media(min-width:1200px){
     .navbar-form {
-        width: 400px;
+        width: 250px;
     }
 }
 
@@ -281,6 +281,10 @@ color: #fff;
 .esriPopup .titleButton.maximize {
     display: none;
 }
+.pLine {
+    margin-top: 0.5px;
+    margin-bottom: 0.5px;
+}
 .sliderTitle {
     text-align: center;
 }
@@ -355,6 +359,10 @@ color: #fff;
 }
 .cnt {
     text-align: center;
+}
+#zoneTable {
+    max-height: 600px;
+    overflow-y: scroll;
 }
 /*.striped {
     background: #383838;
