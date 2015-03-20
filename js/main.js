@@ -538,11 +538,11 @@ require([
             // console.log(feature.attributes);
             var url = window.location;
             var link = "";
-            if (feature.attributes.COUNTY_FIPS === "13") {
+            if (feature.attributes.COUNTY_FIPS === "013") {
                 link = appConfig.MaricopaAssessor + feature.attributes.PARCEL;
                 window.open(link);
             }
-            if (feature.attributes.COUNTY_FIPS === "25") {
+            if (feature.attributes.COUNTY_FIPS === "025") {
                 link = appConfig.YavapaiAssessor + feature.attributes.PARCEL;
                 window.open(link);
             } else {
