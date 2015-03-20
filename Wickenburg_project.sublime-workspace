@@ -523,7 +523,7 @@
 			"file": "CHANGELOG.md",
 			"settings":
 			{
-				"buffer_size": 7237,
+				"buffer_size": 7320,
 				"line_ending": "Unix"
 			}
 		}
@@ -588,16 +588,16 @@
 	},
 	"file_history":
 	[
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/js/main.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/js/config.js",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/index.html",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/js/config.js",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/humans.txt",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/package.json",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/README.md",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/js/main.js",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/definitions.html",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/css/main.css",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/about.html",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/css/bootstrapmap.css",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/humans.txt",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/package.json",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/README.md",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/CHANGELOG.md",
 		"/C/Users/vwolfley/Desktop/test.html",
 		"/C/Users/vwolfley/Desktop/test2.js",
@@ -961,6 +961,7 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -968,15 +969,15 @@
 					"file": "CHANGELOG.md",
 					"settings":
 					{
-						"buffer_size": 7237,
+						"buffer_size": 7320,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								326,
-								326
+								351,
+								351
 							]
 						],
 						"settings":

@@ -10,6 +10,11 @@ CHANGELOG Wickenburg Zoning Website
     * turn off measurement tool when window closes
 
 
+### Version 3.5.1 (03/20/2015)
+
+* update of parcel layer
+* update of Zoning Layer
+
 ### Version 3.5.0 (03/05/2015)
 
 * added code to hide popup when info not found
