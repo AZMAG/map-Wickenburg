@@ -228,7 +228,7 @@ require([
         // add layers to map
 
         var wiZoningParms = new ImageParameters();
-        wiZoningParms.layerIds = [5];
+        wiZoningParms.layerIds = [6];
         wiZoningParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
 
         var wiZoning = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
@@ -246,6 +246,18 @@ require([
         var wiFlood = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
             id: "wiFlood",
             imageParameters: wiFloodParms,
+            outFields: ["*"],
+            visible: false,
+            opacity: 0.65
+        }));
+
+        var wiPendFloodParms = new ImageParameters();
+        wiPendFloodParms.layerIds = [5];
+        wiPendFloodParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
+
+        var wiPendFlood = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
+            id: "wiPendFlood",
+            imageParameters: wiPendFloodParms,
             outFields: ["*"],
             visible: false,
             opacity: 0.65
@@ -342,6 +354,11 @@ require([
             title: "Wickenburg Flood Zone"
         });
         tocLayers.push({
+            layer: wiPendFlood,
+            id: "wiPendFlood",
+            title: "Wickenburg Pending Flood Zone"
+        });
+        tocLayers.push({
             layer: wiZoning,
             id: "wiZoning",
             title: "Wickenburg Zoning"
@@ -373,6 +390,11 @@ require([
             layer: wiFlood,
             id: "wiFlood",
             title: "Wickenburg Flood Zone"
+        });
+        legendLayers.push({
+            layer: wiPendFlood,
+            id: "wiPendFlood",
+            title: "Wickenburg Pending Flood Zone"
         });
         legendLayers.push({
             layer: wiZoning,
@@ -560,7 +582,7 @@ require([
             // zoning Layer
             identifyTask1 = new IdentifyTask(appConfig.mainURL);
             identifyParamsTask1 = new IdentifyParameters();
-            identifyParamsTask1.layerIds = [5];
+            identifyParamsTask1.layerIds = [6];
             identifyParamsTask1.tolerance = 3;
             identifyParamsTask1.returnGeometry = true;
             identifyParamsTask1.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
@@ -584,6 +606,15 @@ require([
             identifyParamsTask3.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
             identifyParamsTask3.width = map.width;
             identifyParamsTask3.height = map.height;
+            // pending flood zone layer
+            identifyTask4 = new IdentifyTask(appConfig.mainURL);
+            identifyParamsTask4 = new IdentifyParameters();
+            identifyParamsTask4.layerIds = [5];
+            identifyParamsTask4.tolerance = 3;
+            identifyParamsTask4.returnGeometry = true;
+            identifyParamsTask4.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
+            identifyParamsTask4.width = map.width;
+            identifyParamsTask4.height = map.height;
         } // end mapReady
 
         function executeIdentifyTask(event) {
@@ -597,7 +628,7 @@ require([
                 // console.log(name + " - " + visible);
 
                 if (name === "wiZoning" && visible === true) {
-                    identifyParamsTask1.layerIds = [5];
+                    identifyParamsTask1.layerIds = [6];
                 }
                 if (name === "wiZoning" && visible === false) {
                     identifyParamsTask1.layerIds = [-1];
@@ -616,6 +647,13 @@ require([
                 if (name === "wiFlood" && visible === false) {
                     identifyParamsTask3.layerIds = [-1];
                 }
+
+                if (name === "wiPendFlood" && visible === true) {
+                    identifyParamsTask4.layerIds = [5];
+                }
+                if (name === "wiPendFlood" && visible === false) {
+                    identifyParamsTask4.layerIds = [-1];
+                }
             }
             identifyParamsTask1.geometry = event.mapPoint;
             identifyParamsTask1.mapExtent = map.extent;
@@ -625,6 +663,9 @@ require([
 
             identifyParamsTask3.geometry = event.mapPoint;
             identifyParamsTask3.mapExtent = map.extent;
+
+            identifyParamsTask4.geometry = event.mapPoint;
+            identifyParamsTask4.mapExtent = map.extent;
 
             var deferred1 = identifyTask1
                 .execute(identifyParamsTask1)
@@ -690,12 +731,33 @@ require([
                     });
                 }); //end addCallback
 
+            var deferred4 = identifyTask4
+                .execute(identifyParamsTask4)
+                .addCallback(function(response) {
+                    // response is an array of identify result objects
+                    // Let's return an array of features.
+                    return arrayUtils.map(response, function(result) {
+                        var feature = result.feature;
+                        feature.attributes.layerName = result.layerName;
+
+                        if (feature.attributes.OBJECTID !== 0) {
+                            var template = new InfoTemplate();
+
+                            // Wickenburg zoning
+                            template.setTitle("Pending Flood Zone");
+                            template.setContent("Pending Flood Zone: ${FloodZone}");
+                            feature.setInfoTemplate(template);
+                        } // end if
+                        return feature;
+                    });
+                }); //end addCallback
+
             // InfoWindow expects an array of features from each deferred
             // object that you pass. If the response from the task execution
             // above is not an array of features, then you need to add a callback
             // like the one above to post-process the response and return an
             // array of features.
-            map.infoWindow.setFeatures([deferred1, deferred2, deferred3]);
+            map.infoWindow.setFeatures([deferred1, deferred2, deferred3, deferred4]);
             map.infoWindow.show(event.mapPoint);
 
         } // end executeIdentifyTask
