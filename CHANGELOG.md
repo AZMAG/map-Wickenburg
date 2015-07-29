@@ -9,6 +9,11 @@ CHANGELOG Wickenburg Zoning Website
     * zoom issue with geocoder
     * turn off measurement tool when window closes
 
+### Version 3.6.0 (07/29/2015)
+
+* add pending floodplain data
+* fix flood zone TOC label
+* add popup for pending floodplain data
 
 ### Version 3.5.1 (03/20/2015)
 
