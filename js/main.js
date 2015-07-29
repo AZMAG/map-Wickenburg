@@ -260,7 +260,7 @@ require([
             imageParameters: wiPendFloodParms,
             outFields: ["*"],
             visible: false,
-            opacity: 0.65
+            opacity: 1
         }));
 
         var tParcelsParms = new ImageParameters();
