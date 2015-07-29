@@ -628,7 +628,7 @@ require([
                 // console.log(name + " - " + visible);
 
                 if (name === "wiZoning" && visible === true) {
-                    identifyParamsTask1.layerIds = [5];
+                    identifyParamsTask1.layerIds = [6];
                 }
                 if (name === "wiZoning" && visible === false) {
                     identifyParamsTask1.layerIds = [-1];
