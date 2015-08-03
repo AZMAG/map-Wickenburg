@@ -57,7 +57,7 @@ color: #fff;
 
 .esriPopup .titlePane, .esriPopup .contentPane, .esriPopup .actionsPane  {
   padding: 8px 14px;
-  max-height: 110px;
+  max-height: 140px;
 }
 .esriPopup .titlePane, {
   padding-top: 10px;

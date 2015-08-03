@@ -4,6 +4,30 @@
 		"selected_items":
 		[
 			[
+				"block",
+				"blockContent"
+			],
+			[
+				"wiB",
+				"wiBlockGroups"
+			],
+			[
+				"s",
+				"strong"
+			],
+			[
+				"bl",
+				"blockTemplate"
+			],
+			[
+				"main",
+				"mainURL"
+			],
+			[
+				"app",
+				"appConfig"
+			],
+			[
 				"sc",
 				"scroll"
 			],
@@ -404,10 +428,6 @@
 				"ul	Tag"
 			],
 			[
-				"s",
-				"strong	Tag"
-			],
-			[
 				"font-f",
 				"font-family:   (property)"
 			],
@@ -494,26 +514,6 @@
 			[
 				"googl",
 				"googlecode"
-			],
-			[
-				"featureL",
-				"featureLayer2"
-			],
-			[
-				"search",
-				"searchfield"
-			],
-			[
-				"EXLU",
-				"EXLUlayer"
-			],
-			[
-				"geometry",
-				"geometryType"
-			],
-			[
-				"identify",
-				"identifyParams"
 			]
 		]
 	},
@@ -580,19 +580,19 @@
 	},
 	"file_history":
 	[
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/CHANGELOG.md",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/js/main.js",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/helpContent.html",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/README.md",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/package.json",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/index.html",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/package.json",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/CHANGELOG.md",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/README.md",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/humans.txt",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/js/config.js",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/js/main.js",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/css/bootstrapmap.css",
+		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/helpContent.html",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/contents.html",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/definitions.html",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/css/main.css",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/views/about.html",
-		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/css/bootstrapmap.css",
 		"/C/Users/vwolfley/Desktop/test.html",
 		"/C/Users/vwolfley/Desktop/test2.js",
 		"/I/Projects/ArcGIS Server/10.2/javascript_apps/Wickenburg/wickenburg_project/node_modules/jshint-stylish-ex/stylish.js",
@@ -725,6 +725,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"click",
 			"punch",
 			"legend",
 			"slider",
@@ -851,8 +852,7 @@
 			"cbr",
 			"org",
 			"if",
-			".magLogo",
-			"img"
+			".magLogo"
 		],
 		"highlight": false,
 		"in_selection": false,

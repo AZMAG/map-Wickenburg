@@ -260,7 +260,7 @@ require([
             imageParameters: wiPendFloodParms,
             outFields: ["*"],
             visible: false,
-            opacity: 0.65
+            opacity: 1
         }));
 
         var tParcelsParms = new ImageParameters();
@@ -287,6 +287,18 @@ require([
             mode: FeatureLayer.MODE_ONDEMAND,
             visible: true,
             opacity: 1
+        }));
+
+        var blockContent = "<strong>GEOID:  ${GEOID10}</strong><br>" + "<b>Total Persons:</b>  ${LOWMODUNIV:NumberFormat}<br>" + "<b>Low Income:</b>  ${LOW:NumberFormat}<br>" + "<b>Low & Moderate Income:</b>  ${LOWMOD:NumberFormat}<br>" + "<b>Low, Moderate, & Medium Income:</b>  ${LMMI:NumberFormat}<br>" + "<b>% Low & Moderate Income:</b> ${LOWMOD_PCT}%";
+        var blockTemplate = new InfoTemplate("Wickenburg Block Groups", blockContent);
+
+        var wiBlockGroups = map.addLayer(new FeatureLayer(appConfig.mainURL + "/7", {
+            id: "wiBlockGroups",
+            visible: false,
+            opacity: 1,
+            mode: FeatureLayer.MODE_ONDEMAND,
+            infoTemplate: blockTemplate,
+            outFields: ["*"]
         }));
 
         // add new info window for employers
@@ -368,6 +380,11 @@ require([
             id: "wiEmployers",
             title: "Wickenburg Employers, 5+ employees"
         });
+        tocLayers.push({
+            layer: wiBlockGroups,
+            id: "wiBlockGroups",
+            title: "Wickenburg Block Groups"
+        });
 
         // Legend Layers
         // legendLayers.push({layer: wiEmployers, title: "Wickenburg Employers"});
@@ -395,6 +412,11 @@ require([
             layer: wiPendFlood,
             id: "wiPendFlood",
             title: "Wickenburg Pending Flood Zone"
+        });
+        legendLayers.push({
+            layer: wiBlockGroups,
+            id: "wiBlockGroups",
+            title: "Wickenburg Block Groups"
         });
         legendLayers.push({
             layer: wiZoning,
@@ -761,6 +783,8 @@ require([
             map.infoWindow.show(event.mapPoint);
 
         } // end executeIdentifyTask
+
+
 
 
 
