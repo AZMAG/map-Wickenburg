@@ -9,6 +9,11 @@ CHANGELOG Wickenburg Zoning Website
     * zoom issue with geocoder
     * turn off measurement tool when window closes
 
+### Version 3.7.0 (08/03/2015)
+
+* added block group layer
+* added popup for block group layer
+
 ### Version 3.6.0 (07/29/2015)
 
 * add pending floodplain data
