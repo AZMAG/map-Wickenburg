@@ -213,6 +213,14 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+##########################
+## Custom Project Ignores
+##########################
+
+# workspace files are user-specific don't track
+*.sublime-workspace
+
 app/resources/css/bootstrap.min.css
 app/resources/css/normalize.css
 app/resources/fonts/glyphicons-halflings-regular.eot
