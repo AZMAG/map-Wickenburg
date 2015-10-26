@@ -5,6 +5,7 @@ require([
         "dojo/dom",
         "dojo/on",
         "dojo/parser",
+        "dojo/_base/connect",
         "dojo/query",
         "dojo/keys",
         "esri/sniff",
@@ -25,6 +26,9 @@ require([
         "esri/dijit/Popup",
         "dojo/_base/array",
         "dojo/_base/Color",
+        "esri/layers/LayerDrawingOptions",
+        "esri/renderers/SimpleRenderer",
+
         "esri/layers/ArcGISDynamicMapServiceLayer",
         "esri/layers/ImageParameters",
         "esri/dijit/Legend",
@@ -48,8 +52,8 @@ require([
         "dojo/domReady!"
     ],
 
-    function(dc, dom, on, parser, query, keys, has, Map, SnappingManager, Measurement, Scalebar, HomeButton, LocateButton, Geocoder,
-        Graphic, Multipoint, PictureMarkerSymbol, SimpleFillSymbol, SimpleLineSymbol, IdentifyTask, IdentifyParameters, Popup, arrayUtils, Color, ArcGISDynamicMapServiceLayer, ImageParameters, Legend, CheckBox, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, BootstrapMap, BasemapToggle, FeatureLayer, PopupTemplate, InfoTemplate, SimpleMarkerSymbol, Print, PrintTemplate, esriRequest, esriConfig) {
+    function(dc, dom, on, parser, connect, query, keys, has, Map, SnappingManager, Measurement, Scalebar, HomeButton, LocateButton, Geocoder,
+        Graphic, Multipoint, PictureMarkerSymbol, SimpleFillSymbol, SimpleLineSymbol, IdentifyTask, IdentifyParameters, Popup, arrayUtils, Color, LayerDrawingOptions, SimpleRenderer, ArcGISDynamicMapServiceLayer, ImageParameters, Legend, CheckBox, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, BootstrapMap, BasemapToggle, FeatureLayer, PopupTemplate, InfoTemplate, SimpleMarkerSymbol, Print, PrintTemplate, esriRequest, esriConfig) {
 
         parser.parse();
 
@@ -81,8 +85,13 @@ require([
             // lineSymbol:
             markerSymbol: pointSymbol,
             visibleWhenEmpty: false,
+            keepHighlightOnHide: true,
             hideDelay: -1
         }, dc.create("div"));
+
+        $("#clearHighlightBtn").fadeOut();
+
+
 
         // create the map and specify the custom info window as the info window that will be used by the map
         // <!-- Get a reference to the ArcGIS Map class -->
@@ -97,8 +106,26 @@ require([
             sliderPosition: "top-right",
             scrollWheelZoom: true
         });
+        var newpopup;
+
+        connect.connect(popup,"onClearFeatures",function(){
+                 newpopup = popup;                
+        });
+
+        connect.connect(popup,"onSelectionChange",function(){
+            $("#clearHighlightBtn").fadeIn();
+            if (newpopup) {
+                map.graphics.add(new Graphic(newpopup.features[0].geometry, fillSymbol3));    
+                newpopup = "";
+            };
+        });
 
         map.on("load", mapReady);
+
+        $("#clearHighlightBtn").click(function(){
+            $("#clearHighlightBtn").fadeOut();
+            map.graphics.clear();
+        });
 
         var identifyHandler = map.on("click", executeIdentifyTask);
         // remove event listener on map close
@@ -106,7 +133,6 @@ require([
 
         var scalebar = new Scalebar({
             map: map,
-            // scalebarUnit: "dual"
             scalebarUnit: "english"
         });
 
@@ -182,13 +208,6 @@ require([
             }
             templateNames = layoutTemplate[0].choiceList;
 
-            // // remove the MAP_ONLY template then add it to the end of the list of templates
-            // mapOnlyIndex = arrayUtils.indexOf(templateNames, "MAP_ONLY");
-            // if ( mapOnlyIndex > -1 ) {
-            //     var mapOnly = templateNames.splice(mapOnlyIndex, mapOnlyIndex + 1)[0];
-            //     templateNames.push(mapOnly);
-            // }
-
             // remove the MAP_ONLY template from the dropdown list
             mapOnlyRemove = arrayUtils.indexOf(templateNames, "MAP_ONLY");
             if (mapOnlyRemove > -1) {
@@ -201,11 +220,7 @@ require([
                 plate.layout = plate.label = ch;
                 plate.format = "PDF";
                 plate.layoutOptions = {
-                    // "authorText": "Made by:  MAG's JS API Team",
-                    // "copyrightText": "<copyright info here>",
-                    // "legendLayers": [],
                     "titleText": "Wickenburg Zoning"
-                    // "scalebarUnit": "Miles"
                 };
                 return plate;
             });
@@ -441,13 +456,12 @@ require([
                 onChange: function() {
                     var clayer = map.getLayer(this.value);
                     clayer.setVisibility(!clayer.visible);
-                    this.checked = clayer.visible;
-                    // console.log(clayer.id + " = " + clayer.visible);
-                    // console.log(layer.layer.visible);
+                    if (this.value == "tParcels") {
+                        this.checked = clayer.visible;
+                        showSlider(this.checked);
+                    };
                 }
             }); //end CheckBox
-            // console.log(layer.layer.id);
-            // console.log(layer.layer.visible);
 
             //add the check box and label to the toc
             dc.place(checkBox.domNode, dom.byId("toggleDiv"));
@@ -456,7 +470,6 @@ require([
                 innerHTML: "&nbsp;&nbsp;" + layerName
             }, checkBox.domNode, "after");
             dc.place("<br>", checkLabel, "after");
-
         });
 
         // wiFlood Transparency Slider
@@ -486,6 +499,55 @@ require([
                 wiZoning.setOpacity(value2);
             }
         }, "slider2");
+
+        // parcel line thickness Slider
+        var slider3 = new HorizontalSlider({
+            name: "slider3",
+            value: wiZoning.opacity,
+            minimum: 1,
+            maximum: 5,
+            intermediateChanges: true,
+            discreteValues: 11,
+            style: "width:250px;",
+            onChange: function(value3) {
+                updateParcelThickness(value3);
+            }
+        }, "slider3");
+
+        function updateParcelThickness(value) {
+            var parcelLayer = map.getLayer("tParcels");
+
+            var layerDrawingOptions = [];
+            var layerDrawingOption = new LayerDrawingOptions();  
+
+            var sls = new SimpleLineSymbol(
+                    SimpleLineSymbol.STYLE_SOLID,
+                    new Color([255, 170, 0]),
+                    1
+                    );
+
+            sls.setWidth(value);
+
+            var sfs = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+                sls,
+                new Color([255,255,0,0])
+            );
+
+            layerDrawingOption.renderer = new SimpleRenderer(sfs);
+            layerDrawingOptions[1] = layerDrawingOption;
+            parcelLayer.setLayerDrawingOptions(layerDrawingOptions);
+        }
+
+        function showSlider(value) {
+            if (value) {
+                //Show Slider Div
+                $("#ThicknessSlider").fadeIn();
+            }
+            else{
+                //Hide Slider Div
+                $("#ThicknessSlider").fadeOut();
+            }
+        }
 
         //=================================================================================>
         // Start Geocode Section
@@ -547,6 +609,7 @@ require([
         }
 
         function clearFindGraphics() {
+
             map.infoWindow.hide();
             map.graphics.clear();
         }
@@ -579,7 +642,6 @@ require([
 
         on(link, "click", function() {
             var feature = map.infoWindow.getSelectedFeature();
-            // console.log(feature.attributes);
             var url = window.location;
             var link = "";
             if (feature.attributes.COUNTY_FIPS === "013") {

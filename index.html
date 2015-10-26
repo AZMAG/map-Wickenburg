@@ -29,33 +29,18 @@
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
     <!-- jQuery user interface CSS -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+
     <!-- ESRI core CSS -->
     <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/dojo/dijit/themes/tundra/tundra.css">
     <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/esri/css/esri.css">
-   <!--  <link rel="stylesheet" href="http://js.arcgis.com/3.12/dijit/themes/tundra/tundra.css">
-    <link rel="stylesheet" href="http://js.arcgis.com/3.12/esri/css/esri.css"> -->
-
-    <!-- CSS for debugging -->
-    <!-- <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/bootstrapmap.css">
-    <link rel="stylesheet" href="css/main.css"> -->
 
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="css/concat.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 
-    <!--  removed once App goes into production -->
-    <!-- <meta http-equiv="cache-control" content="no-cache">
-    <meta http-equiv="expires" content="0">
-    <meta http-equiv="pragma" content="no-cache"> -->
-
-    <script src="js/vendor/modernizr-2.7.1.min.js"></script>
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="js/vendor/html5shiv.js"></script>
-      <script src="js/vendor/respond.min.js"></script>
-    <![endif]-->
   </head>
   <body class="tundra">
     <!--[if lt IE 7]>
@@ -80,9 +65,7 @@
             <li class="" role="button" data-toggle="modal" data-target="#defModal"><a href="#" title="Definitions">Definitions</a></li>
             <li id="measureOpen" class="" role="button" data-target="#mTool"><a href="#" title="Measurement">Measurement</a></li>
           </ul>
-
           <ul class="nav navbar-nav navbar-right">
-
             <li id="printOpen" role="button" data-target="#printTool" class="btn-group toolicon glyphicon glyphicon-print"></li>
             <li>
               <form id="geosearch-form" class="navbar-form navbar-right" role="search">
@@ -91,7 +74,6 @@
             </li>
             <li class="" role="button" data-toggle="modal" data-target="#aboutModal"><a href="#" title="About">About</a></li>
           </ul>
-
         </div><!--/.nav-collapse -->
       </div>
     </div><!--/end navbar -->
@@ -180,14 +162,12 @@
 <!--============================================================================================================-->
   <!-- Global script definitions. -->
   <script src="http://js.arcgis.com/3.9/"></script>
-  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <!-- Custom JavaScript -->
-  <script src="js/vendor/plugins.js"></script>
   <script src="js/config.js"></script>
-  <!-- // <script src="js/main.js"></script> -->
-  <script src="js/main.min.js"></script>
+  <script src="js/main.js"></script>
   <!-- Google Analytics -->
   <script>
     (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=

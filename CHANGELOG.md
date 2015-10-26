@@ -6,8 +6,16 @@ CHANGELOG Wickenburg Zoning Website
 `Major/Minor/Patch 0.0.0`
 
 ### Outstanding Items
-    * zoom issue with geocoder
-    * turn off measurement tool when window closes
+* zoom issue with geocoder
+* turn off measurement tool when window closes
+
+### Version 3.7.1 (08/03/2015)
+
+* added ability to change parcel border thickness.
+* added ability to highlight multiple parcels.
+* moved zoning definitions from main navbar to contents panel.
+* added Flood Zone Definitions link to contents window when floodzone layer is chosen.
+* added reports button next to print button that links to wickenburg demographic and employment reporting.
 
 ### Version 3.7.0 (08/03/2015)
 
