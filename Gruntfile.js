@@ -8,19 +8,19 @@ module.exports = function(grunt){
 
         pkg: grunt.file.readJSON("package.json"),
         bannercss: '/*!\n' +
-                        '*@concat.min.css\n' +
-                        '*@CSS Document for Wickenburg Zoning Map Viewer @ MAG\n' +
-                        '*@For Production\n' +
-                        '*@<%= pkg.name %> - v<%= pkg.version %> | <%= grunt.template.today("mm-dd-yyyy") %>\n' +
-                        '*@author <%= pkg.author %>\n' +
+                        ' * @concat.min.css\n' +
+                        ' * @CSS Document for Wickenburg Zoning Map Viewer @ MAG\n' +
+                        ' * @For Production\n' +
+                        ' * @<%= pkg.name %> - v<%= pkg.version %> | <%= grunt.template.today("mm-dd-yyyy") %>\n' +
+                        ' * @author <%= pkg.author %>\n' +
                     '*/\n',
 
         bannerjs: '/*!\n' +
-                        '*@main.min.js\n' +
-                        '*@JavaScript document for Wickenburg Zoning Map Viewer @ MAG\n' +
-                        '*@For Production\n' +
-                        '*@<%= pkg.name %> - v<%= pkg.version %> | <%= grunt.template.today("mm-dd-yyyy") %>\n' +
-                        '*@author <%= pkg.author %>\n' +
+                        ' * @main.min.js\n' +
+                        ' * @JavaScript document for Wickenburg Zoning Map Viewer @ MAG\n' +
+                        ' * @For Production\n' +
+                        ' * @<%= pkg.name %> - v<%= pkg.version %> | <%= grunt.template.today("mm-dd-yyyy") %>\n' +
+                        ' * @author <%= pkg.author %>\n' +
                     '*/\n',
 
         jshint: {
@@ -49,6 +49,7 @@ module.exports = function(grunt){
             build: {
                 files: {
                     "js/main.min.js": ["js/main.js"],
+                    "js/vendor/bootstrapmap.min.js": ["js/vendor/bootstrapmap.js"]
                 }
             }
         },

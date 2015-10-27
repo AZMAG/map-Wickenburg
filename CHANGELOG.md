@@ -9,13 +9,18 @@ CHANGELOG Wickenburg Zoning Website
 * zoom issue with geocoder
 * turn off measurement tool when window closes
 
-### Version 3.7.1 (08/03/2015)
+### Version 3.7.1 (10/27/2015)
 
+* fixed popup link so it shows only on parcels popup
+* added MPA boundary to map, layers and TOC
 * added ability to change parcel border thickness.
 * added ability to highlight multiple parcels.
 * moved zoning definitions from main navbar to contents panel.
 * added Flood Zone Definitions link to contents window when floodzone layer is chosen.
 * added reports button next to print button that links to wickenburg demographic and employment reporting.
+* upgrade modernizr to `v2.8.3` via CDN - [modernizr] (http://cdnjs.com/libraries/modernizr)
+* upgrade html5shiv to `v3.7.3` via CDN - [html5shiv] (https://cdnjs.com/libraries/html5shiv)
+* upgrade respond.js to `v1.4.2` via CDN - [respond.js] (https://cdnjs.com/libraries/respond.js)
 
 ### Version 3.7.0 (08/03/2015)
 

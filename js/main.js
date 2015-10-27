@@ -17,6 +17,7 @@ require([
         "esri/dijit/LocateButton",
         "esri/dijit/Geocoder",
         "esri/graphic",
+        "esri/geometry/Extent",
         "esri/geometry/Multipoint",
         "esri/symbols/PictureMarkerSymbol",
         "esri/symbols/SimpleFillSymbol",
@@ -36,7 +37,7 @@ require([
         "dijit/form/HorizontalSlider",
         "dijit/form/HorizontalRule",
         "dijit/form/HorizontalRuleLabels",
-        "js/vendor/bootstrapmap.min.js",
+
         "esri/dijit/BasemapToggle",
 
         "esri/layers/FeatureLayer",
@@ -49,11 +50,12 @@ require([
         "esri/request",
         "esri/config",
 
+        "js/vendor/bootstrapmap.min.js",
         "dojo/domReady!"
     ],
 
     function(dc, dom, on, parser, connect, query, keys, has, Map, SnappingManager, Measurement, Scalebar, HomeButton, LocateButton, Geocoder,
-        Graphic, Multipoint, PictureMarkerSymbol, SimpleFillSymbol, SimpleLineSymbol, IdentifyTask, IdentifyParameters, Popup, arrayUtils, Color, LayerDrawingOptions, SimpleRenderer, ArcGISDynamicMapServiceLayer, ImageParameters, Legend, CheckBox, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, BootstrapMap, BasemapToggle, FeatureLayer, PopupTemplate, InfoTemplate, SimpleMarkerSymbol, Print, PrintTemplate, esriRequest, esriConfig) {
+        Graphic, Extent, Multipoint, PictureMarkerSymbol, SimpleFillSymbol, SimpleLineSymbol, IdentifyTask, IdentifyParameters, Popup, arrayUtils, Color, LayerDrawingOptions, SimpleRenderer, ArcGISDynamicMapServiceLayer, ImageParameters, Legend, CheckBox, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, BasemapToggle, FeatureLayer, PopupTemplate, InfoTemplate, SimpleMarkerSymbol, Print, PrintTemplate, esriRequest, esriConfig, BootstrapMap) {
 
         parser.parse();
 
@@ -88,16 +90,14 @@ require([
             hideDelay: -1
         }, dc.create("div"));
 
-        $("#clearHighlightBtn").fadeOut();
-
-
+        $("#highLightBtn").fadeOut();
 
         // create the map and specify the custom info window as the info window that will be used by the map
         // <!-- Get a reference to the ArcGIS Map class -->
         var map = BootstrapMap.create("mapDiv", {
-            extent: new esri.geometry.Extent(appConfig.initExtent),
+            extent: new Extent(appConfig.initExtent),
             basemap: "streets",
-            minZoom: 12,
+            minZoom: 11,
             maxZoom: 19,
             showAttribution: false,
             logo: false,
@@ -105,25 +105,46 @@ require([
             sliderPosition: "top-right",
             scrollWheelZoom: true
         });
-        var newpopup;
 
-        connect.connect(popup,"onClearFeatures",function(){
-            newpopup = popup;                
+        var newpopup;
+        connect.connect(popup, "onClearFeatures", function() {
+            newpopup = popup;
         });
 
-        connect.connect(popup,"onSelectionChange",function(){
-            $("#clearHighlightBtn").fadeIn();
-            if (newpopup) {
-                map.graphics.add(new Graphic(newpopup.features[0].geometry, fillSymbol3));    
-                newpopup = "";
-            };
+        connect.connect(popup, "onSelectionChange", function() {
+            // $("#highlightBtn").fadeIn();
+            // if (newpopup) {
+            //     map.graphics.add(new Graphic(newpopup.features[0].geometry, fillSymbol3));
+            //     newpopup = "";
+            // };
+            var graphic = popup.getSelectedFeature();
+            // console.log(graphic);
+            if (graphic) {
+                if (graphic.attributes.layerName === "Wickenburg Parcels") {
+                    // show link in popup info window
+                    $("#infoLink").show();
+                } else {
+                    // hide link in popup info window
+                    $("#infoLink").hide();
+                }
+            }
         });
 
         map.on("load", mapReady);
 
-        $("#clearHighlightBtn").click(function(){
-            $("#clearHighlightBtn").fadeOut();
+        $("#highLtBtn").click(function() {
+            $(this).removeClass("btn btn-default btn-xs").addClass("btn btn-success btn-xs");
+            $("#clearHighLtBtn").removeClass("btn btn-default btn-xs").addClass("btn btn-danger btn-xs");
+            if (newpopup) {
+                map.graphics.add(new Graphic(newpopup.features[0].geometry, fillSymbol3));
+                newpopup = "";
+            }
+        });
+
+        $("#clearHighLtBtn").click(function() {
             map.graphics.clear();
+            $("#highLtBtn").removeClass("btn btn-success btn-xs").addClass("btn btn-default btn-xs");
+            $(this).removeClass("btn btn-danger btn-xs").addClass("btn btn-default btn-xs");
         });
 
         var identifyHandler = map.on("click", executeIdentifyTask);
@@ -303,6 +324,13 @@ require([
             opacity: 1
         }));
 
+        var wiMPA = map.addLayer(new FeatureLayer(appConfig.mainURL + "/8", {
+            id: "wiMPA",
+            mode: FeatureLayer.MODE_ONDEMAND,
+            visible: false,
+            opacity: 1
+        }));
+
         var blockContent = "<strong>GEOID:  ${GEOID10}</strong><br>" + "<b>Total Persons:</b>  ${LOWMODUNIV:NumberFormat}<br>" + "<b>Low Income:</b>  ${LOW:NumberFormat}<br>" + "<b>Low & Moderate Income:</b>  ${LOWMOD:NumberFormat}<br>" + "<b>Low, Moderate, & Medium Income:</b>  ${LMMI:NumberFormat}<br>" + "<b>% Low & Moderate Income:</b> ${LOWMOD_PCT}%";
         var blockTemplate = new InfoTemplate("Wickenburg Block Groups", blockContent);
 
@@ -366,37 +394,42 @@ require([
         tocLayers.push({
             layer: tParcels,
             id: "tParcels",
-            title: "Wickenburg Parcels"
+            title: "Parcels"
         });
         tocLayers.push({
             layer: wiBoundary,
             id: "wiBoundary",
-            title: "Wickenburg Boundary"
+            title: "Town Boundary"
+        });
+        tocLayers.push({
+            layer: wiMPA,
+            id: "wiMPA",
+            title: "Municipal Planning Area"
         });
         tocLayers.push({
             layer: wiFlood,
             id: "wiFlood",
-            title: "Wickenburg Flood Zone"
+            title: "Flood Zone"
         });
         tocLayers.push({
             layer: wiPendFlood,
             id: "wiPendFlood",
-            title: "Wickenburg Pending Flood Zone"
+            title: "Pending Flood Zone"
         });
         tocLayers.push({
             layer: wiZoning,
             id: "wiZoning",
-            title: "Wickenburg Zoning"
+            title: "Zoning"
         });
         tocLayers.push({
             layer: wiEmployers,
             id: "wiEmployers",
-            title: "Wickenburg Employers, 5+ employees"
+            title: "Employers, 5+ employees"
         });
         tocLayers.push({
             layer: wiBlockGroups,
             id: "wiBlockGroups",
-            title: "Wickenburg Block Groups"
+            title: "Selected Block Groups"
         });
 
         // Legend Layers
@@ -404,7 +437,7 @@ require([
         legendLayers.push({
             layer: tParcels,
             id: "tParcels",
-            title: "Wickenburg Parcels"
+            title: "Parcels"
         });
         legendLayers.push({
             layer: coBoundary,
@@ -414,27 +447,32 @@ require([
         legendLayers.push({
             layer: wiBoundary,
             id: "wiBoundary",
-            title: "Wickenburg Town Boundary"
+            title: "Town Boundary"
         });
         legendLayers.push({
             layer: wiFlood,
             id: "wiFlood",
-            title: "Wickenburg Flood Zone"
+            title: "Flood Zone"
         });
         legendLayers.push({
             layer: wiPendFlood,
             id: "wiPendFlood",
-            title: "Wickenburg Pending Flood Zone"
+            title: "Pending Flood Zone"
         });
         legendLayers.push({
             layer: wiBlockGroups,
             id: "wiBlockGroups",
-            title: "Wickenburg Block Groups"
+            title: "Selected Block Groups"
+        });
+        legendLayers.push({
+            layer: wiMPA,
+            id: "wiMPA",
+            title: "Municipal Planning Area"
         });
         legendLayers.push({
             layer: wiZoning,
             id: "wiZoning",
-            title: "Wickenburg Zoning"
+            title: "Zoning"
         });
 
         // create legend dijit
@@ -454,26 +492,30 @@ require([
                 onChange: function() {
                     var clayer = map.getLayer(this.value);
                     clayer.setVisibility(!clayer.visible);
-                    if (this.value == "tParcels") {
-                        this.checked = clayer.visible;
-                        showSlider(this.checked);
-                    };
-                if (this.value === 'wiZoning') {
-                    if (this.checked) {
-                    $("#zoneDefinitionsLink").show();
+                    if (this.value === "tParcels") {
+                        if (this.checked) {
+                            clayer.visible;
+                            showSlider(1);
+                            $("#highLightBtn").fadeIn();
+                        } else {
+                            $("#highLightBtn").fadeOut();
+                            showSlider(0);
+                        }
                     }
-                else{
-                    $("#zoneDefinitionsLink").hide();
-                }
-                }
-                if (this.value === 'wiFlood' || this.value === 'wiPendFlood') {
-                    if (map.getLayer('wiFlood').visible || map.getLayer('wiPendFlood').visible) {
-                    $("#floodZoneDefinitionsLink").show();
+                    if (this.value === "wiZoning") {
+                        if (this.checked) {
+                            $("#zoneDefinitionsLink").show();
+                        } else {
+                            $("#zoneDefinitionsLink").hide();
+                        }
                     }
-                    else{
-                    $("#floodZoneDefinitionsLink").hide();
-                }
-                }
+                    if (this.value === "wiFlood" || this.value === "wiPendFlood") {
+                        if (map.getLayer("wiFlood").visible || map.getLayer("wiPendFlood").visible) {
+                            $("#floodZoneDefinitionsLink").show();
+                        } else {
+                            $("#floodZoneDefinitionsLink").hide();
+                        }
+                    }
                 }
             }); //end CheckBox
 
@@ -532,19 +574,19 @@ require([
             var parcelLayer = map.getLayer("tParcels");
 
             var layerDrawingOptions = [];
-            var layerDrawingOption = new LayerDrawingOptions();  
+            var layerDrawingOption = new LayerDrawingOptions();
 
             var sls = new SimpleLineSymbol(
-                    SimpleLineSymbol.STYLE_SOLID,
-                    new Color([255, 170, 0]),
-                    1
-                    );
+                SimpleLineSymbol.STYLE_SOLID,
+                new Color([255, 170, 0]),
+                1
+            );
 
             sls.setWidth(value);
 
             var sfs = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
                 sls,
-                new Color([255,255,0,0])
+                new Color([255, 255, 0, 0])
             );
 
             layerDrawingOption.renderer = new SimpleRenderer(sfs);
@@ -553,11 +595,10 @@ require([
         }
 
         function showSlider(value) {
-            if (value) {
+            if (value === 1) {
                 //Show Slider Div
                 $("#ThicknessSlider").fadeIn();
-            }
-            else{
+            } else {
                 //Hide Slider Div
                 $("#ThicknessSlider").fadeOut();
             }
@@ -623,7 +664,6 @@ require([
         }
 
         function clearFindGraphics() {
-
             map.infoWindow.hide();
             map.graphics.clear();
         }
@@ -973,7 +1013,7 @@ $(document).ready(function() {
     });
 });
 
-//sets original position of dropdown for measurement tool
+//sets original position of dropdown for Print and Report tools
 $(document).ready(function() {
     $("#printTool").hide();
     $("#reportTool").hide();

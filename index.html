@@ -7,7 +7,7 @@
     <title>MAG|Wickenburg Zoning</title>
 
     <meta name="description" content="Town of Wickengurg Online Mapping Service">
-    <meta name="author" content="Maricopa Association of Governments vw">
+    <meta name="author" content="Maricopa Association of Governments">
     <link type="text/plain" rel="author" href="http://geo.azmag.gov/maps/wickenburg/humans.txt">
     <meta name="contact" content="www.azmag.gov">
     <meta name="url" content="http://geo.azmag.gov/maps/wickenburg/">
@@ -37,12 +37,27 @@
     <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/dojo/dijit/themes/tundra/tundra.css">
     <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/esri/css/esri.css">
 
+    <!-- CSS for debugging -->
+    <!-- <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/bootstrapmap.css">
+    <link rel="stylesheet" href="css/main.css"> -->
+
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="css/concat.min.css">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
   </head>
   <body class="tundra">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
 <!-- NAVBAR -->
 <!--==============================================================-->
     <div id="navBar" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -186,8 +201,10 @@
   <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <!-- Custom JavaScript -->
+  <script src="js/vendor/plugins.js"></script>
   <script src="js/config.js"></script>
   <script src="js/main.js"></script>
+  <!-- // <script src="js/main.min.js"></script> -->
   <!-- Google Analytics -->
   <script>
     (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=

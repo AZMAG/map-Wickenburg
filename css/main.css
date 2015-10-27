@@ -335,7 +335,20 @@ color: #fff;
     /* symbol for "collapsed" panels */
     content: "\e080";
 }
-
+#highLightBtn {
+    text-align: center;
+}
+#highLtBtn {
+    margin-bottom: 5px;
+}
+#clearHighLtBtn {
+    margin-bottom: 5px;
+}
+.success {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
 
 /* ==========================================
 **** definitions styles ****
