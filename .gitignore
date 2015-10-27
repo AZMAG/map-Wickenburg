@@ -192,7 +192,6 @@ $RECYCLE.BIN/
 # Packages
 *.egg
 *.egg-info
-dist/
 build/
 eggs/
 parts/
@@ -221,15 +220,3 @@ pip-log.txt
 # workspace files are user-specific don't track
 *.sublime-workspace
 
-app/resources/css/bootstrap.min.css
-app/resources/css/normalize.css
-app/resources/fonts/glyphicons-halflings-regular.eot
-app/resources/fonts/glyphicons-halflings-regular.svg
-app/resources/fonts/glyphicons-halflings-regular.ttf
-app/resources/fonts/glyphicons-halflings-regular.woff
-vendor/bootstrap.min.js
-vendor/html5shiv.js
-vendor/jquery-1.10.2.min.js
-vendor/modernizr-2.6.2.min.js
-vendor/plugins.js
-vendor/respond.min.js
