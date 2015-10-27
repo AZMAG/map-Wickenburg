@@ -82,7 +82,6 @@ require([
 
         var popup = new Popup({
             fillSymbol: fillSymbol3,
-            // lineSymbol:
             markerSymbol: pointSymbol,
             visibleWhenEmpty: false,
             keepHighlightOnHide: true,
@@ -98,7 +97,7 @@ require([
         var map = BootstrapMap.create("mapDiv", {
             extent: new esri.geometry.Extent(appConfig.initExtent),
             basemap: "streets",
-            minZoom: 9,
+            minZoom: 12,
             maxZoom: 19,
             showAttribution: false,
             logo: false,
@@ -109,7 +108,7 @@ require([
         var newpopup;
 
         connect.connect(popup,"onClearFeatures",function(){
-                 newpopup = popup;                
+            newpopup = popup;                
         });
 
         connect.connect(popup,"onSelectionChange",function(){
@@ -343,7 +342,6 @@ require([
         var measurement = new Measurement({
             map: map,
             lineSymbol: sfs
-            // pointSymbol: ,
         }, dom.byId("measurementDiv"));
         measurement.startup();
         on(measurement.area, "click", killPopUp);
@@ -460,6 +458,22 @@ require([
                         this.checked = clayer.visible;
                         showSlider(this.checked);
                     };
+                if (this.value === 'wiZoning') {
+                    if (this.checked) {
+                    $("#zoneDefinitionsLink").show();
+                    }
+                else{
+                    $("#zoneDefinitionsLink").hide();
+                }
+                }
+                if (this.value === 'wiFlood' || this.value === 'wiPendFlood') {
+                    if (map.getLayer('wiFlood').visible || map.getLayer('wiPendFlood').visible) {
+                    $("#floodZoneDefinitionsLink").show();
+                    }
+                    else{
+                    $("#floodZoneDefinitionsLink").hide();
+                }
+                }
                 }
             }); //end CheckBox
 
@@ -661,7 +675,7 @@ require([
         //=================================================================================>
 
         function mapReady() {
-
+            $(".esriSimpleSliderDecrementButton").addClass("esriSimpleSliderDisabledButton");
             //create identify tasks and setup parameters
             // zoning Layer
             identifyTask1 = new IdentifyTask(appConfig.mainURL);
@@ -856,13 +870,13 @@ require([
 //=================================================================================>
 function toggleContent() {
     if ($("#legend").is(":hidden")) {
-        $("#legend").slideDown();
+        $("#legend").fadeIn();
         $("#legend").draggable({
             containment: "#mapDiv"
         });
         $("#contentsOpen");
     } else {
-        $("#legend").slideUp();
+        $("#legend").fadeOut();
         $("#contentsOpen");
     }
 }
@@ -870,8 +884,11 @@ function toggleContent() {
 $(document).ready(function() {
     $("#contentsOpen").fadeTo("slow");
     $("#legend").fadeTo("slow");
+    $("#legend").draggable({
+        containment: "#mapDiv"
+    });
     contentsOpen = $("#contentsOpen").height();
-    $("#legend").css("top", contentsOpen);
+    $("#legend").css("top", "55px");
     $("#contentsOpen").click(function() {
         toggleContent();
     });
@@ -886,13 +903,13 @@ $(document).ready(function() {
 //=================================================================================>
 function toggleMTool() {
     if ($("#mTool").is(":hidden")) {
-        $("#mTool").slideDown();
+        $("#mTool").fadeIn();
         $("#mTool").draggable({
             containment: "#mapDiv"
         });
         $("#measureOpen");
     } else {
-        $("#mTool").slideUp();
+        $("#mTool").fadeOut();
         $("#measureOpen");
     }
 }
@@ -901,7 +918,7 @@ $(document).ready(function() {
     $("#measureOpen").fadeTo("slow");
     $("#mTool").fadeTo("slow");
     measureOpen = $("#measureOpen").height();
-    $("#mTool").css("top", measureOpen);
+    $("#mTool").css("top", "55px");
     $("#measureOpen").click(function() {
         toggleMTool();
     });
@@ -916,14 +933,27 @@ $(document).ready(function() {
 //=================================================================================>
 function togglePrint() {
     if ($("#printTool").is(":hidden")) {
-        $("#printTool").slideDown();
+        $("#printTool").fadeIn();
         $("#printTool").draggable({
             containment: "#mapDiv"
         });
         $("#printOpen");
     } else {
-        $("#printTool").slideUp();
+        $("#printTool").fadeOut();
         $("#printOpen");
+    }
+}
+// Report Window open
+//=================================================================================>
+function toggleReportWindow() {
+    if ($("#reportTool").is(":hidden")) {
+        $("#reportTool").fadeIn();
+        $("#reportTool").draggable({
+            containment: "#mapDiv"
+        });
+    } else {
+        $("#reportTool").fadeOut();
+        $("#reportOpen");
     }
 }
 
@@ -931,15 +961,22 @@ $(document).ready(function() {
     $("#printOpen").fadeTo("slow");
     $("#printTool").fadeTo("slow");
     printOpen = $("#printOpen").height();
-    $("#printTool").css("top", printOpen);
+    $("#printTool").css("top", "55px");
     $("#printOpen").click(function() {
         togglePrint();
+    });
+    $("#reportOpen").fadeTo("slow");
+    $("#reportTool").fadeTo("slow");
+    reportOpen = $("#reportOpen").height();
+    $("#reportOpen").click(function() {
+        toggleReportWindow();
     });
 });
 
 //sets original position of dropdown for measurement tool
 $(document).ready(function() {
     $("#printTool").hide();
+    $("#reportTool").hide();
 });
 // Bindings
 //=================================================================================>
@@ -955,6 +992,8 @@ $(document).ready(function() {
     $("#legalDisclaimer").load("views/legalDisclaimer.html");
     //*** Definitions modal binding
     $("#definitions").load("views/definitions.html");
+    //*** Definitions modal binding
+    $("#floodDefinitions").load("views/floodDefinitions.html");
     //*** Measurement Tool binding
     $("#mTool").load("views/measureTool.html");
     //*** Measurement Tool Help modal binding
@@ -963,4 +1002,6 @@ $(document).ready(function() {
     $("#printTool").load("views/printTool.html");
     //*** Print Tool Help modal binding
     $("#helpPrint").load("views/helpPrint.html");
+    //*** Report Window modal binding
+    $("#reportTool").load("views/reportWindow.html");
 });

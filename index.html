@@ -43,9 +43,6 @@
 
   </head>
   <body class="tundra">
-    <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
 <!-- NAVBAR -->
 <!--==============================================================-->
     <div id="navBar" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -62,10 +59,13 @@
           <ul class="nav navbar-nav">
             <li class="" role="button"><a href="http://www.ci.wickenburg.az.us/" title="home">Home</a></li>
             <li id="contentsOpen" class="" role="button"><a href="#" title="contents">Contents</a></li>
-            <li class="" role="button" data-toggle="modal" data-target="#defModal"><a href="#" title="Definitions">Definitions</a></li>
             <li id="measureOpen" class="" role="button" data-target="#mTool"><a href="#" title="Measurement">Measurement</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
+            <li id="reportOpen" class="btn-group toolicon glyphicon glyphicon-list-alt">
+              <ul class="">
+              </ul>
+            </li>
             <li id="printOpen" role="button" data-target="#printTool" class="btn-group toolicon glyphicon glyphicon-print"></li>
             <li>
               <form id="geosearch-form" class="navbar-form navbar-right" role="search">
@@ -83,11 +83,19 @@
 
 <!-- About Modal -->
 <!--==============================================================-->
-<div class="modal" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div id="aboutInfo" class="modal-content modal-style"></div>
   </div><!-- /.modal-dialog -->
 </div><!-- /end Modal -->
+
+<!-- Reports Modal -->
+<!--==============================================================-->
+<div id="reportsModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div id="reportWindow" class="modal-content"></div>
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <!-- Legal Disclaimer Modal -->
 <!--==============================================================-->
@@ -104,6 +112,14 @@
     <div id="definitions" class="modal-content modal-style"></div>
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<!-- Zoning Descriptions Modal -->
+<!--==============================================================-->
+<div id="defFloodModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div id="defModalCon" class="modal-dialog modal-lg">
+    <div id="floodDefinitions" class="modal-content modal-style"></div>
+  </div>
+</div>
 
 <!-- Content -->
 <!--==============================================================-->
@@ -156,6 +172,10 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<!-- Reports Window -->
+<!--==============================================================-->
+<div id="reportTool" class="panel panel-default modal-style"></div>
 
 <!-- Core JavaScript -->
 <!-- JavaScript / Placed at the end of the document so the pages load faster -->
