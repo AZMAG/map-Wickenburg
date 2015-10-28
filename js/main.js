@@ -133,8 +133,10 @@ require([
         map.on("load", mapReady);
 
         $("#highLtBtn").click(function() {
+            $(this).data("clicked", true);
             $(this).removeClass("btn btn-default btn-xs").addClass("btn btn-success btn-xs");
             $("#clearHighLtBtn").removeClass("btn btn-default btn-xs").addClass("btn btn-danger btn-xs");
+            killPopUp1();
             if (newpopup) {
                 map.graphics.add(new Graphic(newpopup.features[0].geometry, fillSymbol3));
                 newpopup = "";
@@ -145,6 +147,7 @@ require([
             map.graphics.clear();
             $("#highLtBtn").removeClass("btn btn-success btn-xs").addClass("btn btn-default btn-xs");
             $(this).removeClass("btn btn-danger btn-xs").addClass("btn btn-default btn-xs");
+            identifyHandler = map.on("click", executeIdentifyTask);
         });
 
         var identifyHandler = map.on("click", executeIdentifyTask);
@@ -386,6 +389,14 @@ require([
             if (activeTool !== true) {
                 // turn popups back on
                 identifyHandler = map.on("click", executeIdentifyTask);
+            }
+        }
+
+        function killPopUp1() {
+            if ($("#highLtBtn").data("clicked")) {
+                console.log("YES");
+                // kill the popup
+                identifyHandler.remove();
             }
         }
 

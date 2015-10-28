@@ -220,9 +220,9 @@ color: #fff;
 ============================================= */
 #legend {
     position: absolute;
-    top: 55px !important;
+    top: 55px;
     left: 5px;
-    max-height: 600px;
+    /*max-height: 600px;*/
     width: 310px;
     padding: 10px;
     font-size: .85em;
@@ -392,11 +392,30 @@ background-color: #383838;
     }
 }
 /* ==========================================
+**** Flood Def styles ****
+============================================= */
+#floodZoneDefinitionsLink {
+    float: right;
+    display: none;
+}
+#reportTool {
+    left: 660px;
+    top: 55px;
+    max-height: 300px;
+    width: 250px;
+    padding: 10px;
+    z-index: 50;
+    position: absolute;
+}
+.reportbtn {
+    margin-top: 10px;
+}
+/* ==========================================
 **** Measurement Tool styles ****
 ============================================= */
 #mTool {
     position: absolute;
-    top: 55px !important;
+    top: 55px;
     left: 325px;
     max-height: 300px;
     width: 250px;
@@ -437,7 +456,7 @@ background-color: #383838;
 ============================================= */
 #printTool {
     position: absolute;
-    top: 55px !important;
+    top: 55px;
     left: 1060px;
     max-height: 300px;
     width: 250px;
@@ -462,6 +481,7 @@ background-color: #383838;
 .tundra .dijitButtonNode {
     background: none;
 }
+
 /* ==========================================
 **** Custom scrollbar CSS styles ****
 ============================================= */
