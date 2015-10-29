@@ -7,16 +7,17 @@
   "url": "http://geo.azmag.gov/maps/wickenburg/",
   "private": true,
   "devDependencies": {
-    "grunt":                "*",
+    "grunt": "*",
     "grunt-contrib-concat": "*",
     "grunt-contrib-cssmin": "*",
     "grunt-contrib-jshint": "*",
     "grunt-contrib-uglify": "*",
-    "grunt-contrib-watch":  "*",
-    "grunt-version-check":  "*",
-    "jshint-stylish-ex":    "*",
-    "matchdep":             "*",
-    "lodash":               "*",
-    "normalize.css":        "^3.0.3"
+    "grunt-contrib-watch": "*",
+    "grunt-cssbeautifier": "^0.1.2",
+    "grunt-version-check": "*",
+    "jshint-stylish-ex": "*",
+    "lodash": "*",
+    "matchdep": "*",
+    "normalize.css": "^3.0.3"
   }
 }

@@ -103,8 +103,8 @@ body {
     background-color: #e7e1bd;
 }
 .starter-template {
-      padding: 40px 15px;
-      text-align: center;
+    padding: 40px 15px;
+    text-align: center;
 }
 #mapDiv {
     min-height: 100%;
@@ -646,44 +646,45 @@ background-color: #383838;
      * Don't show links for images, or javascript/internal links
      */
 
-    .ir a:after,
+.ir a:after,
     a[href^="javascript:"]:after,
     a[href^="#"]:after {
-        content: "";
-    }
+    content: "";
+}
 
-    pre,
+pre,
     blockquote {
-        border: 1px solid #999;
-        page-break-inside: avoid;
-    }
+    border: 1px solid #999;
+    page-break-inside: avoid;
+}
 
-    thead {
-        display: table-header-group; /* h5bp.com/t */
-    }
+thead {
+    display: table-header-group;
+ /* h5bp.com/t */
+}
 
-    tr,
+tr,
     img {
-        page-break-inside: avoid;
-    }
+    page-break-inside: avoid;
+}
 
-    img {
-        max-width: 100% !important;
-    }
+img {
+    max-width: 100% !important;
+}
 
-    @page {
-        margin: 0.5cm;
-    }
+@page {
+    margin: 0.5cm;
+}
 
-    p,
+p,
     h2,
     h3 {
-        orphans: 3;
-        widows: 3;
-    }
+    orphans: 3;
+    widows: 3;
+}
 
-    h2,
+h2,
     h3 {
-        page-break-after: avoid;
-    }
+    page-break-after: avoid;
+}
 }
