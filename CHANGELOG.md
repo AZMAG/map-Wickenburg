@@ -12,6 +12,7 @@ CHANGELOG Wickenburg Zoning Website
 ### Version 3.7.2 (1/8/2015)
 
 * Changed multiple parcel selection feature
+* updated Employers to 2014 MAG employees from MAG employment database, +5 employees
 
 ### Version 3.7.1 (10/27/2015)
 
