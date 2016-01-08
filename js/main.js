@@ -1,7 +1,5 @@
 /*! main.js | Wickenburg Zoning Website @ MAG */
 
-var measurement;
-
 require([
         "dojo/dom-construct",
         "dojo/dom",
@@ -378,7 +376,7 @@ require([
         }];
         snapManager.setLayerInfos(layerInfos);
 
-        measurement = new Measurement({
+        var measurement = new Measurement({
             map: map,
             lineSymbol: sfs
         }, dom.byId("measurementDiv"));

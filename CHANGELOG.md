@@ -9,7 +9,7 @@ CHANGELOG Wickenburg Zoning Website
 * zoom issue with geocoder
 * turn off measurement tool when window closes
 
-### Version 3.7.2 (1/8/2015)
+### Version 3.7.2 (01/08/2015)
 
 * Changed multiple parcel selection feature
 * updated Employers to 2014 MAG employees from MAG employment database, +5 employees
