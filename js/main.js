@@ -1,5 +1,7 @@
 /*! main.js | Wickenburg Zoning Website @ MAG */
 
+var measurement;
+
 require([
         "dojo/dom-construct",
         "dojo/dom",
@@ -152,7 +154,7 @@ require([
             multiple = false;
             map.graphics.clear();
             $(single).prop("checked", true);
-            
+
         });
 
 
@@ -353,7 +355,7 @@ require([
         }));
 
         // add new info window for employers
-        var empContent = "<strong>${EMPNAME}</strong><hr class='pLine'>${ADDRESS}</br>" + "${CITY}, ${STATE} ${ZIP}<br>" + "Type:  ${CLUSTER}";
+        var empContent = "<strong>${EmpName}</strong><hr class='pLine'>${Address}</br>" + "${Jurisdiction}, ${State} ${Zip}<br>" + "Type:  ${Cluster}";
         var empTemplate = new InfoTemplate("Employers", empContent);
 
         var wiEmployers = map.addLayer(new FeatureLayer(appConfig.mainURL + "/0", {
@@ -376,7 +378,7 @@ require([
         }];
         snapManager.setLayerInfos(layerInfos);
 
-        var measurement = new Measurement({
+        measurement = new Measurement({
             map: map,
             lineSymbol: sfs
         }, dom.byId("measurementDiv"));
@@ -778,8 +780,7 @@ require([
                     newpopup = "";
                 }
             }
-            if (!multiple)
-            {
+            if (!multiple) {
                 map.graphics.clear();
             }
             var layers = map.layerIds;
@@ -927,8 +928,6 @@ require([
 
 
         } // end executeIdentifyTask
-
-
 
 
 
