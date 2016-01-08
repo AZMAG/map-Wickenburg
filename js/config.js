@@ -1,6 +1,6 @@
 var appConfig = new function() {
 
-    this.Version = "v3.7.2 | 01/08/2016";
+    this.Version = "v3.7.3 | 01/08/2016";
 
     this.emailLink = "https://www.azmag.gov/EmailPages/JasonHoward.asp";
 
