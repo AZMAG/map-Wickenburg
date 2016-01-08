@@ -103,8 +103,8 @@ body {
     background-color: #e7e1bd;
 }
 .starter-template {
-      padding: 40px 15px;
-      text-align: center;
+    padding: 40px 15px;
+    text-align: center;
 }
 #mapDiv {
     min-height: 100%;
@@ -218,11 +218,23 @@ color: #fff;
 /* ==========================================
 **** contents styles ****
 ============================================= */
+
+.hRadio{
+    margin: 5px;
+    padding: 5px;
+}
+#highlight label{
+    margin-left: 5px;
+
+}
+#highlight input{
+    margin-left: 5px;
+}
 #legend {
     position: absolute;
-    top: 55px !important;
+    top: 55px;
     left: 5px;
-    max-height: 600px;
+    /*max-height: 600px;*/
     width: 310px;
     padding: 10px;
     font-size: .85em;
@@ -335,7 +347,20 @@ color: #fff;
     /* symbol for "collapsed" panels */
     content: "\e080";
 }
-
+#highLightBtn {
+    text-align: center;
+}
+#highLtBtn {
+    margin-bottom: 5px;
+}
+#clearHighLtBtn {
+    margin-bottom: 5px;
+}
+.success {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
 
 /* ==========================================
 **** definitions styles ****
@@ -379,11 +404,30 @@ background-color: #383838;
     }
 }
 /* ==========================================
+**** Flood Def styles ****
+============================================= */
+#floodZoneDefinitionsLink {
+    float: right;
+    display: none;
+}
+#reportTool {
+    left: 660px;
+    top: 55px;
+    max-height: 300px;
+    width: 250px;
+    padding: 10px;
+    z-index: 50;
+    position: absolute;
+}
+.reportbtn {
+    margin-top: 10px;
+}
+/* ==========================================
 **** Measurement Tool styles ****
 ============================================= */
 #mTool {
     position: absolute;
-    top: 55px !important;
+    top: 55px;
     left: 325px;
     max-height: 300px;
     width: 250px;
@@ -424,7 +468,7 @@ background-color: #383838;
 ============================================= */
 #printTool {
     position: absolute;
-    top: 55px !important;
+    top: 55px;
     left: 1060px;
     max-height: 300px;
     width: 250px;
@@ -449,6 +493,7 @@ background-color: #383838;
 .tundra .dijitButtonNode {
     background: none;
 }
+
 /* ==========================================
 **** Custom scrollbar CSS styles ****
 ============================================= */
@@ -613,44 +658,45 @@ background-color: #383838;
      * Don't show links for images, or javascript/internal links
      */
 
-    .ir a:after,
+.ir a:after,
     a[href^="javascript:"]:after,
     a[href^="#"]:after {
-        content: "";
-    }
+    content: "";
+}
 
-    pre,
+pre,
     blockquote {
-        border: 1px solid #999;
-        page-break-inside: avoid;
-    }
+    border: 1px solid #999;
+    page-break-inside: avoid;
+}
 
-    thead {
-        display: table-header-group; /* h5bp.com/t */
-    }
+thead {
+    display: table-header-group;
+ /* h5bp.com/t */
+}
 
-    tr,
+tr,
     img {
-        page-break-inside: avoid;
-    }
+    page-break-inside: avoid;
+}
 
-    img {
-        max-width: 100% !important;
-    }
+img {
+    max-width: 100% !important;
+}
 
-    @page {
-        margin: 0.5cm;
-    }
+@page {
+    margin: 0.5cm;
+}
 
-    p,
+p,
     h2,
     h3 {
-        orphans: 3;
-        widows: 3;
-    }
+    orphans: 3;
+    widows: 3;
+}
 
-    h2,
+h2,
     h3 {
-        page-break-after: avoid;
-    }
+    page-break-after: avoid;
+}
 }

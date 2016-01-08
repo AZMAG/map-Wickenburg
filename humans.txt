@@ -10,6 +10,12 @@
         Twitter: @vernwolfley
         From: Litchfield Park, AZ
 
+        Name:  Jack Fairfield
+        Role: Decision Support Analyst I
+        Contact:
+        Twitter:
+        From: Chandler, AZ
+
         Name:  Scott Bridwell
         Role: GIS Modeler/Developer
         Contact:
@@ -43,8 +49,8 @@
 # SITE
     Site Name: Wickenburg Zoning Map Viewer
     Site URL: http://geo.azmag.gov/maps/wickenburg/
-    Version: 3.7.0
-    Last updated: 08/03/2015
+    Version: 3.7.2
+    Last updated: 01/08/2016
     Creation date: 04/01/2013
     Language: English
     Doctype: HTML5

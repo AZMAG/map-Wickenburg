@@ -5,6 +5,7 @@ require([
         "dojo/dom",
         "dojo/on",
         "dojo/parser",
+        "dojo/_base/connect",
         "dojo/query",
         "dojo/keys",
         "esri/sniff",
@@ -16,6 +17,7 @@ require([
         "esri/dijit/LocateButton",
         "esri/dijit/Geocoder",
         "esri/graphic",
+        "esri/geometry/Extent",
         "esri/geometry/Multipoint",
         "esri/symbols/PictureMarkerSymbol",
         "esri/symbols/SimpleFillSymbol",
@@ -25,6 +27,9 @@ require([
         "esri/dijit/Popup",
         "dojo/_base/array",
         "dojo/_base/Color",
+        "esri/layers/LayerDrawingOptions",
+        "esri/renderers/SimpleRenderer",
+
         "esri/layers/ArcGISDynamicMapServiceLayer",
         "esri/layers/ImageParameters",
         "esri/dijit/Legend",
@@ -32,7 +37,7 @@ require([
         "dijit/form/HorizontalSlider",
         "dijit/form/HorizontalRule",
         "dijit/form/HorizontalRuleLabels",
-        "js/vendor/bootstrapmap.min.js",
+
         "esri/dijit/BasemapToggle",
 
         "esri/layers/FeatureLayer",
@@ -45,11 +50,12 @@ require([
         "esri/request",
         "esri/config",
 
+        "js/vendor/bootstrapmap.min.js",
         "dojo/domReady!"
     ],
 
-    function(dc, dom, on, parser, query, keys, has, Map, SnappingManager, Measurement, Scalebar, HomeButton, LocateButton, Geocoder,
-        Graphic, Multipoint, PictureMarkerSymbol, SimpleFillSymbol, SimpleLineSymbol, IdentifyTask, IdentifyParameters, Popup, arrayUtils, Color, ArcGISDynamicMapServiceLayer, ImageParameters, Legend, CheckBox, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, BootstrapMap, BasemapToggle, FeatureLayer, PopupTemplate, InfoTemplate, SimpleMarkerSymbol, Print, PrintTemplate, esriRequest, esriConfig) {
+    function(dc, dom, on, parser, connect, query, keys, has, Map, SnappingManager, Measurement, Scalebar, HomeButton, LocateButton, Geocoder,
+        Graphic, Extent, Multipoint, PictureMarkerSymbol, SimpleFillSymbol, SimpleLineSymbol, IdentifyTask, IdentifyParameters, Popup, arrayUtils, Color, LayerDrawingOptions, SimpleRenderer, ArcGISDynamicMapServiceLayer, ImageParameters, Legend, CheckBox, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, BasemapToggle, FeatureLayer, PopupTemplate, InfoTemplate, SimpleMarkerSymbol, Print, PrintTemplate, esriRequest, esriConfig, BootstrapMap) {
 
         parser.parse();
 
@@ -58,6 +64,8 @@ require([
 
         // add version and date to about.html, changed in config.js
         dom.byId("version").innerHTML = appConfig.Version;
+
+        var multiple = false;
 
         // var identifyParams;
         var tocLayers = [];
@@ -78,18 +86,18 @@ require([
 
         var popup = new Popup({
             fillSymbol: fillSymbol3,
-            // lineSymbol:
             markerSymbol: pointSymbol,
             visibleWhenEmpty: false,
+            keepHighlightOnHide: true,
             hideDelay: -1
         }, dc.create("div"));
 
         // create the map and specify the custom info window as the info window that will be used by the map
         // <!-- Get a reference to the ArcGIS Map class -->
         var map = BootstrapMap.create("mapDiv", {
-            extent: new esri.geometry.Extent(appConfig.initExtent),
+            extent: new Extent(appConfig.initExtent),
             basemap: "streets",
-            minZoom: 9,
+            minZoom: 11,
             maxZoom: 19,
             showAttribution: false,
             logo: false,
@@ -98,7 +106,55 @@ require([
             scrollWheelZoom: true
         });
 
+        var newpopup;
+        connect.connect(popup, "onClearFeatures", function() {
+            newpopup = popup;
+        });
+
+        connect.connect(popup, "onSelectionChange", function() {
+            // $("#highlightBtn").fadeIn();
+            // if (newpopup) {
+            //     map.graphics.add(new Graphic(newpopup.features[0].geometry, fillSymbol3));
+            //     newpopup = "";
+            // };
+            var graphic = popup.getSelectedFeature();
+            // console.log(graphic);
+            if (graphic) {
+                if (graphic.attributes.layerName === "Wickenburg Parcels") {
+                    // show link in popup info window
+                    $("#infoLink").show();
+                } else {
+                    // hide link in popup info window
+                    $("#infoLink").hide();
+                }
+            }
+        });
+
         map.on("load", mapReady);
+
+        $("#highlight").hide();
+
+        $("#multiple").click(function() {
+            $(this).data("clicked", true);
+            multiple = true;
+            killPopUp1();
+            identifyHandler = map.on("click", executeIdentifyTask);
+        });
+
+        var single = $("#single");
+
+        single.click(function() {
+            multiple = false;
+            identifyHandler = map.on("click", executeIdentifyTask);
+        });
+
+        $("#clearHighlights").click(function() {
+            multiple = false;
+            map.graphics.clear();
+            $(single).prop("checked", true);
+
+        });
+
 
         var identifyHandler = map.on("click", executeIdentifyTask);
         // remove event listener on map close
@@ -106,7 +162,6 @@ require([
 
         var scalebar = new Scalebar({
             map: map,
-            // scalebarUnit: "dual"
             scalebarUnit: "english"
         });
 
@@ -182,13 +237,6 @@ require([
             }
             templateNames = layoutTemplate[0].choiceList;
 
-            // // remove the MAP_ONLY template then add it to the end of the list of templates
-            // mapOnlyIndex = arrayUtils.indexOf(templateNames, "MAP_ONLY");
-            // if ( mapOnlyIndex > -1 ) {
-            //     var mapOnly = templateNames.splice(mapOnlyIndex, mapOnlyIndex + 1)[0];
-            //     templateNames.push(mapOnly);
-            // }
-
             // remove the MAP_ONLY template from the dropdown list
             mapOnlyRemove = arrayUtils.indexOf(templateNames, "MAP_ONLY");
             if (mapOnlyRemove > -1) {
@@ -201,11 +249,7 @@ require([
                 plate.layout = plate.label = ch;
                 plate.format = "PDF";
                 plate.layoutOptions = {
-                    // "authorText": "Made by:  MAG's JS API Team",
-                    // "copyrightText": "<copyright info here>",
-                    // "legendLayers": [],
                     "titleText": "Wickenburg Zoning"
-                    // "scalebarUnit": "Miles"
                 };
                 return plate;
             });
@@ -289,6 +333,13 @@ require([
             opacity: 1
         }));
 
+        var wiMPA = map.addLayer(new FeatureLayer(appConfig.mainURL + "/8", {
+            id: "wiMPA",
+            mode: FeatureLayer.MODE_ONDEMAND,
+            visible: false,
+            opacity: 1
+        }));
+
         var blockContent = "<strong>GEOID:  ${GEOID10}</strong><br>" + "<b>Total Persons:</b>  ${LOWMODUNIV:NumberFormat}<br>" + "<b>Low Income:</b>  ${LOW:NumberFormat}<br>" + "<b>Low & Moderate Income:</b>  ${LOWMOD:NumberFormat}<br>" + "<b>Low, Moderate, & Medium Income:</b>  ${LMMI:NumberFormat}<br>" + "<b>% Low & Moderate Income:</b> ${LOWMOD_PCT}%";
         var blockTemplate = new InfoTemplate("Wickenburg Block Groups", blockContent);
 
@@ -302,7 +353,7 @@ require([
         }));
 
         // add new info window for employers
-        var empContent = "<strong>${EMPNAME}</strong><hr class='pLine'>${ADDRESS}</br>" + "${CITY}, ${STATE} ${ZIP}<br>" + "Type:  ${CLUSTER}";
+        var empContent = "<strong>${EmpName}</strong><hr class='pLine'>${Address}</br>" + "${Jurisdiction}, ${State} ${Zip}<br>" + "Type:  ${Cluster}";
         var empTemplate = new InfoTemplate("Employers", empContent);
 
         var wiEmployers = map.addLayer(new FeatureLayer(appConfig.mainURL + "/0", {
@@ -328,7 +379,6 @@ require([
         var measurement = new Measurement({
             map: map,
             lineSymbol: sfs
-            // pointSymbol: ,
         }, dom.byId("measurementDiv"));
         measurement.startup();
         on(measurement.area, "click", killPopUp);
@@ -348,42 +398,54 @@ require([
             }
         }
 
+        function killPopUp1() {
+            if ($("#multiple").data("clicked")) {
+                // kill the popup
+                identifyHandler.remove();
+            }
+        }
+
         //TOC Layers
         // tocLayers.push({layer: aerial, title: "Aerial Imagery"});
         tocLayers.push({
             layer: tParcels,
             id: "tParcels",
-            title: "Wickenburg Parcels"
+            title: "Parcels"
         });
         tocLayers.push({
             layer: wiBoundary,
             id: "wiBoundary",
-            title: "Wickenburg Boundary"
+            title: "Town Boundary"
+        });
+        tocLayers.push({
+            layer: wiMPA,
+            id: "wiMPA",
+            title: "Municipal Planning Area"
         });
         tocLayers.push({
             layer: wiFlood,
             id: "wiFlood",
-            title: "Wickenburg Flood Zone"
+            title: "Flood Zone"
         });
         tocLayers.push({
             layer: wiPendFlood,
             id: "wiPendFlood",
-            title: "Wickenburg Pending Flood Zone"
+            title: "Pending Flood Zone"
         });
         tocLayers.push({
             layer: wiZoning,
             id: "wiZoning",
-            title: "Wickenburg Zoning"
+            title: "Zoning"
         });
         tocLayers.push({
             layer: wiEmployers,
             id: "wiEmployers",
-            title: "Wickenburg Employers, 5+ employees"
+            title: "Employers, 5+ employees"
         });
         tocLayers.push({
             layer: wiBlockGroups,
             id: "wiBlockGroups",
-            title: "Wickenburg Block Groups"
+            title: "Selected Block Groups"
         });
 
         // Legend Layers
@@ -391,7 +453,7 @@ require([
         legendLayers.push({
             layer: tParcels,
             id: "tParcels",
-            title: "Wickenburg Parcels"
+            title: "Parcels"
         });
         legendLayers.push({
             layer: coBoundary,
@@ -401,27 +463,32 @@ require([
         legendLayers.push({
             layer: wiBoundary,
             id: "wiBoundary",
-            title: "Wickenburg Town Boundary"
+            title: "Town Boundary"
         });
         legendLayers.push({
             layer: wiFlood,
             id: "wiFlood",
-            title: "Wickenburg Flood Zone"
+            title: "Flood Zone"
         });
         legendLayers.push({
             layer: wiPendFlood,
             id: "wiPendFlood",
-            title: "Wickenburg Pending Flood Zone"
+            title: "Pending Flood Zone"
         });
         legendLayers.push({
             layer: wiBlockGroups,
             id: "wiBlockGroups",
-            title: "Wickenburg Block Groups"
+            title: "Selected Block Groups"
+        });
+        legendLayers.push({
+            layer: wiMPA,
+            id: "wiMPA",
+            title: "Municipal Planning Area"
         });
         legendLayers.push({
             layer: wiZoning,
             id: "wiZoning",
-            title: "Wickenburg Zoning"
+            title: "Zoning"
         });
 
         // create legend dijit
@@ -441,13 +508,32 @@ require([
                 onChange: function() {
                     var clayer = map.getLayer(this.value);
                     clayer.setVisibility(!clayer.visible);
-                    this.checked = clayer.visible;
-                    // console.log(clayer.id + " = " + clayer.visible);
-                    // console.log(layer.layer.visible);
+                    if (this.value === "tParcels") {
+                        if (this.checked) {
+                            clayer.visible;
+                            showSlider(1);
+                            $("#highlight").fadeIn();
+                        } else {
+                            $("#highlight").fadeOut();
+                            showSlider(0);
+                        }
+                    }
+                    if (this.value === "wiZoning") {
+                        if (this.checked) {
+                            $("#zoneDefinitionsLink").show();
+                        } else {
+                            $("#zoneDefinitionsLink").hide();
+                        }
+                    }
+                    if (this.value === "wiFlood" || this.value === "wiPendFlood") {
+                        if (map.getLayer("wiFlood").visible || map.getLayer("wiPendFlood").visible) {
+                            $("#floodZoneDefinitionsLink").show();
+                        } else {
+                            $("#floodZoneDefinitionsLink").hide();
+                        }
+                    }
                 }
             }); //end CheckBox
-            // console.log(layer.layer.id);
-            // console.log(layer.layer.visible);
 
             //add the check box and label to the toc
             dc.place(checkBox.domNode, dom.byId("toggleDiv"));
@@ -456,7 +542,6 @@ require([
                 innerHTML: "&nbsp;&nbsp;" + layerName
             }, checkBox.domNode, "after");
             dc.place("<br>", checkLabel, "after");
-
         });
 
         // wiFlood Transparency Slider
@@ -486,6 +571,54 @@ require([
                 wiZoning.setOpacity(value2);
             }
         }, "slider2");
+
+        // parcel line thickness Slider
+        var slider3 = new HorizontalSlider({
+            name: "slider3",
+            value: wiZoning.opacity,
+            minimum: 1,
+            maximum: 5,
+            intermediateChanges: true,
+            discreteValues: 11,
+            style: "width:250px;",
+            onChange: function(value3) {
+                updateParcelThickness(value3);
+            }
+        }, "slider3");
+
+        function updateParcelThickness(value) {
+            var parcelLayer = map.getLayer("tParcels");
+
+            var layerDrawingOptions = [];
+            var layerDrawingOption = new LayerDrawingOptions();
+
+            var sls = new SimpleLineSymbol(
+                SimpleLineSymbol.STYLE_SOLID,
+                new Color([255, 170, 0]),
+                1
+            );
+
+            sls.setWidth(value);
+
+            var sfs = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+                sls,
+                new Color([255, 255, 0, 0])
+            );
+
+            layerDrawingOption.renderer = new SimpleRenderer(sfs);
+            layerDrawingOptions[1] = layerDrawingOption;
+            parcelLayer.setLayerDrawingOptions(layerDrawingOptions);
+        }
+
+        function showSlider(value) {
+            if (value === 1) {
+                //Show Slider Div
+                $("#ThicknessSlider").fadeIn();
+            } else {
+                //Hide Slider Div
+                $("#ThicknessSlider").fadeOut();
+            }
+        }
 
         //=================================================================================>
         // Start Geocode Section
@@ -579,7 +712,6 @@ require([
 
         on(link, "click", function() {
             var feature = map.infoWindow.getSelectedFeature();
-            // console.log(feature.attributes);
             var url = window.location;
             var link = "";
             if (feature.attributes.COUNTY_FIPS === "013") {
@@ -599,7 +731,7 @@ require([
         //=================================================================================>
 
         function mapReady() {
-
+            $(".esriSimpleSliderDecrementButton").addClass("esriSimpleSliderDisabledButton");
             //create identify tasks and setup parameters
             // zoning Layer
             identifyTask1 = new IdentifyTask(appConfig.mainURL);
@@ -640,6 +772,15 @@ require([
         } // end mapReady
 
         function executeIdentifyTask(event) {
+            if (multiple) {
+                if (newpopup) {
+                    map.graphics.add(new Graphic(newpopup.features[0].geometry, fillSymbol3));
+                    newpopup = "";
+                }
+            }
+            if (!multiple) {
+                map.graphics.clear();
+            }
             var layers = map.layerIds;
             var vis = tocLayers;
 
@@ -782,9 +923,9 @@ require([
             map.infoWindow.setFeatures([deferred1, deferred2, deferred3, deferred4]);
             map.infoWindow.show(event.mapPoint);
 
+
+
         } // end executeIdentifyTask
-
-
 
 
 
@@ -794,13 +935,13 @@ require([
 //=================================================================================>
 function toggleContent() {
     if ($("#legend").is(":hidden")) {
-        $("#legend").slideDown();
+        $("#legend").fadeIn();
         $("#legend").draggable({
             containment: "#mapDiv"
         });
         $("#contentsOpen");
     } else {
-        $("#legend").slideUp();
+        $("#legend").fadeOut();
         $("#contentsOpen");
     }
 }
@@ -808,8 +949,11 @@ function toggleContent() {
 $(document).ready(function() {
     $("#contentsOpen").fadeTo("slow");
     $("#legend").fadeTo("slow");
+    $("#legend").draggable({
+        containment: "#mapDiv"
+    });
     contentsOpen = $("#contentsOpen").height();
-    $("#legend").css("top", contentsOpen);
+    $("#legend").css("top", "55px");
     $("#contentsOpen").click(function() {
         toggleContent();
     });
@@ -824,13 +968,13 @@ $(document).ready(function() {
 //=================================================================================>
 function toggleMTool() {
     if ($("#mTool").is(":hidden")) {
-        $("#mTool").slideDown();
+        $("#mTool").fadeIn();
         $("#mTool").draggable({
             containment: "#mapDiv"
         });
         $("#measureOpen");
     } else {
-        $("#mTool").slideUp();
+        $("#mTool").fadeOut();
         $("#measureOpen");
     }
 }
@@ -839,7 +983,7 @@ $(document).ready(function() {
     $("#measureOpen").fadeTo("slow");
     $("#mTool").fadeTo("slow");
     measureOpen = $("#measureOpen").height();
-    $("#mTool").css("top", measureOpen);
+    $("#mTool").css("top", "55px");
     $("#measureOpen").click(function() {
         toggleMTool();
     });
@@ -854,14 +998,27 @@ $(document).ready(function() {
 //=================================================================================>
 function togglePrint() {
     if ($("#printTool").is(":hidden")) {
-        $("#printTool").slideDown();
+        $("#printTool").fadeIn();
         $("#printTool").draggable({
             containment: "#mapDiv"
         });
         $("#printOpen");
     } else {
-        $("#printTool").slideUp();
+        $("#printTool").fadeOut();
         $("#printOpen");
+    }
+}
+// Report Window open
+//=================================================================================>
+function toggleReportWindow() {
+    if ($("#reportTool").is(":hidden")) {
+        $("#reportTool").fadeIn();
+        $("#reportTool").draggable({
+            containment: "#mapDiv"
+        });
+    } else {
+        $("#reportTool").fadeOut();
+        $("#reportOpen");
     }
 }
 
@@ -869,15 +1026,22 @@ $(document).ready(function() {
     $("#printOpen").fadeTo("slow");
     $("#printTool").fadeTo("slow");
     printOpen = $("#printOpen").height();
-    $("#printTool").css("top", printOpen);
+    $("#printTool").css("top", "55px");
     $("#printOpen").click(function() {
         togglePrint();
     });
+    $("#reportOpen").fadeTo("slow");
+    $("#reportTool").fadeTo("slow");
+    reportOpen = $("#reportOpen").height();
+    $("#reportOpen").click(function() {
+        toggleReportWindow();
+    });
 });
 
-//sets original position of dropdown for measurement tool
+//sets original position of dropdown for Print and Report tools
 $(document).ready(function() {
     $("#printTool").hide();
+    $("#reportTool").hide();
 });
 // Bindings
 //=================================================================================>
@@ -893,6 +1057,8 @@ $(document).ready(function() {
     $("#legalDisclaimer").load("views/legalDisclaimer.html");
     //*** Definitions modal binding
     $("#definitions").load("views/definitions.html");
+    //*** Definitions modal binding
+    $("#floodDefinitions").load("views/floodDefinitions.html");
     //*** Measurement Tool binding
     $("#mTool").load("views/measureTool.html");
     //*** Measurement Tool Help modal binding
@@ -901,4 +1067,6 @@ $(document).ready(function() {
     $("#printTool").load("views/printTool.html");
     //*** Print Tool Help modal binding
     $("#helpPrint").load("views/helpPrint.html");
+    //*** Report Window modal binding
+    $("#reportTool").load("views/reportWindow.html");
 });

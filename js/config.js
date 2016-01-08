@@ -1,6 +1,6 @@
 var appConfig = new function() {
 
-    this.Version = "v3.7.0 | 08/03/2015";
+    this.Version = "v3.7.2 | 01/08/2016";
 
     this.emailLink = "https://www.azmag.gov/EmailPages/JasonHoward.asp";
 
@@ -17,16 +17,15 @@ var appConfig = new function() {
 
 
     this.initExtent = {
-        "xmin": -12561509,
-        "ymin": 4020496,
-        "xmax": -12543164,
-        "ymax": 4030003,
+        "xmin": -12570767,
+        "ymin": 4018810,
+        "xmax": -12534077,
+        "ymax": 4037517,
         "spatialReference": {
             "wkid": 102100
         }
     };
 
     this.center = [-112.343, 33.285]; // for Maricopa County
-    //Lat, Long (33.969, -112.731) for wickenburg
-    //Lat, Long (33.471, -112.115) for phoenix
+
 }; //End Config
