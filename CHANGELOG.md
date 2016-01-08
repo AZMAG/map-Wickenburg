@@ -9,6 +9,10 @@ CHANGELOG Wickenburg Zoning Website
 * zoom issue with geocoder
 * turn off measurement tool when window closes
 
+### Version 3.7.2 (1/8/2015)
+
+* Changed multiple parcel selection feature
+
 ### Version 3.7.1 (10/27/2015)
 
 * fixed popup link so it shows only on parcels popup

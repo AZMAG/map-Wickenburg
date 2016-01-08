@@ -218,6 +218,18 @@ color: #fff;
 /* ==========================================
 **** contents styles ****
 ============================================= */
+
+.hRadio{
+    margin: 5px;
+    padding: 5px;
+}
+#highlight label{
+    margin-left: 5px;
+
+}
+#highlight input{
+    margin-left: 5px;
+}
 #legend {
     position: absolute;
     top: 55px;
