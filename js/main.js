@@ -65,6 +65,8 @@ require([
         // add version and date to about.html, changed in config.js
         dom.byId("version").innerHTML = appConfig.Version;
 
+        var multiple = false;
+
         // var identifyParams;
         var tocLayers = [];
         var legendLayers = [];
@@ -89,8 +91,6 @@ require([
             keepHighlightOnHide: true,
             hideDelay: -1
         }, dc.create("div"));
-
-        $("#highLightBtn").fadeOut();
 
         // create the map and specify the custom info window as the info window that will be used by the map
         // <!-- Get a reference to the ArcGIS Map class -->
@@ -132,23 +132,29 @@ require([
 
         map.on("load", mapReady);
 
-        $("#highLtBtn").click(function() {
-            $(this).data("clicked", true);
-            $(this).removeClass("btn btn-default btn-xs").addClass("btn btn-success btn-xs");
-            $("#clearHighLtBtn").removeClass("btn btn-default btn-xs").addClass("btn btn-danger btn-xs");
-            killPopUp1();
-            if (newpopup) {
-                map.graphics.add(new Graphic(newpopup.features[0].geometry, fillSymbol3));
-                newpopup = "";
-            }
-        });
+        $("#highlight").hide();
 
-        $("#clearHighLtBtn").click(function() {
-            map.graphics.clear();
-            $("#highLtBtn").removeClass("btn btn-success btn-xs").addClass("btn btn-default btn-xs");
-            $(this).removeClass("btn btn-danger btn-xs").addClass("btn btn-default btn-xs");
+        $("#multiple").click(function() {
+            $(this).data("clicked", true);
+            multiple = true;
+            killPopUp1();
             identifyHandler = map.on("click", executeIdentifyTask);
         });
+
+        var single = $("#single");
+
+        single.click(function() {
+            multiple = false;
+            identifyHandler = map.on("click", executeIdentifyTask);
+        });
+
+        $("#clearHighlights").click(function() {
+            multiple = false;
+            map.graphics.clear();
+            $(single).prop("checked", true);
+            
+        });
+
 
         var identifyHandler = map.on("click", executeIdentifyTask);
         // remove event listener on map close
@@ -393,8 +399,7 @@ require([
         }
 
         function killPopUp1() {
-            if ($("#highLtBtn").data("clicked")) {
-                console.log("YES");
+            if ($("#multiple").data("clicked")) {
                 // kill the popup
                 identifyHandler.remove();
             }
@@ -507,9 +512,9 @@ require([
                         if (this.checked) {
                             clayer.visible;
                             showSlider(1);
-                            $("#highLightBtn").fadeIn();
+                            $("#highlight").fadeIn();
                         } else {
-                            $("#highLightBtn").fadeOut();
+                            $("#highlight").fadeOut();
                             showSlider(0);
                         }
                     }
@@ -767,6 +772,16 @@ require([
         } // end mapReady
 
         function executeIdentifyTask(event) {
+            if (multiple) {
+                if (newpopup) {
+                    map.graphics.add(new Graphic(newpopup.features[0].geometry, fillSymbol3));
+                    newpopup = "";
+                }
+            }
+            if (!multiple)
+            {
+                map.graphics.clear();
+            }
             var layers = map.layerIds;
             var vis = tocLayers;
 
@@ -908,6 +923,8 @@ require([
             // array of features.
             map.infoWindow.setFeatures([deferred1, deferred2, deferred3, deferred4]);
             map.infoWindow.show(event.mapPoint);
+
+
 
         } // end executeIdentifyTask
 
