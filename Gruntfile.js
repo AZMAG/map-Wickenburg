@@ -101,7 +101,7 @@ module.exports = function(grunt) {
 
         replace: {
             update_Meta: {
-                src: ["index.html", "config.js", "humans.txt", "README.md"], // source files array
+                src: ["index.html", "js/config.js", "humans.txt", "README.md"], // source files array
                 // src: ["README.md"], // source files array
                 overwrite: true, // overwrite matched source files
                 replacements: [{
@@ -137,7 +137,7 @@ module.exports = function(grunt) {
 
     // this would be run by typing "grunt test" on the command line
     grunt.registerTask("work", ["jshint"]);
-    grunt.registerTask("build", ["report", "uglify", "cssmin", "concat"]);
+    grunt.registerTask("build", ["replace", "uglify", "cssmin", "concat"]);
     grunt.registerTask("workcss", ["cssbeautifier"]);
     grunt.registerTask("change", ["conventionalChangelog"]);
 
