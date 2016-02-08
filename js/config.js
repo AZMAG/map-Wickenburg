@@ -1,6 +1,6 @@
 var appConfig = new function() {
 
-    this.Version = "v3.7.3 | 01/08/2016";
+    this.Version = "v3.7.4 | 02/08/2016";
 
     this.emailLink = "https://www.azmag.gov/EmailPages/JasonHoward.asp";
 
@@ -15,6 +15,10 @@ var appConfig = new function() {
     this.printUrl = "http://geo.azmag.gov/gismag/rest/services/gp/Wickenburg_Print/GPServer/Export%20Web%20Map"; // MAG Wickenburg Print service
     // "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task" // Esri test service
 
+    // Demographic PDF report
+    this.demService = "http://geo.azmag.gov/services/Demographics/reports.html?city=Wickenburg";
+    // Employment PDF report
+    this.empService = "http://geo.azmag.gov/services/employment2014/reports.html?city=Wickenburg";
 
     this.initExtent = {
         "xmin": -12570767,

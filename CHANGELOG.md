@@ -9,7 +9,13 @@ CHANGELOG Wickenburg Zoning Website
 * zoom issue with geocoder
 * turn off measurement tool when window closes
 
-### Version 3.7.3 (01/08/2015)
+### Version 3.7.4 (02/08/2016)
+
+* updated PDF reports URL for employment
+* moved reports URL's from view to config
+* updated grunt files
+
+### Version 3.7.3 (01/08/2016)
 
 * changed the title on the reports window to `Wickenburg`
 
