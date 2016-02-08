@@ -1,9 +1,10 @@
 {
   "name": "Wickenburg-Project",
-  "version": "3.7.3",
-  "date": "01/08/2016",
+  "version": "3.7.4",
+  "date": "02/08/2016",
   "author": "Vern Wolfley & Jack Fairfield",
-  "email": "vwolfley@azmag.gov & jfairfield@azmag.gov",
+  "email1": "vwolfley@azmag.gov",
+  "email2": "jfairfield@azmag.gov",
   "url": "http://geo.azmag.gov/maps/wickenburg/",
   "private": true,
   "devDependencies": {
@@ -13,11 +14,12 @@
     "grunt-contrib-jshint": "*",
     "grunt-contrib-uglify": "*",
     "grunt-contrib-watch": "*",
-    "grunt-cssbeautifier": "^0.1.2",
+    "grunt-cssbeautifier": "*",
+    "grunt-text-replace": "*",
     "grunt-version-check": "*",
     "jshint-stylish-ex": "*",
     "lodash": "*",
     "matchdep": "*",
-    "normalize.css": "^3.0.3"
+    "normalize.css": "*"
   }
 }
