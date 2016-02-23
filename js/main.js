@@ -103,7 +103,7 @@ require([
             keepHighlightOnHide: false,
             hideDelay: -1
         }, dc.create("div"));
-        // popup.on("show", highlightMultipleParcels); //back here;
+        popup.on("show", highlightMultipleParcels); //back here;
         popup.on("hide", highlightMultipleParcels); //back here;
 
 
@@ -149,12 +149,13 @@ require([
             //     map.graphics.add(new Graphic(newpopup.features[0].geometry, fillSymbol3));
             //     newpopup = "";
             // };
-            var graphic = popup.getSelectedFeature();;
+            var graphic = popup.getSelectedFeature();
             if (graphic) {
-                if (graphic.attributes.layerName === "Wickenburg Parcels") {
+                if (graphic._layer.name === "Wickenburg Parcels") {
                     // show link in popup info window
                     $("#infoLink").show();
-                } else {
+                } 
+                else {
                     // hide link in popup info window
                     $("#infoLink").hide();
                 }
@@ -168,7 +169,6 @@ require([
         $("#multiple").click(function() {
             $(this).data("clicked", true);
             multiple = true;
-            killPopUp1();
         });
 
         var single = $("#single");
@@ -291,35 +291,14 @@ require([
         //=================================================================================>
         // add layers to map
 
+        appConfig.layerInfo.sort(dynamicSort("-mapOrder"));
         for (var i = 0; i < appConfig.layerInfo.length; i++) {
            var configItem = appConfig.layerInfo[i];
-
            var popupBox = "";
 
            if (configItem.popupHeader != "" && configItem.popupBody != "" ) {
                 popupBox = new InfoTemplate(configItem.popupHeader, configItem.popupBody);
-           }
-
-           if (configItem.id === "tParcels") {
-                var tParcelsParms = new ImageParameters();
-                tParcelsParms.layerIds = [2];
-                tParcelsParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
-                var infoTemplates = {
-                  2: {
-                    infoTemplate: popupBox
-                  }
-                };
-
-                var tParcels = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
-                    id: "tParcels",
-                    imageParameters: tParcelsParms,
-                    outFields: ["*"],
-                    infoTemplates: infoTemplates,
-                    visible: false,
-                    opacity: 1
-                }));
-            }
-            else{                
+           }               
             var layer = new FeatureLayer(configItem.url, {
                 id: configItem.id,
                 mode: FeatureLayer.MODE_ONDEMAND,
@@ -329,23 +308,26 @@ require([
                 outFields: ["*"]
               });
             map.addLayer(layer);
-        }
            if (configItem.showLegend === true) {
                 legendLayers.push({
                     layer: map.getLayer(configItem.id),
                     id: configItem.id,
-                    title: configItem.title
+                    title: configItem.title,
+                    legendOrder: configItem.legendOrder
                 });
            }
            if (configItem.showCheckBox === true) {
                 tocLayers.push({
                     layer: map.getLayer(configItem.id),
                     id: configItem.id,
-                    title: configItem.title
+                    title: configItem.title,
+                    tocOrder: configItem.tocOrder
                 });
            }
         }
 
+        tocLayers.sort(dynamicSort("-tocOrder"));
+        legendLayers.sort(dynamicSort("-legendOrder"));
 
         // Measurement Tool
         //=================================================================================>
@@ -356,7 +338,7 @@ require([
         }, dom.byId("measurementDiv"));
         measurement.on("measure-start", function(evt){
            map.setInfoWindowOnClick(false);
-           disablepopup();
+           //disablepopup();
         });
         measurement.on("measure-end", function(evt){
            map.setInfoWindowOnClick(true);
@@ -374,22 +356,15 @@ require([
             }
         }
 
-        function killPopUp1() {
-            if ($("#multiple").data("clicked")) {
-                // kill the popup
-            }
-        }
-
         function highlightMultipleParcels(e) {
             if ($("#multiple").is(':checked')) {
-                if (e.target.features[0]._layer.id === "tParcels_2") {
+                if (e.target.features[0]._layer.id === "tParcels") {
                     var graphic = new Graphic(e.target._highlighted.geometry, e.target._highlighted.symbol);
                     map.graphics.add(graphic);
                 }
             }
             else{
-                map.graphics.clear()
-
+                //map.graphics.clear();
                 for (var i = 0; i < graphicsCollection.length; i++) {
                     map.graphics.add(graphicsCollection[i]);
                 }
@@ -480,7 +455,7 @@ require([
         // parcel line thickness Slider
         var slider3 = new HorizontalSlider({
             name: "slider3",
-            value: map.getLayer("wiZoning").opacity,
+            value: .5,
             minimum: 1,
             maximum: 5,
             intermediateChanges: true,
@@ -494,25 +469,15 @@ require([
         function updateParcelThickness(value) {
             var parcelLayer = map.getLayer("tParcels");
 
-            var layerDrawingOptions = [];
-            var layerDrawingOption = new LayerDrawingOptions();
-
             var sls = new SimpleLineSymbol(
                 SimpleLineSymbol.STYLE_SOLID,
                 new Color([255, 170, 0]),
                 1
             );
-
             sls.setWidth(value);
-
-            var sfs = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
-                sls,
-                new Color([255, 255, 0, 0])
-            );
-
-            layerDrawingOption.renderer = new SimpleRenderer(sfs);
-            layerDrawingOptions[2] = layerDrawingOption;
-            parcelLayer.setLayerDrawingOptions(layerDrawingOptions);
+            var renderer = new SimpleRenderer(sls);
+            parcelLayer.setRenderer(renderer);
+            parcelLayer.refresh()
         }
 
         function showSlider(value) {
@@ -536,16 +501,15 @@ require([
         on(link, "click", function() {
             var feature = map.infoWindow.getSelectedFeature();
             var url = window.location;
+
             var link = "";
-            if (feature.attributes.COUNTY_FIPS === "013") {
-                link = appConfig.MaricopaAssessor + feature.attributes.PARCEL;
+            if (feature.attributes.COUNTYFP10 === "013") {
+                link = appConfig.MaricopaAssessor + feature.attributes.PARCEL_APN;
                 window.open(link);
             }
-            if (feature.attributes.COUNTY_FIPS === "025") {
-                link = appConfig.YavapaiAssessor + feature.attributes.PARCEL;
+            else if (feature.attributes.COUNTYFP10 === "025") {
+                link = appConfig.YavapaiAssessor + feature.attributes.PARCEL_APN;
                 window.open(link);
-            } else {
-                // *** do nothing ***
             }
         });
 
@@ -808,6 +772,18 @@ function addBtnClick() {
         textSymbol.setFont(font);
         editToolbar._graphic.setSymbol(textSymbol);
     };
+
+    function dynamicSort(property) {
+        var sortOrder = 1;
+        if(property[0] === "-") {
+            sortOrder = -1;
+            property = property.substr(1);
+        }
+        return function (a,b) {
+            var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+            return result * sortOrder;
+        }
+    }
 
     }); // end Main Function
 

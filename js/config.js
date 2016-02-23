@@ -12,7 +12,10 @@ var appConfig = new function() {
             showLegend: true,
             showCheckBox: true,
             popupHeader: "Wickenburg Zoning",
-            popupBody: "Zoning Code: ${CODE}" + "<br>Zoning Description: ${DESCRIPTION}"
+            popupBody: "Zoning Code: ${CODE}" + "<br>Zoning Description: ${DESCRIPTION}",
+            tocOrder:1,
+            legendOrder:1,
+            mapOrder:11
         },{
             id: "wiFlood",
             url: this.mainURL + "/5",
@@ -22,7 +25,10 @@ var appConfig = new function() {
             showLegend: true,
             showCheckBox: true,
             popupHeader: "Flood Zone",
-            popupBody: "Flood Zone: ${ZONE}"
+            popupBody: "Flood Zone: ${ZONE}",
+            tocOrder:2,
+            legendOrder:9,
+            mapOrder:6
         },{
             id: "wiPendFlood",
             url: this.mainURL + "/6",
@@ -32,7 +38,10 @@ var appConfig = new function() {
             showLegend: true,
             showCheckBox: true,
             popupHeader: "Pending Flood Zone",
-            popupBody: "Pending Flood Zone: ${FloodZone}"
+            popupBody: "Pending Flood Zone: ${FloodZone}",
+            tocOrder:3,
+            legendOrder:3,
+            mapOrder:5
         },{
             id: "tParcels",
             url: this.mainURL + "/2",
@@ -42,7 +51,10 @@ var appConfig = new function() {
             showLegend: true,
             showCheckBox: true,
             popupHeader: "Parcels",
-            popupBody: "County: ${COUNTY}<br>" + "Parcel: ${PARCEL_APN_LABEL}<br>" + "Address: ${P_ADDRESS}"
+            popupBody: "County: ${COUNTY}<br>" + "Parcel: ${PARCEL_APN_LABEL}<br>" + "Address: ${P_ADDRESS}",
+            tocOrder:3,
+            legendOrder:3,
+            mapOrder:4
         },{
             id: "coBoundary",
             url: this.mainURL + "/4",
@@ -52,7 +64,9 @@ var appConfig = new function() {
             showLegend: true,
             showCheckBox: false,
             popupHeader: "",
-            popupBody: ""
+            popupBody: "",
+            legendOrder:4,
+            mapOrder:10
         },{
             id: "wiBoundary",
             url: this.mainURL + "/3",
@@ -62,7 +76,10 @@ var appConfig = new function() {
             showLegend: true,
             showCheckBox: true,
             popupHeader: "",
-            popupBody: ""
+            popupBody: "",
+            tocOrder:5,
+            legendOrder:5,
+            mapOrder:8
         },{
             id: "wiMPA",
             url: this.mainURL + "/10",
@@ -72,7 +89,10 @@ var appConfig = new function() {
             showLegend: true,
             showCheckBox: true,
             popupHeader: "",
-            popupBody: ""
+            popupBody: "",
+            tocOrder:6,
+            legendOrder:6,
+            mapOrder:9
         },{
             id: "wiBlockGroups",
             url: this.mainURL + "/9",
@@ -82,7 +102,10 @@ var appConfig = new function() {
             showLegend: true,
             showCheckBox: true,
             popupHeader: "Wickenburg Block Groups",
-            popupBody: "<strong>GEOID:  ${GEOID10}</strong><br>" + "<b>Total Persons:</b>  ${LOWMODUNIV:NumberFormat}<br>" + "<b>Low Income:</b>  ${LOW:NumberFormat}<br>" + "<b>Low & Moderate Income:</b>  ${LOWMOD:NumberFormat}<br>" + "<b>Low, Moderate, & Medium Income:</b>  ${LMMI:NumberFormat}<br>" + "<b>% Low & Moderate Income:</b> ${LOWMOD_PCT}%"
+            popupBody: "<strong>GEOID:  ${GEOID10}</strong><br>" + "<b>Total Persons:</b>  ${LOWMODUNIV:NumberFormat}<br>" + "<b>Low Income:</b>  ${LOW:NumberFormat}<br>" + "<b>Low & Moderate Income:</b>  ${LOWMOD:NumberFormat}<br>" + "<b>Low, Moderate, & Medium Income:</b>  ${LMMI:NumberFormat}<br>" + "<b>% Low & Moderate Income:</b> ${LOWMOD_PCT}%",
+            tocOrder:7,
+            legendOrder:7,
+            mapOrder:7
         },{
             id: "wiEmployers",
             url: this.mainURL + "/1",
@@ -92,7 +115,10 @@ var appConfig = new function() {
             showLegend: true,
             showCheckBox: true,
             popupHeader: "Employers",
-            popupBody: "<strong>${EmpName}</strong><hr class='pLine'>${Address}</br>" + "${Jurisdiction}, ${State} ${Zip}<br>" + "Type:  ${Cluster}"
+            popupBody: "<strong>${EmpName}</strong><hr class='pLine'>${Address}</br>" + "${Jurisdiction}, ${State} ${Zip}<br>" + "Type:  ${Cluster}",
+            tocOrder:8,
+            legendOrder:8,
+            mapOrder:2
         },{
             id: "wiBLI",
             url: this.mainURL + "/0",
@@ -102,7 +128,10 @@ var appConfig = new function() {
             showLegend: true,
             showCheckBox: true,
             popupHeader: "${NAME}",
-            popupBody: "<hr class='pLine'> Category:  ${BLI_CAT}<br> Sub Category: ${BLI_SUBCAT}<br> Website: ${WEBSITE} <br> APN: ${APN}"
+            popupBody: "<hr class='pLine'> Category:  ${BLI_CAT}<br> Sub Category: ${BLI_SUBCAT}<br> Website: ${WEBSITE} <br> APN: ${APN}",
+            tocOrder:9,
+            legendOrder:2,
+            mapOrder:1
         },{
             id: "wiSubdivisions",
             url: this.mainURL + "/7",
@@ -112,7 +141,10 @@ var appConfig = new function() {
             showLegend: true,
             showCheckBox: true,
             popupHeader: "${NAME}",
-            popupBody: "<hr class='pLine'> MCR:  ${MCR}<br> Square Miles: ${SQMI}<br> Acres: ${ACRES}"
+            popupBody: "<hr class='pLine'> MCR:  ${MCR}",
+            tocOrder:10,
+            legendOrder:10,
+            mapOrder:3
         }
     ];
 
