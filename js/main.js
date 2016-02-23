@@ -358,6 +358,7 @@ require([
 
         function highlightMultipleParcels(e) {
             if ($("#multiple").is(':checked')) {
+                disablepopup();
                 if (e.target.features[0]._layer.id === "tParcels") {
                     var graphic = new Graphic(e.target._highlighted.geometry, e.target._highlighted.symbol);
                     map.graphics.add(graphic);
