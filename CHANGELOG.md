@@ -9,6 +9,15 @@ CHANGELOG Wickenburg Zoning Website
 * zoom issue with geocoder
 * turn off measurement tool when window closes
 
+### Version 3.7.5 (02/08/2016)
+
+* updated to latest arcgis javascript api version
+* upgraded "geocoder" widget to newer "search" widget
+* updated the way layers are added and simplified popup handling
+* added new layers (BLI and Subdivisions)
+* added markup tools
+
+
 ### Version 3.7.4 (02/08/2016)
 
 * updated PDF reports URL for employment
