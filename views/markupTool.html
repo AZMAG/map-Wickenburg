@@ -1,0 +1,61 @@
+<!doctype html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <button id="" type="button" class="close closeX" data-dismiss="panel" onclick="toggleMarkupTools()" aria-hidden="true">&times;</button>
+            <a id="" type="button" class="close helpB" data-dismiss="panel" aria-hidden="true" href="#" data-toggle="modal" data-target="#helpModalMarkupTool"><img src="img/help_icon.png"></a>
+        
+        <div id="markupToolsHeader"></div>
+        <div class="editMarkupBtns">
+            <button id="btnAdd" title="Add" onClick="" class="btn glyphicon glyphicon-plus"></button>
+            <button id="btnEdit" title="Edit" onClick="toggleSelectedButton(this.id); " class="btn glyphicon glyphicon-pencil"></button>
+            <button id="btnErase" title="Erase" onClick="toggleSelectedButton(this.id);" class="btn glyphicon glyphicon-trash"></button>
+            <button id="btnUndo" title="Undo" onClick="" class="btn glyphicon glyphicon-share-alt flipped"></button>
+        </div>
+        <hr>
+        <div>Choose a Markup Tool:
+            <select name="dropdown"   class="btn btn-sm dropdown-toggle" id="markupDropdown">
+                <option value="POLYGON">Polygon</option>
+                <option value="CIRCLE">Circle</option>
+                <option value="ARROW">Arrow</option>
+                <option value="FREEHAND_POLYGON">Freehand Polygon</option>
+                <option value="POINT">Text</option>
+            </select>
+             
+        </div>
+        <hr>
+        <div class="div-toggles">
+            <div id="fillColor">
+            Click to change the fill color:
+            <div id="picker1"  class="trigger color trig" value="#556B2F"><div><div style="color: rgb(34, 34, 34); background-color: rgb(201, 213, 181);"></div></div></div>
+            <br>
+            <br>
+            *Transparency
+            <div id="fillTransparencySlider"></div>
+            <hr>
+            </div>
+            <div id="outlineColor">
+            Click to change the outline color:
+            <div id="picker2"  class="trigger color trig2" value="rgb(100, 86, 70)"><div><div id="picker2" style="color: rgb(34, 34, 34); background-color: rgb(189, 134, 70);"></div></div></div>
+            </div>
+
+        </div>
+        <div id="textSettings">
+            Font Size
+            <br>
+            <select name="dropdown" class="btn btn-sm dropdown-toggle" id="textDropdown">
+                <option value="5px">5px</option>
+                <option value="10px">10px</option>
+                <option value="25px">25px</option>
+                <option value="50px">50px</option>
+                <option value="75px">75px</option>
+            </select>
+            <hr>
+            Text Input
+            <br>
+            <input id="inputText" class="form-control" type="text">
+        </div>
+    </body>
+</html>

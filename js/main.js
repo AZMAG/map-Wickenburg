@@ -1,8 +1,22 @@
 /*! main.js | Wickenburg Zoning Website @ MAG */
-
+var map, toolbar;
+var graphicsCollection = [];
+var fillColorSelection = {
+    r: 0,
+    g: 0,
+    b: 255
+};
+var outlineColorSelection = {
+    r: 0,
+    g: 0,
+    b: 0
+};
 require([
         "dojo/dom-construct",
         "dojo/dom",
+        "dojo/dom-style",
+        "esri/toolbars/draw",
+        "esri/toolbars/edit",
         "dojo/on",
         "dojo/parser",
         "dojo/_base/connect",
@@ -10,28 +24,29 @@ require([
         "dojo/keys",
         "esri/sniff",
         "esri/map",
-        "esri/SnappingManager",
         "esri/dijit/Measurement",
         "esri/dijit/Scalebar",
         "esri/dijit/HomeButton",
         "esri/dijit/LocateButton",
-        "esri/dijit/Geocoder",
         "esri/graphic",
         "esri/geometry/Extent",
         "esri/geometry/Multipoint",
         "esri/symbols/PictureMarkerSymbol",
         "esri/symbols/SimpleFillSymbol",
         "esri/symbols/SimpleLineSymbol",
+        "esri/symbols/TextSymbol",
         "esri/tasks/IdentifyTask",
         "esri/tasks/IdentifyParameters",
         "esri/dijit/Popup",
         "dojo/_base/array",
         "dojo/_base/Color",
+        "dojo/_base/event",
         "esri/layers/LayerDrawingOptions",
         "esri/renderers/SimpleRenderer",
 
-        "esri/layers/ArcGISDynamicMapServiceLayer",
         "esri/layers/ImageParameters",
+        "esri/dijit/Search",
+        "esri/tasks/locator",
         "esri/dijit/Legend",
         "dijit/form/CheckBox",
         "dijit/form/HorizontalSlider",
@@ -41,6 +56,8 @@ require([
         "esri/dijit/BasemapToggle",
 
         "esri/layers/FeatureLayer",
+        "esri/layers/ArcGISDynamicMapServiceLayer",
+        "esri/layers/ArcGISTiledMapServiceLayer",
         "esri/dijit/PopupTemplate",
         "esri/InfoTemplate",
         "esri/symbols/SimpleMarkerSymbol",
@@ -50,12 +67,13 @@ require([
         "esri/request",
         "esri/config",
 
+
         "js/vendor/bootstrapmap.min.js",
         "dojo/domReady!"
     ],
 
-    function(dc, dom, on, parser, connect, query, keys, has, Map, SnappingManager, Measurement, Scalebar, HomeButton, LocateButton, Geocoder,
-        Graphic, Extent, Multipoint, PictureMarkerSymbol, SimpleFillSymbol, SimpleLineSymbol, IdentifyTask, IdentifyParameters, Popup, arrayUtils, Color, LayerDrawingOptions, SimpleRenderer, ArcGISDynamicMapServiceLayer, ImageParameters, Legend, CheckBox, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, BasemapToggle, FeatureLayer, PopupTemplate, InfoTemplate, SimpleMarkerSymbol, Print, PrintTemplate, esriRequest, esriConfig, BootstrapMap) {
+    function(dc, dom, domStyle, Draw, Edit, on, parser, connect, query, keys, has, Map, Measurement, Scalebar, HomeButton, LocateButton,
+        Graphic, Extent, Multipoint, PictureMarkerSymbol, SimpleFillSymbol, SimpleLineSymbol, TextSymbol, IdentifyTask, IdentifyParameters, Popup, arrayUtils, Color, event, LayerDrawingOptions, SimpleRenderer, ImageParameters, Search, Locator, Legend, CheckBox, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, BasemapToggle, FeatureLayer, ArcGISDynamicMapServiceLayer, ArcGISTiledMapServiceLayer, PopupTemplate, InfoTemplate, SimpleMarkerSymbol, Print, PrintTemplate, esriRequest, esriConfig, BootstrapMap) {
 
         parser.parse();
 
@@ -75,6 +93,8 @@ require([
         var tocLayers = [];
         var legendLayers = [];
 
+        var newOP = 1;
+
         // line set up for measurement tool
         var sfs = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
             new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
@@ -92,13 +112,15 @@ require([
             fillSymbol: fillSymbol3,
             markerSymbol: pointSymbol,
             visibleWhenEmpty: false,
-            keepHighlightOnHide: true,
+            keepHighlightOnHide: false,
             hideDelay: -1
         }, dc.create("div"));
+        popup.on("show", highlightMultipleParcels); //back here;
+        popup.on("hide", highlightMultipleParcels); //back here;
 
         // create the map and specify the custom info window as the info window that will be used by the map
         // <!-- Get a reference to the ArcGIS Map class -->
-        var map = BootstrapMap.create("mapDiv", {
+        map = BootstrapMap.create("mapDiv", {
             extent: new Extent(appConfig.initExtent),
             basemap: "streets",
             minZoom: 11,
@@ -109,29 +131,28 @@ require([
             sliderPosition: "top-right",
             scrollWheelZoom: true
         });
+        // console.log(map.getLayer(map.basemapLayerIds).opacity);
+
+        var search = new Search({
+            map: map,
+            sources: [{
+                locator: new Locator(appConfig.LocatorService),
+                singleLineFieldName: "SingleLine",
+                autoNavigate: true,
+                enableInfoWindow: true,
+                enableHighlight: false,
+                autoSelect: false,
+                showInfoWindowOnSelect: true,
+                name: "Address",
+                searchExtent: new Extent(appConfig.initExtent),
+                placeholder: "21 North Frontier Street"
+            }]
+        }, "search");
+        search.startup();
 
         var newpopup;
         connect.connect(popup, "onClearFeatures", function() {
             newpopup = popup;
-        });
-
-        connect.connect(popup, "onSelectionChange", function() {
-            // $("#highlightBtn").fadeIn();
-            // if (newpopup) {
-            //     map.graphics.add(new Graphic(newpopup.features[0].geometry, fillSymbol3));
-            //     newpopup = "";
-            // };
-            var graphic = popup.getSelectedFeature();
-            // console.log(graphic);
-            if (graphic) {
-                if (graphic.attributes.layerName === "Wickenburg Parcels") {
-                    // show link in popup info window
-                    $("#infoLink").show();
-                } else {
-                    // hide link in popup info window
-                    $("#infoLink").hide();
-                }
-            }
         });
 
         map.on("load", mapReady);
@@ -141,28 +162,29 @@ require([
         $("#multiple").click(function() {
             $(this).data("clicked", true);
             multiple = true;
-            killPopUp1();
-            identifyHandler = map.on("click", executeIdentifyTask);
         });
 
         var single = $("#single");
 
         single.click(function() {
             multiple = false;
-            identifyHandler = map.on("click", executeIdentifyTask);
         });
 
         $("#clearHighlights").click(function() {
             multiple = false;
             map.graphics.clear();
+
+            for (var i = 0; i < graphicsCollection.length; i++) {
+                map.graphics.add(graphicsCollection[i]);
+            }
+
+            // map.graphics.add(graphicsCollection);
             $(single).prop("checked", true);
 
         });
 
-
-        var identifyHandler = map.on("click", executeIdentifyTask);
         // remove event listener on map close
-        map.on("unload", executeIdentifyTask);
+        // map.on("unload", executeIdentifyTask);
 
         var scalebar = new Scalebar({
             map: map,
@@ -186,36 +208,37 @@ require([
         }, dc.create("div", {
             id: "LocateButton"
         }, "mapDiv", "last"));
+
+        geoLocateButton.on("locate", function(evt) {
+            disablepopup();
+        });
         geoLocateButton.startup();
 
-        var toggle = new BasemapToggle({
-            // theme: "basemapToggle",
-            map: map,
-            visible: true,
-            basemap: "satellite"
-        }, dc.create("div", {
-            id: "BasemapToggle"
-        }, "mapDiv", "last"));
-        toggle.startup();
+        // var toggleBasemap = new BasemapToggle({
+        //     // theme: "basemapToggle",
+        //     map: map,
+        //     visible: true,
+        //     basemap: "satellite"
+        // }, dc.create("div", {
+        //     id: "BasemapToggle"
+        // }, "mapDiv", "last"));
+        // toggleBasemap.startup();
 
-        // create geosearch widget
-        var geocoder = new Geocoder({
-            value: "",
-            zoomScale: 10,
-            maxLocations: 10,
-            autoComplete: true,
-            // arcgisGeocoder: true,
-            arcgisGeocoder: {
-                sourceCountry: "USA",
-                placeholder: "155 N Tegner St, Wickenburg, AZ"
-            },
-            // geocoders:
-            map: map
-        }, "geosearch");
-        geocoder.startup();
-        geocoder.on("select", geocodeSelect);
-        geocoder.on("findResults", geocodeResults);
-        geocoder.on("clear", clearFindGraphics);
+        // toggleBasemap.on("toggle", function(evt) {
+        //     if (evt.currentBasemap === "streets") {
+        //         domStyle.set(dom.byId("worldImg"), "display", "none");
+        //         domStyle.set(dom.byId("worldStr"), "display", "list-item");
+        //         newOP = 0;
+        //         value4 = 1
+        //     }
+        //     if (evt.currentBasemap === "satellite") {
+        //         domStyle.set(dom.byId("worldStr"), "display", "none");
+        //         domStyle.set(dom.byId("worldImg"), "display", "list-item");
+        //         newOP = 1;
+        //         value4 = 0;
+        //     }
+        // });
+
 
         // Print Functions for Print dijit
         //=================================================================================>
@@ -271,229 +294,101 @@ require([
             console.log("Something broke: ", err);
         }
 
-
         //=================================================================================>
         // add layers to map
 
-        var wiZoningParms = new ImageParameters();
-        wiZoningParms.layerIds = [6];
-        wiZoningParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
+        appConfig.layerInfo.sort(dynamicSort("-mapOrder"));
+        for (var i = 0; i < appConfig.layerInfo.length; i++) {
+            var configItem = appConfig.layerInfo[i];
+            var popupBox = "";
 
-        var wiZoning = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
-            id: "wiZoning",
-            imageParameters: wiZoningParms,
-            outFields: ["*"],
-            visible: true,
-            opacity: 0.65
-        }));
+            if (configItem.popupHeader !== "" && configItem.popupBody !== "") {
+                popupBox = new InfoTemplate(configItem.popupHeader, configItem.popupBody);
+            }
+            var layer = new FeatureLayer(configItem.url, {
+                id: configItem.id,
+                mode: FeatureLayer.MODE_ONDEMAND,
+                visible: configItem.visible,
+                infoTemplate: popupBox,
+                opacity: configItem.opacity,
+                outFields: ["*"]
+            });
+            map.addLayer(layer);
+            if (configItem.showLegend === true) {
+                legendLayers.push({
+                    layer: map.getLayer(configItem.id),
+                    id: configItem.id,
+                    title: configItem.title,
+                    legendOrder: configItem.legendOrder
+                });
+            }
+            if (configItem.showCheckBox === true) {
+                tocLayers.push({
+                    layer: map.getLayer(configItem.id),
+                    id: configItem.id,
+                    title: configItem.title,
+                    tocOrder: configItem.tocOrder
+                });
+            }
+        }
 
-        var wiFloodParms = new ImageParameters();
-        wiFloodParms.layerIds = [4];
-        wiFloodParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
+        tocLayers.sort(dynamicSort("-tocOrder"));
+        legendLayers.sort(dynamicSort("-legendOrder"));
 
-        var wiFlood = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
-            id: "wiFlood",
-            imageParameters: wiFloodParms,
-            outFields: ["*"],
-            visible: false,
-            opacity: 0.65
-        }));
+        // added for transparency slider option
+        // World Imagery
+        var imgBasemapI = new ArcGISTiledMapServiceLayer(appConfig.imageryLayer, {
+            visible: false
+        });
+        map.addLayer(imgBasemapI);
+        // World Street Map
+        // var imgBasemapS = new ArcGISTiledMapServiceLayer(appConfig.streetsLayer, {
+        //     visible: false
+        // });
+        // map.addLayer(imgBasemapS);
 
-        var wiPendFloodParms = new ImageParameters();
-        wiPendFloodParms.layerIds = [5];
-        wiPendFloodParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
-
-        var wiPendFlood = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
-            id: "wiPendFlood",
-            imageParameters: wiPendFloodParms,
-            outFields: ["*"],
-            visible: false,
-            opacity: 1
-        }));
-
-        var tParcelsParms = new ImageParameters();
-        tParcelsParms.layerIds = [1];
-        tParcelsParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
-
-        var tParcels = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
-            id: "tParcels",
-            imageParameters: tParcelsParms,
-            outFields: ["*"],
-            visible: false,
-            opacity: 1
-        }));
-
-        var coBoundary = map.addLayer(new FeatureLayer(appConfig.mainURL + "/3", {
-            id: "coBoundary",
-            mode: FeatureLayer.MODE_ONDEMAND,
-            visible: true,
-            opacity: 1
-        }));
-
-        var wiBoundary = map.addLayer(new FeatureLayer(appConfig.mainURL + "/2", {
-            id: "wiBoundary",
-            mode: FeatureLayer.MODE_ONDEMAND,
-            visible: true,
-            opacity: 1
-        }));
-
-        var wiMPA = map.addLayer(new FeatureLayer(appConfig.mainURL + "/8", {
-            id: "wiMPA",
-            mode: FeatureLayer.MODE_ONDEMAND,
-            visible: false,
-            opacity: 1
-        }));
-
-        var blockContent = "<strong>GEOID:  ${GEOID10}</strong><br>" + "<b>Total Persons:</b>  ${LOWMODUNIV:NumberFormat}<br>" + "<b>Low Income:</b>  ${LOW:NumberFormat}<br>" + "<b>Low & Moderate Income:</b>  ${LOWMOD:NumberFormat}<br>" + "<b>Low, Moderate, & Medium Income:</b>  ${LMMI:NumberFormat}<br>" + "<b>% Low & Moderate Income:</b> ${LOWMOD_PCT}%";
-        var blockTemplate = new InfoTemplate("Wickenburg Block Groups", blockContent);
-
-        var wiBlockGroups = map.addLayer(new FeatureLayer(appConfig.mainURL + "/7", {
-            id: "wiBlockGroups",
-            visible: false,
-            opacity: 1,
-            mode: FeatureLayer.MODE_ONDEMAND,
-            infoTemplate: blockTemplate,
-            outFields: ["*"]
-        }));
-
-        // add new info window for employers
-        var empContent = "<strong>${EmpName}</strong><hr class='pLine'>${Address}</br>" + "${Jurisdiction}, ${State} ${Zip}<br>" + "Type:  ${Cluster}";
-        var empTemplate = new InfoTemplate("Employers", empContent);
-
-        var wiEmployers = map.addLayer(new FeatureLayer(appConfig.mainURL + "/0", {
-            id: "wiEmployers",
-            visible: false,
-            opacity: 1,
-            mode: FeatureLayer.MODE_ONDEMAND,
-            infoTemplate: empTemplate,
-            outFields: ["*"]
-        }));
 
         // Measurement Tool
         //=================================================================================>
-        //dojo.keys.copyKey maps to CTRL on windows and Cmd on Mac., but has wrong code for Chrome on Mac
-        var snapManager = map.enableSnapping({
-            snapKey: has("mac") ? keys.META : keys.CTRL
-        });
-        var layerInfos = [{
-            layer: tParcels
-        }];
-        snapManager.setLayerInfos(layerInfos);
 
         var measurement = new Measurement({
             map: map,
             lineSymbol: sfs
         }, dom.byId("measurementDiv"));
+        measurement.on("measure-start", function(evt) {
+            map.setInfoWindowOnClick(false);
+            //disablepopup();
+        });
+        measurement.on("measure-end", function(evt) {
+            map.setInfoWindowOnClick(true);
+        });
         measurement.startup();
-        on(measurement.area, "click", killPopUp);
-        on(measurement.distance, "click", killPopUp);
-        on(measurement.location, "click", killPopUp);
 
         function killPopUp() {
             var toolName = this.dojoAttachPoint;
             var activeTool = measurement[toolName].checked;
             if (activeTool === true) {
                 // kill the popup
-                identifyHandler.remove();
             }
             if (activeTool !== true) {
                 // turn popups back on
-                identifyHandler = map.on("click", executeIdentifyTask);
             }
         }
 
-        function killPopUp1() {
-            if ($("#multiple").data("clicked")) {
-                // kill the popup
-                identifyHandler.remove();
+        function highlightMultipleParcels(e) {
+            if ($("#multiple").is(":checked")) {
+                disablepopup();
+                if (e.target.features[0]._layer.id === "tParcels") {
+                    var graphic = new Graphic(e.target._highlighted.geometry, e.target._highlighted.symbol);
+                    map.graphics.add(graphic);
+                }
+            } else {
+                //map.graphics.clear();
+                for (var i = 0; i < graphicsCollection.length; i++) {
+                    map.graphics.add(graphicsCollection[i]);
+                }
             }
         }
-
-        //TOC Layers
-        // tocLayers.push({layer: aerial, title: "Aerial Imagery"});
-        tocLayers.push({
-            layer: tParcels,
-            id: "tParcels",
-            title: "Parcels"
-        });
-        tocLayers.push({
-            layer: wiBoundary,
-            id: "wiBoundary",
-            title: "Town Boundary"
-        });
-        tocLayers.push({
-            layer: wiMPA,
-            id: "wiMPA",
-            title: "Municipal Planning Area"
-        });
-        tocLayers.push({
-            layer: wiFlood,
-            id: "wiFlood",
-            title: "Flood Zone"
-        });
-        tocLayers.push({
-            layer: wiPendFlood,
-            id: "wiPendFlood",
-            title: "Pending Flood Zone"
-        });
-        tocLayers.push({
-            layer: wiZoning,
-            id: "wiZoning",
-            title: "Zoning"
-        });
-        tocLayers.push({
-            layer: wiEmployers,
-            id: "wiEmployers",
-            title: "Employers, 5+ employees"
-        });
-        tocLayers.push({
-            layer: wiBlockGroups,
-            id: "wiBlockGroups",
-            title: "Selected Block Groups"
-        });
-
-        // Legend Layers
-        // legendLayers.push({layer: wiEmployers, title: "Wickenburg Employers"});
-        legendLayers.push({
-            layer: tParcels,
-            id: "tParcels",
-            title: "Parcels"
-        });
-        legendLayers.push({
-            layer: coBoundary,
-            id: "coBoundary",
-            title: "Maricopa County Boundary"
-        });
-        legendLayers.push({
-            layer: wiBoundary,
-            id: "wiBoundary",
-            title: "Town Boundary"
-        });
-        legendLayers.push({
-            layer: wiFlood,
-            id: "wiFlood",
-            title: "Flood Zone"
-        });
-        legendLayers.push({
-            layer: wiPendFlood,
-            id: "wiPendFlood",
-            title: "Pending Flood Zone"
-        });
-        legendLayers.push({
-            layer: wiBlockGroups,
-            id: "wiBlockGroups",
-            title: "Selected Block Groups"
-        });
-        legendLayers.push({
-            layer: wiMPA,
-            id: "wiMPA",
-            title: "Municipal Planning Area"
-        });
-        legendLayers.push({
-            layer: wiZoning,
-            id: "wiZoning",
-            title: "Zoning"
-        });
 
         // create legend dijit
         var legend = new Legend({
@@ -551,35 +446,84 @@ require([
         // wiFlood Transparency Slider
         var slider1 = new HorizontalSlider({
             name: "slider1",
-            value: wiFlood.opacity,
+            value: map.getLayer("wiFlood").opacity,
             minimum: 0,
             maximum: 1,
             intermediateChanges: true,
             discreteValues: 11,
             style: "width:250px;",
             onChange: function(value1) {
-                wiFlood.setOpacity(value1);
+                map.getLayer("wiFlood").setOpacity(value1);
             }
         }, "slider1");
 
         // wiZoning Transparency Slider
         var slider2 = new HorizontalSlider({
             name: "slider2",
-            value: wiZoning.opacity,
+            value: map.getLayer("wiZoning").opacity,
             minimum: 0,
             maximum: 1,
             intermediateChanges: true,
             discreteValues: 11,
             style: "width:250px;",
             onChange: function(value2) {
-                wiZoning.setOpacity(value2);
+                map.getLayer("wiZoning").setOpacity(value2);
             }
         }, "slider2");
+
+        // basemap Transparency Slider
+        var slider4 = new HorizontalSlider({
+            name: "slider4",
+            value: map.getLayer(map.basemapLayerIds).opacity,
+            minimum: 0,
+            maximum: 1,
+            intermediateChanges: true,
+            discreteValues: 11,
+            style: "width:250px;",
+            onChange: function(value4) {
+                // console.log("value4: " + value4);
+                // console.log(map.getLayer(map.basemapLayerIds).layerInfos[0].name);
+                var baseLayerName = map.getLayer(map.basemapLayerIds).layerInfos[0].name;
+                // console.log(baseLayerName);
+                newOP = 1 - value4;
+                // console.log("newOP: " + newOP);
+
+                // if (baseLayerName === "World Street Map") {
+                //     imgBasemapI.show();
+                //     map.getLayer(map.basemapLayerIds).setOpacity(value4);
+                //     imgBasemapI.setOpacity(newOP);
+
+                //     if (newOP === 0) {
+                //         imgBasemapI.hide();
+                //     }
+                // }
+                // if (baseLayerName === "World Imagery") {
+                //     imgBasemapS.show();
+                //     map.getLayer(map.basemapLayerIds).setOpacity(value4);
+                //     imgBasemapS.setOpacity(newOP);
+
+                //     if (newOP === 0) {
+                //         imgBasemapS.hide();
+                //     }
+                // }
+
+                imgBasemapI.show();
+                map.getLayer(map.basemapLayerIds).setOpacity(value4);
+                imgBasemapI.setOpacity(newOP);
+
+                if (newOP === 0) {
+                    imgBasemapI.hide();
+                }
+                // console.log("newOP: " + newOP);
+                // console.log("image: " + imgBasemap.opacity);
+                // console.log("streets: " + map.getLayer(map.basemapLayerIds).opacity);
+            }
+        }, "slider4");
 
         // parcel line thickness Slider
         var slider3 = new HorizontalSlider({
             name: "slider3",
-            value: wiZoning.opacity,
+            value: 0.5,
             minimum: 1,
             maximum: 5,
             intermediateChanges: true,
@@ -593,25 +537,15 @@ require([
         function updateParcelThickness(value) {
             var parcelLayer = map.getLayer("tParcels");
 
-            var layerDrawingOptions = [];
-            var layerDrawingOption = new LayerDrawingOptions();
-
             var sls = new SimpleLineSymbol(
                 SimpleLineSymbol.STYLE_SOLID,
                 new Color([255, 170, 0]),
                 1
             );
-
             sls.setWidth(value);
-
-            var sfs = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
-                sls,
-                new Color([255, 255, 0, 0])
-            );
-
-            layerDrawingOption.renderer = new SimpleRenderer(sfs);
-            layerDrawingOptions[1] = layerDrawingOption;
-            parcelLayer.setLayerDrawingOptions(layerDrawingOptions);
+            var renderer = new SimpleRenderer(sls);
+            parcelLayer.setRenderer(renderer);
+            parcelLayer.refresh();
         }
 
         function showSlider(value) {
@@ -624,111 +558,67 @@ require([
             }
         }
 
-        //=================================================================================>
-        // Start Geocode Section
-
-        function geosearch() {
-            var def = geocoder.find();
-            def.then(function(res) {
-                geocodeResults(res);
-            });
-        }
-
-        function geocodeSelect(item) {
-            var g = (item.graphic ? item.graphic : item.result.feature);
-            g.setSymbol(sym);
-            addPlaceGraphic(item.result, g.symbol);
-        }
-
-        function geocodeResults(places) {
-            places = places.results;
-            if (places.length > 0) {
-                clearFindGraphics();
-                var symbol = sym;
-                // Create and add graphics with pop-ups
-                for (var i = 0; i < places.length; i++) {
-                    addPlaceGraphic(places[i], symbol);
-                }
-                zoomToPlaces(places);
-            } else {
-                alert("Sorry, address or place not found.");
-            }
-        }
-
-        function addPlaceGraphic(item, symbol) {
-            var place = {};
-            var attributes, infoTemplate, pt, graphic;
-            pt = item.feature.geometry;
-            place.address = item.name;
-            place.score = item.feature.attributes.Score;
-            // Graphic components
-            attributes = {
-                address: place.address,
-                score: place.score,
-                lat: pt.getLatitude().toFixed(2),
-                lon: pt.getLongitude().toFixed(2)
-            };
-            infoTemplate = new InfoTemplate("${address}", "Latitude: ${lat}<br/>Longitude: ${lon}<br/>Score: ${score}");
-            graphic = new Graphic(pt, symbol, attributes, infoTemplate);
-            // Add to map
-            map.graphics.add(graphic);
-        }
-
-        function zoomToPlaces(places) {
-            var multiPoint = new Multipoint(map.spatialReference);
-            for (var i = 0; i < places.length; i++) {
-                //multiPoint.addPoint(places[i].location);
-                multiPoint.addPoint(places[i].feature.geometry);
-            }
-            map.setExtent(multiPoint.getExtent().expand(2.0));
-        }
-
-        function clearFindGraphics() {
-            map.infoWindow.hide();
-            map.graphics.clear();
-        }
-
-        function createPictureSymbol(url, xOffset, yOffset) {
-            return new PictureMarkerSymbol({
-                "angle": 0,
-                "xoffset": xOffset,
-                "yoffset": yOffset,
-                "type": "esriPMS",
-                "url": url,
-                "contentType": "image/png",
-                "width": 12,
-                "height": 24
-            });
-        }
-
-        var sym = createPictureSymbol("img/blue-pin.png", 0, 12, 35);
-
-        // End Geocode Section
-        //=================================================================================>
-
         //create a link in the popup window.
-        var link = dc.create("a", {
+        var alink = dc.create("a", {
             "class": "action",
-            "id": "infoLink",
+            "id": "aInfoLink",
             "innerHTML": "Assessor Info", //text that appears in the popup for the link
             "href": "javascript: void(0);"
         }, query(".actionList", map.infoWindow.domNode)[0]);
 
-        on(link, "click", function() {
+        on(alink, "click", function() {
             var feature = map.infoWindow.getSelectedFeature();
+            console.log(feature);
             var url = window.location;
-            var link = "";
-            if (feature.attributes.COUNTY_FIPS === "013") {
-                link = appConfig.MaricopaAssessor + feature.attributes.PARCEL;
-                window.open(link);
-            }
-            if (feature.attributes.COUNTY_FIPS === "025") {
-                link = appConfig.YavapaiAssessor + feature.attributes.PARCEL;
-                window.open(link);
-            } else {
-                // *** do nothing ***
-            }
 
+            var alink = "";
+            if (feature.attributes.COUNTYFP10 === "013") {
+                alink = appConfig.MaricopaAssessor + feature.attributes.PARCEL_APN;
+                window.open(alink);
+            } else if (feature.attributes.COUNTYFP10 === "025") {
+                alink = appConfig.YavapaiAssessor + feature.attributes.PARCEL_APN;
+                window.open(alink);
+            }
+        });
+
+        //create a link in the popup window.
+        var rlink = dc.create("a", {
+            "class": "action",
+            "id": "rInfoLink",
+            "innerHTML": "Recorder Info", //text that appears in the popup for the link
+            "href": "javascript: void(0);"
+        }, query(".actionList", map.infoWindow.domNode)[0]);
+
+        on(rlink, "click", function() {
+            var feature = map.infoWindow.getSelectedFeature();
+            console.log(feature);
+            var url = window.location;
+
+            var rlink = appConfig.MaricopaRecorder + feature.attributes.MCR_BOOK + "&page=" + feature.attributes.MCR_PAGE;
+            window.open(rlink);
+        });
+
+        /**
+         * Determines what shows up in the action link section of the popup
+         * @param  {[type]} ) {var graphic [description]
+         * @return {[type]}   returns action link in popup
+         */
+        connect.connect(popup, "onSelectionChange", function() {
+            var graphic = popup.getSelectedFeature();
+            // console.log(graphic);
+            if (graphic) {
+                // console.log(graphic);
+                if (graphic.attributes.PARCEL_APN) {
+                    $("#aInfoLink").show();
+                    $("#rInfoLink").hide();
+                } else if (graphic.attributes.MCR) {
+                    $("#rInfoLink").show();
+                    $("#aInfoLink").hide();
+                } else {
+                    $("#aInfoLink").hide();
+                    $("#rInfoLink").hide();
+                }
+            }
         });
 
         // Identify Features
@@ -736,202 +626,265 @@ require([
 
         function mapReady() {
             $(".esriSimpleSliderDecrementButton").addClass("esriSimpleSliderDisabledButton");
-            //create identify tasks and setup parameters
-            // zoning Layer
-            identifyTask1 = new IdentifyTask(appConfig.mainURL);
-            identifyParamsTask1 = new IdentifyParameters();
-            identifyParamsTask1.layerIds = [6];
-            identifyParamsTask1.tolerance = 3;
-            identifyParamsTask1.returnGeometry = true;
-            identifyParamsTask1.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
-            identifyParamsTask1.width = map.width;
-            identifyParamsTask1.height = map.height;
-            // parcel layer
-            identifyTask2 = new IdentifyTask(appConfig.mainURL);
-            identifyParamsTask2 = new IdentifyParameters();
-            identifyParamsTask2.layerIds = [1];
-            identifyParamsTask2.tolerance = 3;
-            identifyParamsTask2.returnGeometry = true;
-            identifyParamsTask2.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
-            identifyParamsTask2.width = map.width;
-            identifyParamsTask2.height = map.height;
-            // flood zone layer
-            identifyTask3 = new IdentifyTask(appConfig.mainURL);
-            identifyParamsTask3 = new IdentifyParameters();
-            identifyParamsTask3.layerIds = [4];
-            identifyParamsTask3.tolerance = 3;
-            identifyParamsTask3.returnGeometry = true;
-            identifyParamsTask3.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
-            identifyParamsTask3.width = map.width;
-            identifyParamsTask3.height = map.height;
-            // pending flood zone layer
-            identifyTask4 = new IdentifyTask(appConfig.mainURL);
-            identifyParamsTask4 = new IdentifyParameters();
-            identifyParamsTask4.layerIds = [5];
-            identifyParamsTask4.tolerance = 3;
-            identifyParamsTask4.returnGeometry = true;
-            identifyParamsTask4.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
-            identifyParamsTask4.width = map.width;
-            identifyParamsTask4.height = map.height;
+            createToolbar();
+            createEditToolbar();
+            $("#btnUndo").click(undoGraphic);
+            $("#btnAdd").click(addBtnClick);
+            $("#markupDropdown").change(dropdownChanged);
+            $(".color").colorPicker({
+                renderCallback: function($elm, toggled) {
+                    if (toggled === false) {
+                        if (editToolbar._graphic) {
+                            if ($elm[0].id === "picker1") {
+                                onFillColorPaletteSelection($elm[0].value);
+                            } else if ($elm[0].id === "picker2") {
+                                onOutlineColorPaletteSelection($elm[0].value);
+                            }
+                        }
+                    }
+                }
+            });
+
+            $("body").on("mousemove", function(e) {
+                $("#tail").css({
+                    left: e.pageX + 20,
+                    top: e.pageY
+                });
+            });
+
+            $("#tail").hide();
+
+
+            $("#fillTransparencySlider").slider({
+                min: 0,
+                max: 1,
+                step: 0.1,
+                value: appConfig.fillColorOpacity
+            });
         } // end mapReady
 
-        function executeIdentifyTask(event) {
-            if (multiple) {
-                if (newpopup) {
-                    map.graphics.add(new Graphic(newpopup.features[0].geometry, fillSymbol3));
-                    newpopup = "";
+        function createToolbar(themap) {
+            toolbar = new Draw(map);
+            toolbar.on("draw-end", addToMap);
+        }
+
+        function activateTool() {
+            var tool = $("#markupDropdown").val();
+            toolbar.activate(Draw[tool]);
+            map.setInfoWindowOnClick(false);
+            $("#tail").show();
+            disablepopup();
+            map.hideZoomSlider();
+        }
+
+        function createEditToolbar() {
+            editToolbar = new Edit(map);
+
+            //Activate the toolbar when you click on a graphic
+            map.graphics.on("click", function(evt) {
+
+                if ($("#btnEdit").hasClass("btn-primary")) {
+                    event.stop(evt);
+                    activateEditToolbar(evt.graphic);
+                    $(".editMarkupBtns button").removeClass("btn-primary");
+                } else if ($("#btnErase").hasClass("btn-primary")) {
+                    map.graphics.remove(evt.graphic);
+                    $(".editMarkupBtns button").removeClass("btn-primary");
                 }
+            });
+            //deactivate the toolbar when you click outside a graphic
+            map.on("click", function(evt) {
+                editToolbar.deactivate();
+            });
+        }
+
+        function activateEditToolbar(graphic) {
+            var tool = 0;
+            tool = tool | Edit.MOVE;
+            tool = tool | Edit.EDIT_VERTICES;
+            tool = tool | Edit.SCALE;
+            tool = tool | Edit.ROTATE;
+            // enable text editing if a graphic uses a text symbol
+            if (graphic.symbol.declaredClass === "esri.symbol.TextSymbol") {
+                tool = tool | Edit.EDIT_TEXT;
             }
-            if (!multiple) {
-                map.graphics.clear();
+            //specify toolbar options
+            var options = {
+                allowAddVertices: true,
+                allowDeleteVertices: true,
+                uniformScaling: true
+            };
+            editToolbar.activate(tool, graphic, options);
+        }
+
+        function undoGraphic() {
+
+            var graphicsToRemove = graphicsCollection.pop();
+            map.graphics.remove(graphicsToRemove);
+
+            $(".editMarkupBtns button").removeClass("btn-primary");
+
+        }
+
+        function disablepopup() {
+            map.infoWindow.hide();
+        }
+
+        function addToMap(evt) {
+            map.setInfoWindowOnClick(true);
+            var symbol;
+            $("#tail").hide();
+            toolbar.deactivate();
+            map.showZoomSlider();
+            var outlineColor = $("#outlineColor :first-child").css("background-color");
+            var transparencyValue = $("#fillTransparencySlider").slider("option", "value");
+            var fillColor = $("#fillColor :first-child").css("background-color");
+            fillColor = fillColor.slice(0, -1) + ", " + transparencyValue + ")";
+            var fontSize = $("#textDropdown").val();
+            var text = $("#inputText").val();
+            switch (evt.geometry.type) {
+                case "point":
+                    symbol = new TextSymbol();
+                    symbol.setText(text);
+                    var font = new esri.symbol.Font();
+                    font.setSize(fontSize);
+                    var color = new Color();
+                    color.setColor(fillColor);
+                    symbol.setFont(font);
+                    symbol.setColor(color);
+                    break;
+                case "multipoint":
+                    symbol = new SimpleMarkerSymbol();
+                    break;
+                case "polyline":
+                    symbol = new SimpleLineSymbol();
+                    break;
+                default:
+                    symbol = new SimpleFillSymbol(
+                        esri.symbol.SimpleFillSymbol.STYLE_SOLID,
+                        new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, outlineColor, 3),
+                        fillColor
+                    );
+                    break;
             }
-            var layers = map.layerIds;
-            var vis = tocLayers;
 
-            // find out what layers are visible
-            for (var i = 0; i < vis.length; i++) {
-                var visible = vis[i].layer.visible;
-                var name = vis[i].id;
-                // console.log(name + " - " + visible);
+            var graphic = new Graphic(evt.geometry, symbol);
+            graphicsCollection.push(graphic);
+            map.graphics.add(graphic);
+            $("#btnAdd").removeClass("btn-primary");
+            $("*").css("cursor", "default");
+        }
 
-                if (name === "wiZoning" && visible === true) {
-                    identifyParamsTask1.layerIds = [6];
-                }
-                if (name === "wiZoning" && visible === false) {
-                    identifyParamsTask1.layerIds = [-1];
-                }
+        function addBtnClick() {
+            var selection = $("#markupDropdown").val();
+            var textSettings = $("#textSettings");
+            var outlineDiv = $("#outlineColor");
+            var textBox = $("#inputText");
 
-                if (name === "tParcels" && visible === true) {
-                    identifyParamsTask2.layerIds = [1];
-                }
-                if (name === "tParcels" && visible === false) {
-                    identifyParamsTask2.layerIds = [-1];
-                }
+            $(".editMarkupBtns button").removeClass("btn-primary");
 
-                if (name === "wiFlood" && visible === true) {
-                    identifyParamsTask3.layerIds = [4];
-                }
-                if (name === "wiFlood" && visible === false) {
-                    identifyParamsTask3.layerIds = [-1];
-                }
+            activateTool();
+            $("#btnAdd").addClass("btn-primary");
+            $("*").css("cursor", "crosshair");
 
-                if (name === "wiPendFlood" && visible === true) {
-                    identifyParamsTask4.layerIds = [5];
-                }
-                if (name === "wiPendFlood" && visible === false) {
-                    identifyParamsTask4.layerIds = [-1];
-                }
+            switch (selection) {
+                case "POINT":
+                    var value = $(textBox).val();
+                    if (value === "") {
+                        $(textBox).css("border", "2px solid red");
+                        $("*").css("cursor", "default");
+                        $(".editMarkupBtns button").removeClass("btn-primary");
+                        alert("Please enter a text value before trying to add a label.");
+                    }
+                    break;
+                case "POLYGON":
+                    break;
+                case "CIRCLE":
+                    break;
+                case "ARROW":
+                    break;
+                case "FREEHAND_POLYGON":
+                    break;
             }
-            identifyParamsTask1.geometry = event.mapPoint;
-            identifyParamsTask1.mapExtent = map.extent;
+        }
 
-            identifyParamsTask2.geometry = event.mapPoint;
-            identifyParamsTask2.mapExtent = map.extent;
+        function dropdownChanged(e) {
+            if (e.target.value === "POINT") {
+                $("#textSettings").show();
+                $("#outlineColor").hide();
+            } else {
+                $("#textSettings").hide();
+                $("#outlineColor").show();
+            }
+        }
 
-            identifyParamsTask3.geometry = event.mapPoint;
-            identifyParamsTask3.mapExtent = map.extent;
+        function hexToRgb(hex) {
+            // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+            var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+            hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+                return r + r + g + g + b + b;
+            });
 
-            identifyParamsTask4.geometry = event.mapPoint;
-            identifyParamsTask4.mapExtent = map.extent;
+            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
 
-            var deferred1 = identifyTask1
-                .execute(identifyParamsTask1)
-                .addCallback(function(response) {
-                    // response is an array of identify result objects
-                    // Let's return an array of features.
-                    return arrayUtils.map(response, function(result) {
-                        var feature = result.feature;
-                        feature.attributes.layerName = result.layerName;
+        function onFillColorPaletteSelection(e) {
+            var value = hexToRgb(e);
+            fillColorSelection = value;
+            if (editToolbar._vertexEditor !== null && editToolbar._graphic !== null) {
+                updateGraphicSymbol();
+            } else {
+                updateTextSymbol();
+            }
 
-                        if (feature.attributes.OBJECTID !== 0) {
-                            var template = new InfoTemplate();
+        }
 
-                            //wickenburg zoning
-                            template.setTitle("Wickenburg Zoning");
-                            template.setContent("Zoning Code: ${CODE}" + "<br>Zoning Description: ${Description}");
-                            feature.setInfoTemplate(template);
+        function onOutlineColorPaletteSelection(e) {
+            var value = e;
+            outlineColorSelection = value;
+            if (editToolbar._graphic !== null) {
+                updateGraphicSymbol();
+            }
+        }
 
-                        } // end if
-                        return feature;
-                    });
-                }); //end addCallback
+        function updateGraphicSymbol() {
+            var fill = fillColorSelection;
+            var outline = outlineColorSelection;
+            var fillColorOpacity = $("#fillTransparencySlider").slider("option", "value");
 
-            var deferred2 = identifyTask2
-                .execute(identifyParamsTask2)
-                .addCallback(function(response) {
-                    // response is an array of identify result objects
-                    // Let's return an array of features.
-                    return arrayUtils.map(response, function(result) {
-                        var feature = result.feature;
-                        feature.attributes.layerName = result.layerName;
+            var symbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+                new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+                    new Color(outline), 3), new Color([fill.r, fill.g, fill.b, fillColorOpacity]));
 
-                        if (feature.attributes.OBJECTID !== 0) {
-                            var template = new InfoTemplate();
+            editToolbar._graphic.setSymbol(symbol);
+        }
 
-                            template.setTitle("County Parcels");
-                            template.setContent("County: ${COUNTY}<br>" + "Parcel: ${PARCEL_LABEL}<br>" + "Address: ${PHYSICAL_ADDRESS}");
-                            feature.setInfoTemplate(template);
+        function updateTextSymbol() {
+            var fill = fillColorSelection;
 
-                        } // end if
-                        return feature;
-                    });
-                }); //end addCallback
+            var textSymbol = new TextSymbol(self.textInput()).setColor(new Color([fill.r, fill.g, fill.b, 1]));
+            var font = new Font();
+            font.setSize(self.fontSize.toString() + "pt");
+            textSymbol.setFont(font);
+            editToolbar._graphic.setSymbol(textSymbol);
+        }
 
-            var deferred3 = identifyTask3
-                .execute(identifyParamsTask3)
-                .addCallback(function(response) {
-                    // response is an array of identify result objects
-                    // Let's return an array of features.
-                    return arrayUtils.map(response, function(result) {
-                        var feature = result.feature;
-                        feature.attributes.layerName = result.layerName;
-
-                        if (feature.attributes.OBJECTID !== 0) {
-                            var template = new InfoTemplate();
-
-                            // Wickenburg zoning
-                            template.setTitle("Flood Zone");
-                            template.setContent("Flood Zone: ${ZONE}");
-                            feature.setInfoTemplate(template);
-                        } // end if
-                        return feature;
-                    });
-                }); //end addCallback
-
-            var deferred4 = identifyTask4
-                .execute(identifyParamsTask4)
-                .addCallback(function(response) {
-                    // response is an array of identify result objects
-                    // Let's return an array of features.
-                    return arrayUtils.map(response, function(result) {
-                        var feature = result.feature;
-                        feature.attributes.layerName = result.layerName;
-
-                        if (feature.attributes.OBJECTID !== 0) {
-                            var template = new InfoTemplate();
-
-                            // Wickenburg zoning
-                            template.setTitle("Pending Flood Zone");
-                            template.setContent("Pending Flood Zone: ${FloodZone}");
-                            feature.setInfoTemplate(template);
-                        } // end if
-                        return feature;
-                    });
-                }); //end addCallback
-
-            // InfoWindow expects an array of features from each deferred
-            // object that you pass. If the response from the task execution
-            // above is not an array of features, then you need to add a callback
-            // like the one above to post-process the response and return an
-            // array of features.
-            map.infoWindow.setFeatures([deferred1, deferred2, deferred3, deferred4]);
-            map.infoWindow.show(event.mapPoint);
-
-
-
-        } // end executeIdentifyTask
-
-
+        function dynamicSort(property) {
+            var sortOrder = 1;
+            if (property[0] === "-") {
+                sortOrder = -1;
+                property = property.substr(1);
+            }
+            return function(a, b) {
+                var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+                return result * sortOrder;
+            };
+        }
 
     }); // end Main Function
 
@@ -1040,12 +993,46 @@ $(document).ready(function() {
     $("#reportOpen").click(function() {
         toggleReportWindow();
     });
+
+});
+
+// Markup Tools open
+//=================================================================================>
+function toggleMarkupTools() {
+    if ($("#markupTool").is(":hidden")) {
+        $("#markupTool").fadeIn();
+        $("#markupTool").draggable({
+            containment: "#mapDiv"
+        });
+    } else {
+        $("#markupTool").fadeOut();
+    }
+    $("#textSettings").hide();
+}
+
+function toggleSelectedButton(sender) {
+    $(".btn-primary").removeClass("btn-primary");
+    $("#" + sender).addClass("btn-primary");
+}
+
+$(document).ready(function() {
+
+    $("#markupOpen").fadeTo("slow");
+    $("#markupTool").fadeTo("slow");
+    $("#markupTool").css("top", "55px");
+    $("#markupOpen").click(function() {
+        toggleMarkupTools();
+        $("#picker1").css("background-color", appConfig.defaultFillColor); //set default fill color
+        $("#picker2").css("background-color", appConfig.defaultOutlineColor); //set default outline color
+    });
+
 });
 
 //sets original position of dropdown for Print and Report tools
 $(document).ready(function() {
     $("#printTool").hide();
     $("#reportTool").hide();
+    $("#markupTool").hide();
 });
 // Bindings
 //=================================================================================>
@@ -1073,4 +1060,8 @@ $(document).ready(function() {
     $("#helpPrint").load("views/helpPrint.html");
     //*** Report Window modal binding
     $("#reportTool").load("views/reportWindow.html");
+    //*** Markup Tool modal binding
+    $("#markupTool").load("views/markupTool.html");
+    //*** Markup Tool Help modal binding
+    $("#helpMarkup").load("views/helpMarkup.html");
 });

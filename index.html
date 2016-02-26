@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=9, IE=10">
 
-    <title>MAG | Wickenburg Zoning</title>
+    <title>MAG|Wickenburg Zoning</title>
 
     <meta name="description" content="Town of Wickengurg Online Mapping Service">
     <meta name="author" content="Maricopa Association of Governments">
@@ -12,8 +12,8 @@
     <meta name="contact" content="www.azmag.gov">
     <meta name="url" content="http://geo.azmag.gov/maps/wickenburg/">
     <meta name="creation-date" content="04/01/2013">
-    <meta name="revision-date" content="02/08/2016">
-    <meta name="version" content="3.7.4">
+    <meta name="revision-date" content="02/26/2016">
+    <meta name="version" content="3.7.5">
 
     <!-- Apple-Specific Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -21,11 +21,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <link rel="apple-touch-icon" type="image/png" sizes="144x144" href="img/magicon_144.png">
-    <link rel="apple-touch-icon" type="image/png" sizes="114x114" href="img/magicon_114.png">
-    <link rel="apple-touch-icon" type="image/png" sizes="72x72" href="img/magicon_72.png">
-    <link rel="apple-touch-icon" type="image/png" sizes="57x57" href="img/magicon_57.png">
-    <link rel="shortcut icon" type="image-favorites-icon" href="img/magfavicon.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="144x144" href="app/resources/img/magicon_144.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="114x114" href="app/resources/img/magicon_114.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="72x72" href="app/resources/img/magicon_72.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="57x57" href="app/resources/img/magicon_57.png">
+    <link rel="shortcut icon" type="image-favorites-icon" href="app/resources/img/magfavicon.png">
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -34,11 +34,15 @@
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 
     <!-- ESRI core CSS -->
-    <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/dojo/dijit/themes/tundra/tundra.css">
-    <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/esri/css/esri.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/3.15/dijit/themes/tundra/tundra.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/3.15/esri/css/esri.css">
 
     <!-- CSS for debugging -->
-       <!-- Custom styles for this template -->
+    <!-- <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/bootstrapmap.min.css">
+    <link rel="stylesheet" href="css/main.css"> -->
+
+    <!-- Custom styles for this template -->
     <link rel="stylesheet" href="css/concat.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
@@ -71,26 +75,28 @@
             <li class="" role="button"><a href="http://www.ci.wickenburg.az.us/" title="home">Home</a></li>
             <li id="contentsOpen" class="" role="button"><a href="#" title="contents">Contents</a></li>
             <li id="measureOpen" class="" role="button" data-target="#mTool"><a href="#" title="Measurement">Measurement</a></li>
+            <li id="markupOpen" class="" role="button" data-target="#markupTool"><a href="#" title="Markup Tools">Markup Tools</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
+          <li class="searchDiv">
+            <div id="search"></div>
+          </li>
             <li id="reportOpen" class="btn-group toolicon glyphicon glyphicon-list-alt">
               <ul class="">
               </ul>
             </li>
             <li id="printOpen" role="button" data-target="#printTool" class="btn-group toolicon glyphicon glyphicon-print"></li>
-            <li>
-              <form id="geosearch-form" class="navbar-form navbar-right" role="search">
-              <input id="geosearch" type="text" class="form-control" placeholder="">
-              </form>
-            </li>
             <li class="" role="button" data-toggle="modal" data-target="#aboutModal"><a href="#" title="About">About</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div><!--/end navbar -->
 
+
     <!-- Bootstrap-map-js -->
     <div id="mapDiv"></div>
+    <div id="tail">Click anywhere on the map to start adding a graphic.</div>
+
 
 <!-- About Modal -->
 <!--==============================================================-->
@@ -167,6 +173,19 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<!-- Help Modal for measurement tool-->
+<div id="helpModalMarkupTool" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div id="" class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close closeX" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h2 class="modal-title" id=""><strong>Markup Tools Help</strong></h2>
+      </div>
+      <div id="helpMarkup" class="modal-body modal-style"></div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <!-- Print Tool -->
 <!--==============================================================-->
 <div id="printTool" class="panel panel-default modal-style"></div>
@@ -188,19 +207,25 @@
 <!--==============================================================-->
 <div id="reportTool" class="panel panel-default modal-style"></div>
 
+<!-- MarkupTool Window -->
+<!--==============================================================-->
+<div id="markupTool" class="panel panel-default modal-style"></div>
+
 <!-- Core JavaScript -->
 <!-- JavaScript / Placed at the end of the document so the pages load faster -->
 <!--============================================================================================================-->
   <!-- Global script definitions. -->
-  <script src="http://js.arcgis.com/3.9/"></script>
+  <script src="http://js.arcgis.com/3.15/"></script>
   <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="js/vendor/jqColorPicker.min.js"></script>
+
 <!-- Custom JavaScript -->
-  <script src="js/vendor/plugins.js"></script>
   <script src="js/config.js"></script>
   <!-- // <script src="js/main.js"></script> -->
   <script src="js/main.min.js"></script>
+
   <!-- Google Analytics -->
   <script>
     (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
