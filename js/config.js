@@ -1,6 +1,6 @@
 var appConfig = new function() {
 
-    this.mainURL = "http://geo.azmag.gov/gismag/rest/services/maps/WickenburgData2016/MapServer";
+    this.mainURL = "http://geo.azmag.gov/gismag/rest/services/maps/WickenburgData/MapServer";
 
     this.layerInfo = [{
         layerNum: 0,
