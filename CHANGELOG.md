@@ -9,8 +9,10 @@ CHANGELOG Wickenburg Zoning Website
 * zoom issue with geocoder
 * turn off measurement tool when window closes
 
-### Version 3.7.5 (02/23/2016)
+### Version 3.7.5 (02/26/2016)
 
+* added basemap transparency slider
+* disabled basemaptoggle button
 * updated to latest arcgis javascript api version
 * upgraded "geocoder" widget to newer "search" widget
 * updated the way layers are added and simplified popup handling
@@ -19,9 +21,10 @@ CHANGELOG Wickenburg Zoning Website
 * make popup title smaller or something so it doesn't run into the buttons
 * subdivisions layer remove acres/sq mi
 * add info link to parcel
-* reorder layers to have zoning at the top
+* reorder legend layers to have zoning at the top
 * fix parcel highlighting
-
+* reordered layer options alphabetically
+* added link to Maricopa County Recorders office for MCR docs
 
 ### Version 3.7.4 (02/08/2016)
 

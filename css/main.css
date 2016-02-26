@@ -361,6 +361,15 @@ color: #fff;
     background-color: #5cb85c;
     border-color: #4cae4c;
 }
+#worldStr {
+    display: list-item;
+    list-style-type: none;
+}
+#worldImg {
+    display: none;
+    list-style-type: none;
+}
+
 
 /* ==========================================
 **** definitions styles ****

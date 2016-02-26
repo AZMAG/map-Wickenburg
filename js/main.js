@@ -1,11 +1,20 @@
 /*! main.js | Wickenburg Zoning Website @ MAG */
 var map, toolbar;
 var graphicsCollection = [];
-var fillColorSelection = {r:0, g:0, b:255};
-var outlineColorSelection = {r:0, g:0, b:0};
+var fillColorSelection = {
+    r: 0,
+    g: 0,
+    b: 255
+};
+var outlineColorSelection = {
+    r: 0,
+    g: 0,
+    b: 0
+};
 require([
         "dojo/dom-construct",
         "dojo/dom",
+        "dojo/dom-style",
         "esri/toolbars/draw",
         "esri/toolbars/edit",
         "dojo/on",
@@ -48,6 +57,7 @@ require([
 
         "esri/layers/FeatureLayer",
         "esri/layers/ArcGISDynamicMapServiceLayer",
+        "esri/layers/ArcGISTiledMapServiceLayer",
         "esri/dijit/PopupTemplate",
         "esri/InfoTemplate",
         "esri/symbols/SimpleMarkerSymbol",
@@ -62,8 +72,8 @@ require([
         "dojo/domReady!"
     ],
 
-    function(dc, dom, Draw, Edit, on, parser, connect, query, keys, has, Map,  Measurement, Scalebar, HomeButton, LocateButton,
-        Graphic, Extent, Multipoint, PictureMarkerSymbol, SimpleFillSymbol, SimpleLineSymbol, TextSymbol, IdentifyTask, IdentifyParameters, Popup, arrayUtils, Color, event, LayerDrawingOptions, SimpleRenderer, ImageParameters, Search, Locator, Legend, CheckBox, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, BasemapToggle, FeatureLayer, ArcGISDynamicMapServiceLayer, PopupTemplate, InfoTemplate, SimpleMarkerSymbol, Print, PrintTemplate, esriRequest, esriConfig, BootstrapMap) {
+    function(dc, dom, domStyle, Draw, Edit, on, parser, connect, query, keys, has, Map, Measurement, Scalebar, HomeButton, LocateButton,
+        Graphic, Extent, Multipoint, PictureMarkerSymbol, SimpleFillSymbol, SimpleLineSymbol, TextSymbol, IdentifyTask, IdentifyParameters, Popup, arrayUtils, Color, event, LayerDrawingOptions, SimpleRenderer, ImageParameters, Search, Locator, Legend, CheckBox, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, BasemapToggle, FeatureLayer, ArcGISDynamicMapServiceLayer, ArcGISTiledMapServiceLayer, PopupTemplate, InfoTemplate, SimpleMarkerSymbol, Print, PrintTemplate, esriRequest, esriConfig, BootstrapMap) {
 
         parser.parse();
 
@@ -82,6 +92,8 @@ require([
         // var identifyParams;
         var tocLayers = [];
         var legendLayers = [];
+
+        var newOP = 1;
 
         // line set up for measurement tool
         var sfs = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
@@ -106,7 +118,6 @@ require([
         popup.on("show", highlightMultipleParcels); //back here;
         popup.on("hide", highlightMultipleParcels); //back here;
 
-
         // create the map and specify the custom info window as the info window that will be used by the map
         // <!-- Get a reference to the ArcGIS Map class -->
         map = BootstrapMap.create("mapDiv", {
@@ -120,11 +131,12 @@ require([
             sliderPosition: "top-right",
             scrollWheelZoom: true
         });
+        // console.log(map.getLayer(map.basemapLayerIds).opacity);
 
         var search = new Search({
-          map: map,
-          sources: [{
-                locator: new Locator("//geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"),
+            map: map,
+            sources: [{
+                locator: new Locator(appConfig.LocatorService),
                 singleLineFieldName: "SingleLine",
                 autoNavigate: true,
                 enableInfoWindow: true,
@@ -135,31 +147,12 @@ require([
                 searchExtent: new Extent(appConfig.initExtent),
                 placeholder: "21 North Frontier Street"
             }]
-        },"search");
+        }, "search");
         search.startup();
 
         var newpopup;
         connect.connect(popup, "onClearFeatures", function() {
             newpopup = popup;
-        });
-
-        connect.connect(popup, "onSelectionChange", function() {
-            // $("#highlightBtn").fadeIn();
-            // if (newpopup) {
-            //     map.graphics.add(new Graphic(newpopup.features[0].geometry, fillSymbol3));
-            //     newpopup = "";
-            // };
-            var graphic = popup.getSelectedFeature();
-            if (graphic) {
-                if (graphic._layer.name === "Wickenburg Parcels") {
-                    // show link in popup info window
-                    $("#infoLink").show();
-                } 
-                else {
-                    // hide link in popup info window
-                    $("#infoLink").hide();
-                }
-            }
         });
 
         map.on("load", mapReady);
@@ -181,11 +174,9 @@ require([
             multiple = false;
             map.graphics.clear();
 
-
             for (var i = 0; i < graphicsCollection.length; i++) {
                 map.graphics.add(graphicsCollection[i]);
             }
-
 
             // map.graphics.add(graphicsCollection);
             $(single).prop("checked", true);
@@ -218,20 +209,36 @@ require([
             id: "LocateButton"
         }, "mapDiv", "last"));
 
-        geoLocateButton.on("locate", function(evt){
-           disablepopup();
+        geoLocateButton.on("locate", function(evt) {
+            disablepopup();
         });
         geoLocateButton.startup();
 
-        var toggle = new BasemapToggle({
-            // theme: "basemapToggle",
-            map: map,
-            visible: true,
-            basemap: "satellite"
-        }, dc.create("div", {
-            id: "BasemapToggle"
-        }, "mapDiv", "last"));
-        toggle.startup();
+        // var toggleBasemap = new BasemapToggle({
+        //     // theme: "basemapToggle",
+        //     map: map,
+        //     visible: true,
+        //     basemap: "satellite"
+        // }, dc.create("div", {
+        //     id: "BasemapToggle"
+        // }, "mapDiv", "last"));
+        // toggleBasemap.startup();
+
+        // toggleBasemap.on("toggle", function(evt) {
+        //     if (evt.currentBasemap === "streets") {
+        //         domStyle.set(dom.byId("worldImg"), "display", "none");
+        //         domStyle.set(dom.byId("worldStr"), "display", "list-item");
+        //         newOP = 0;
+        //         value4 = 1
+        //     }
+        //     if (evt.currentBasemap === "satellite") {
+        //         domStyle.set(dom.byId("worldStr"), "display", "none");
+        //         domStyle.set(dom.byId("worldImg"), "display", "list-item");
+        //         newOP = 1;
+        //         value4 = 0;
+        //     }
+        // });
+
 
         // Print Functions for Print dijit
         //=================================================================================>
@@ -287,18 +294,17 @@ require([
             console.log("Something broke: ", err);
         }
 
-
         //=================================================================================>
         // add layers to map
 
         appConfig.layerInfo.sort(dynamicSort("-mapOrder"));
         for (var i = 0; i < appConfig.layerInfo.length; i++) {
-           var configItem = appConfig.layerInfo[i];
-           var popupBox = "";
+            var configItem = appConfig.layerInfo[i];
+            var popupBox = "";
 
-           if (configItem.popupHeader != "" && configItem.popupBody != "" ) {
+            if (configItem.popupHeader !== "" && configItem.popupBody !== "") {
                 popupBox = new InfoTemplate(configItem.popupHeader, configItem.popupBody);
-           }               
+            }
             var layer = new FeatureLayer(configItem.url, {
                 id: configItem.id,
                 mode: FeatureLayer.MODE_ONDEMAND,
@@ -306,28 +312,41 @@ require([
                 infoTemplate: popupBox,
                 opacity: configItem.opacity,
                 outFields: ["*"]
-              });
+            });
             map.addLayer(layer);
-           if (configItem.showLegend === true) {
+            if (configItem.showLegend === true) {
                 legendLayers.push({
                     layer: map.getLayer(configItem.id),
                     id: configItem.id,
                     title: configItem.title,
                     legendOrder: configItem.legendOrder
                 });
-           }
-           if (configItem.showCheckBox === true) {
+            }
+            if (configItem.showCheckBox === true) {
                 tocLayers.push({
                     layer: map.getLayer(configItem.id),
                     id: configItem.id,
                     title: configItem.title,
                     tocOrder: configItem.tocOrder
                 });
-           }
+            }
         }
 
         tocLayers.sort(dynamicSort("-tocOrder"));
         legendLayers.sort(dynamicSort("-legendOrder"));
+
+        // added for transparency slider option
+        // World Imagery
+        var imgBasemapI = new ArcGISTiledMapServiceLayer(appConfig.imageryLayer, {
+            visible: false
+        });
+        map.addLayer(imgBasemapI);
+        // World Street Map
+        // var imgBasemapS = new ArcGISTiledMapServiceLayer(appConfig.streetsLayer, {
+        //     visible: false
+        // });
+        // map.addLayer(imgBasemapS);
+
 
         // Measurement Tool
         //=================================================================================>
@@ -336,12 +355,12 @@ require([
             map: map,
             lineSymbol: sfs
         }, dom.byId("measurementDiv"));
-        measurement.on("measure-start", function(evt){
-           map.setInfoWindowOnClick(false);
-           //disablepopup();
+        measurement.on("measure-start", function(evt) {
+            map.setInfoWindowOnClick(false);
+            //disablepopup();
         });
-        measurement.on("measure-end", function(evt){
-           map.setInfoWindowOnClick(true);
+        measurement.on("measure-end", function(evt) {
+            map.setInfoWindowOnClick(true);
         });
         measurement.startup();
 
@@ -357,14 +376,13 @@ require([
         }
 
         function highlightMultipleParcels(e) {
-            if ($("#multiple").is(':checked')) {
+            if ($("#multiple").is(":checked")) {
                 disablepopup();
                 if (e.target.features[0]._layer.id === "tParcels") {
                     var graphic = new Graphic(e.target._highlighted.geometry, e.target._highlighted.symbol);
                     map.graphics.add(graphic);
                 }
-            }
-            else{
+            } else {
                 //map.graphics.clear();
                 for (var i = 0; i < graphicsCollection.length; i++) {
                     map.graphics.add(graphicsCollection[i]);
@@ -453,10 +471,59 @@ require([
             }
         }, "slider2");
 
+        // basemap Transparency Slider
+        var slider4 = new HorizontalSlider({
+            name: "slider4",
+            value: map.getLayer(map.basemapLayerIds).opacity,
+            minimum: 0,
+            maximum: 1,
+            intermediateChanges: true,
+            discreteValues: 11,
+            style: "width:250px;",
+            onChange: function(value4) {
+                // console.log("value4: " + value4);
+                // console.log(map.getLayer(map.basemapLayerIds).layerInfos[0].name);
+                var baseLayerName = map.getLayer(map.basemapLayerIds).layerInfos[0].name;
+                // console.log(baseLayerName);
+                newOP = 1 - value4;
+                // console.log("newOP: " + newOP);
+
+                // if (baseLayerName === "World Street Map") {
+                //     imgBasemapI.show();
+                //     map.getLayer(map.basemapLayerIds).setOpacity(value4);
+                //     imgBasemapI.setOpacity(newOP);
+
+                //     if (newOP === 0) {
+                //         imgBasemapI.hide();
+                //     }
+                // }
+                // if (baseLayerName === "World Imagery") {
+                //     imgBasemapS.show();
+                //     map.getLayer(map.basemapLayerIds).setOpacity(value4);
+                //     imgBasemapS.setOpacity(newOP);
+
+                //     if (newOP === 0) {
+                //         imgBasemapS.hide();
+                //     }
+                // }
+
+                imgBasemapI.show();
+                map.getLayer(map.basemapLayerIds).setOpacity(value4);
+                imgBasemapI.setOpacity(newOP);
+
+                if (newOP === 0) {
+                    imgBasemapI.hide();
+                }
+                // console.log("newOP: " + newOP);
+                // console.log("image: " + imgBasemap.opacity);
+                // console.log("streets: " + map.getLayer(map.basemapLayerIds).opacity);
+            }
+        }, "slider4");
+
         // parcel line thickness Slider
         var slider3 = new HorizontalSlider({
             name: "slider3",
-            value: .5,
+            value: 0.5,
             minimum: 1,
             maximum: 5,
             intermediateChanges: true,
@@ -478,7 +545,7 @@ require([
             sls.setWidth(value);
             var renderer = new SimpleRenderer(sls);
             parcelLayer.setRenderer(renderer);
-            parcelLayer.refresh()
+            parcelLayer.refresh();
         }
 
         function showSlider(value) {
@@ -492,25 +559,65 @@ require([
         }
 
         //create a link in the popup window.
-        var link = dc.create("a", {
+        var alink = dc.create("a", {
             "class": "action",
-            "id": "infoLink",
+            "id": "aInfoLink",
             "innerHTML": "Assessor Info", //text that appears in the popup for the link
             "href": "javascript: void(0);"
         }, query(".actionList", map.infoWindow.domNode)[0]);
 
-        on(link, "click", function() {
+        on(alink, "click", function() {
             var feature = map.infoWindow.getSelectedFeature();
+            console.log(feature);
             var url = window.location;
 
-            var link = "";
+            var alink = "";
             if (feature.attributes.COUNTYFP10 === "013") {
-                link = appConfig.MaricopaAssessor + feature.attributes.PARCEL_APN;
-                window.open(link);
+                alink = appConfig.MaricopaAssessor + feature.attributes.PARCEL_APN;
+                window.open(alink);
+            } else if (feature.attributes.COUNTYFP10 === "025") {
+                alink = appConfig.YavapaiAssessor + feature.attributes.PARCEL_APN;
+                window.open(alink);
             }
-            else if (feature.attributes.COUNTYFP10 === "025") {
-                link = appConfig.YavapaiAssessor + feature.attributes.PARCEL_APN;
-                window.open(link);
+        });
+
+        //create a link in the popup window.
+        var rlink = dc.create("a", {
+            "class": "action",
+            "id": "rInfoLink",
+            "innerHTML": "Recorder Info", //text that appears in the popup for the link
+            "href": "javascript: void(0);"
+        }, query(".actionList", map.infoWindow.domNode)[0]);
+
+        on(rlink, "click", function() {
+            var feature = map.infoWindow.getSelectedFeature();
+            console.log(feature);
+            var url = window.location;
+
+            var rlink = appConfig.MaricopaRecorder + feature.attributes.MCR_BOOK + "&page=" + feature.attributes.MCR_PAGE;
+            window.open(rlink);
+        });
+
+        /**
+         * Determines what shows up in the action link section of the popup
+         * @param  {[type]} ) {var graphic [description]
+         * @return {[type]}   returns action link in popup
+         */
+        connect.connect(popup, "onSelectionChange", function() {
+            var graphic = popup.getSelectedFeature();
+            // console.log(graphic);
+            if (graphic) {
+                // console.log(graphic);
+                if (graphic.attributes.PARCEL_APN) {
+                    $("#aInfoLink").show();
+                    $("#rInfoLink").hide();
+                } else if (graphic.attributes.MCR) {
+                    $("#rInfoLink").show();
+                    $("#aInfoLink").hide();
+                } else {
+                    $("#aInfoLink").hide();
+                    $("#rInfoLink").hide();
+                }
             }
         });
 
@@ -521,37 +628,34 @@ require([
             $(".esriSimpleSliderDecrementButton").addClass("esriSimpleSliderDisabledButton");
             createToolbar();
             createEditToolbar();
-            $('#btnUndo').click(undoGraphic);
-            $('#btnAdd').click(addBtnClick);
-            $('#markupDropdown').change(dropdownChanged);
-            $('.color').colorPicker(
-                {
-                    renderCallback: function($elm, toggled) {
-                        if (toggled === false) {
-                            if (editToolbar._graphic) {
-                                if ($elm[0].id === "picker1") {
-                                    onFillColorPaletteSelection($elm[0].value);
-                                }
-                                else if ($elm[0].id === "picker2") {
-                                    onOutlineColorPaletteSelection($elm[0].value);
-                                }
+            $("#btnUndo").click(undoGraphic);
+            $("#btnAdd").click(addBtnClick);
+            $("#markupDropdown").change(dropdownChanged);
+            $(".color").colorPicker({
+                renderCallback: function($elm, toggled) {
+                    if (toggled === false) {
+                        if (editToolbar._graphic) {
+                            if ($elm[0].id === "picker1") {
+                                onFillColorPaletteSelection($elm[0].value);
+                            } else if ($elm[0].id === "picker2") {
+                                onOutlineColorPaletteSelection($elm[0].value);
                             }
                         }
                     }
                 }
-            );
+            });
 
-            $("body").on('mousemove', function(e){
-                $('#tail').css({
-                       left:  e.pageX + 20,
-                       top:   e.pageY
-                    });
+            $("body").on("mousemove", function(e) {
+                $("#tail").css({
+                    left: e.pageX + 20,
+                    top: e.pageY
                 });
+            });
 
             $("#tail").hide();
 
 
-            $('#fillTransparencySlider').slider({
+            $("#fillTransparencySlider").slider({
                 min: 0,
                 max: 1,
                 step: 0.1,
@@ -559,232 +663,228 @@ require([
             });
         } // end mapReady
 
-function createToolbar(themap) {
-    toolbar = new Draw(map);
-    toolbar.on("draw-end", addToMap);
-}
+        function createToolbar(themap) {
+            toolbar = new Draw(map);
+            toolbar.on("draw-end", addToMap);
+        }
 
-function activateTool() {
-    var tool = $("#markupDropdown").val();
-    toolbar.activate(Draw[tool]);
-    map.setInfoWindowOnClick(false);
-    $("#tail").show();
-    disablepopup();
-    map.hideZoomSlider();
-}
+        function activateTool() {
+            var tool = $("#markupDropdown").val();
+            toolbar.activate(Draw[tool]);
+            map.setInfoWindowOnClick(false);
+            $("#tail").show();
+            disablepopup();
+            map.hideZoomSlider();
+        }
 
-function createEditToolbar() {
-          editToolbar = new Edit(map);
+        function createEditToolbar() {
+            editToolbar = new Edit(map);
 
-          //Activate the toolbar when you click on a graphic
-          map.graphics.on("click", function(evt) {
+            //Activate the toolbar when you click on a graphic
+            map.graphics.on("click", function(evt) {
 
-            if ($('#btnEdit').hasClass('btn-primary')) {
-                event.stop(evt);
-                activateEditToolbar(evt.graphic);
-                $(".editMarkupBtns button").removeClass("btn-primary");
+                if ($("#btnEdit").hasClass("btn-primary")) {
+                    event.stop(evt);
+                    activateEditToolbar(evt.graphic);
+                    $(".editMarkupBtns button").removeClass("btn-primary");
+                } else if ($("#btnErase").hasClass("btn-primary")) {
+                    map.graphics.remove(evt.graphic);
+                    $(".editMarkupBtns button").removeClass("btn-primary");
+                }
+            });
+            //deactivate the toolbar when you click outside a graphic
+            map.on("click", function(evt) {
+                editToolbar.deactivate();
+            });
+        }
+
+        function activateEditToolbar(graphic) {
+            var tool = 0;
+            tool = tool | Edit.MOVE;
+            tool = tool | Edit.EDIT_VERTICES;
+            tool = tool | Edit.SCALE;
+            tool = tool | Edit.ROTATE;
+            // enable text editing if a graphic uses a text symbol
+            if (graphic.symbol.declaredClass === "esri.symbol.TextSymbol") {
+                tool = tool | Edit.EDIT_TEXT;
             }
-            else if ($('#btnErase').hasClass('btn-primary')) {
-                map.graphics.remove(evt.graphic);
-                $(".editMarkupBtns button").removeClass("btn-primary");
+            //specify toolbar options
+            var options = {
+                allowAddVertices: true,
+                allowDeleteVertices: true,
+                uniformScaling: true
+            };
+            editToolbar.activate(tool, graphic, options);
+        }
+
+        function undoGraphic() {
+
+            var graphicsToRemove = graphicsCollection.pop();
+            map.graphics.remove(graphicsToRemove);
+
+            $(".editMarkupBtns button").removeClass("btn-primary");
+
+        }
+
+        function disablepopup() {
+            map.infoWindow.hide();
+        }
+
+        function addToMap(evt) {
+            map.setInfoWindowOnClick(true);
+            var symbol;
+            $("#tail").hide();
+            toolbar.deactivate();
+            map.showZoomSlider();
+            var outlineColor = $("#outlineColor :first-child").css("background-color");
+            var transparencyValue = $("#fillTransparencySlider").slider("option", "value");
+            var fillColor = $("#fillColor :first-child").css("background-color");
+            fillColor = fillColor.slice(0, -1) + ", " + transparencyValue + ")";
+            var fontSize = $("#textDropdown").val();
+            var text = $("#inputText").val();
+            switch (evt.geometry.type) {
+                case "point":
+                    symbol = new TextSymbol();
+                    symbol.setText(text);
+                    var font = new esri.symbol.Font();
+                    font.setSize(fontSize);
+                    var color = new Color();
+                    color.setColor(fillColor);
+                    symbol.setFont(font);
+                    symbol.setColor(color);
+                    break;
+                case "multipoint":
+                    symbol = new SimpleMarkerSymbol();
+                    break;
+                case "polyline":
+                    symbol = new SimpleLineSymbol();
+                    break;
+                default:
+                    symbol = new SimpleFillSymbol(
+                        esri.symbol.SimpleFillSymbol.STYLE_SOLID,
+                        new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, outlineColor, 3),
+                        fillColor
+                    );
+                    break;
             }
-          });
-          //deactivate the toolbar when you click outside a graphic
-          map.on("click", function(evt){
-            editToolbar.deactivate();
-          });
+
+            var graphic = new Graphic(evt.geometry, symbol);
+            graphicsCollection.push(graphic);
+            map.graphics.add(graphic);
+            $("#btnAdd").removeClass("btn-primary");
+            $("*").css("cursor", "default");
         }
 
-function activateEditToolbar(graphic) {
-  var tool = 0;
-    tool = tool | Edit.MOVE;
-    tool = tool | Edit.EDIT_VERTICES;
-    tool = tool | Edit.SCALE;
-    tool = tool | Edit.ROTATE;
-  // enable text editing if a graphic uses a text symbol
-  if ( graphic.symbol.declaredClass === "esri.symbol.TextSymbol" ) {
-    tool = tool | Edit.EDIT_TEXT;
-  }
-  //specify toolbar options        
-  var options = {
-    allowAddVertices: true,
-    allowDeleteVertices: true,
-    uniformScaling: true
-  };
-  editToolbar.activate(tool, graphic, options);
-}
+        function addBtnClick() {
+            var selection = $("#markupDropdown").val();
+            var textSettings = $("#textSettings");
+            var outlineDiv = $("#outlineColor");
+            var textBox = $("#inputText");
 
-function undoGraphic() {  
+            $(".editMarkupBtns button").removeClass("btn-primary");
 
-   var graphicsToRemove = graphicsCollection.pop();
-   map.graphics.remove(graphicsToRemove);
+            activateTool();
+            $("#btnAdd").addClass("btn-primary");
+            $("*").css("cursor", "crosshair");
 
-   $(".editMarkupBtns button").removeClass("btn-primary");
-
-}
-
-function disablepopup() {
-   map.infoWindow.hide();
-}
-
-
-function addToMap(evt) {
-          map.setInfoWindowOnClick(true);
-          var symbol;
-          $("#tail").hide();
-          toolbar.deactivate();
-          map.showZoomSlider();
-          var outlineColor = $("#outlineColor :first-child").css("background-color");
-          var transparencyValue = $('#fillTransparencySlider').slider("option", "value");
-          var fillColor = $("#fillColor :first-child").css("background-color");
-          fillColor = fillColor.slice(0, - 1) + ", " + transparencyValue +")";
-          var fontSize = $("#textDropdown").val();
-          var text = $("#inputText").val();
-          switch (evt.geometry.type) {
-            case "point":
-              symbol = new TextSymbol();
-              symbol.setText(text);
-              var font  = new esri.symbol.Font();
-              font.setSize(fontSize);
-              var color = new Color();
-              color.setColor(fillColor);
-              symbol.setFont(font);
-              symbol.setColor(color);
-              break;
-            case "multipoint":
-              symbol = new SimpleMarkerSymbol();
-              break;
-            case "polyline":
-              symbol = new SimpleLineSymbol();
-              break;
-            default:
-              symbol = new SimpleFillSymbol(
-                esri.symbol.SimpleFillSymbol.STYLE_SOLID,
-                new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, outlineColor, 3),
-                fillColor
-              );
-              break;
-          }
-
-          var graphic = new Graphic(evt.geometry, symbol);
-          graphicsCollection.push(graphic);
-          map.graphics.add(graphic);
-          $('#btnAdd').removeClass('btn-primary');
-          $('*').css( "cursor" , "default");
-        }
-
-function addBtnClick() {
-    var selection = $("#markupDropdown").val();
-    var textSettings = $('#textSettings');
-    var outlineDiv = $('#outlineColor');
-    var textBox = $("#inputText");
-
-    $(".editMarkupBtns button").removeClass("btn-primary");
-
-    activateTool();
-    $('#btnAdd').addClass('btn-primary');
-    $('*').css( "cursor" , "crosshair");
-
-    switch (selection) {
-            case 'POINT':
-            var value = $(textBox).val();
-            if (value === "") {
-                $(textBox).css("border", "2px solid red");
-                $('*').css( "cursor" , "default");
-                $(".editMarkupBtns button").removeClass("btn-primary");
-                alert("Please enter a text value before trying to add a label.");
+            switch (selection) {
+                case "POINT":
+                    var value = $(textBox).val();
+                    if (value === "") {
+                        $(textBox).css("border", "2px solid red");
+                        $("*").css("cursor", "default");
+                        $(".editMarkupBtns button").removeClass("btn-primary");
+                        alert("Please enter a text value before trying to add a label.");
+                    }
+                    break;
+                case "POLYGON":
+                    break;
+                case "CIRCLE":
+                    break;
+                case "ARROW":
+                    break;
+                case "FREEHAND_POLYGON":
+                    break;
             }
-            break;
-            case 'POLYGON':
-                break;
-            case 'CIRCLE':
-                break;
-            case 'ARROW':
-                break;
-            case 'FREEHAND_POLYGON':
-                break;
-        }        
-    }
-
-    function dropdownChanged(e) {
-        if (e.target.value === 'POINT') {
-            $("#textSettings").show();
-            $("#outlineColor").hide();
-        }
-        else
-        {
-            $("#textSettings").hide();
-            $("#outlineColor").show();
-        }
-    }
-
-    function hexToRgb(hex) {
-        // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
-        var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-        hex = hex.replace(shorthandRegex, function(m, r, g, b) {
-            return r + r + g + g + b + b;
-        });
-
-        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-        return result ? {
-            r: parseInt(result[1], 16),
-            g: parseInt(result[2], 16),
-            b: parseInt(result[3], 16)
-        } : null;
-    }
-
-    function onFillColorPaletteSelection(e) {
-        var value = hexToRgb(e);
-        fillColorSelection = value;
-        if (editToolbar._vertexEditor !== null && editToolbar._graphic !== null) {
-            updateGraphicSymbol();
-        } else {
-            updateTextSymbol();
         }
 
-    }
-    
-    function onOutlineColorPaletteSelection(e) {
-        var value = e;
-        outlineColorSelection = value;
-        if (editToolbar._graphic !== null) {
-            updateGraphicSymbol();
+        function dropdownChanged(e) {
+            if (e.target.value === "POINT") {
+                $("#textSettings").show();
+                $("#outlineColor").hide();
+            } else {
+                $("#textSettings").hide();
+                $("#outlineColor").show();
+            }
         }
-    }
 
-    function updateGraphicSymbol() {
-        var fill = fillColorSelection;
-        var outline = outlineColorSelection;
-        var fillColorOpacity = $('#fillTransparencySlider').slider("option", "value");
+        function hexToRgb(hex) {
+            // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+            var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+            hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+                return r + r + g + g + b + b;
+            });
 
-        var symbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
-            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
-                new Color(outline), 3), new Color([fill.r, fill.g, fill.b, fillColorOpacity]));
-
-        editToolbar._graphic.setSymbol(symbol);
-    };
-
-    function updateTextSymbol() {
-        var fill = fillColorSelection;
-
-        var textSymbol = new TextSymbol(self.textInput()).setColor(new Color([fill.r, fill.g, fill.b, 1]));
-        var font = new Font();
-        font.setSize(self.fontSize.toString() + "pt");
-        textSymbol.setFont(font);
-        editToolbar._graphic.setSymbol(textSymbol);
-    };
-
-    function dynamicSort(property) {
-        var sortOrder = 1;
-        if(property[0] === "-") {
-            sortOrder = -1;
-            property = property.substr(1);
+            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
         }
-        return function (a,b) {
-            var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-            return result * sortOrder;
+
+        function onFillColorPaletteSelection(e) {
+            var value = hexToRgb(e);
+            fillColorSelection = value;
+            if (editToolbar._vertexEditor !== null && editToolbar._graphic !== null) {
+                updateGraphicSymbol();
+            } else {
+                updateTextSymbol();
+            }
+
         }
-    }
+
+        function onOutlineColorPaletteSelection(e) {
+            var value = e;
+            outlineColorSelection = value;
+            if (editToolbar._graphic !== null) {
+                updateGraphicSymbol();
+            }
+        }
+
+        function updateGraphicSymbol() {
+            var fill = fillColorSelection;
+            var outline = outlineColorSelection;
+            var fillColorOpacity = $("#fillTransparencySlider").slider("option", "value");
+
+            var symbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+                new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+                    new Color(outline), 3), new Color([fill.r, fill.g, fill.b, fillColorOpacity]));
+
+            editToolbar._graphic.setSymbol(symbol);
+        }
+
+        function updateTextSymbol() {
+            var fill = fillColorSelection;
+
+            var textSymbol = new TextSymbol(self.textInput()).setColor(new Color([fill.r, fill.g, fill.b, 1]));
+            var font = new Font();
+            font.setSize(self.fontSize.toString() + "pt");
+            textSymbol.setFont(font);
+            editToolbar._graphic.setSymbol(textSymbol);
+        }
+
+        function dynamicSort(property) {
+            var sortOrder = 1;
+            if (property[0] === "-") {
+                sortOrder = -1;
+                property = property.substr(1);
+            }
+            return function(a, b) {
+                var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+                return result * sortOrder;
+            };
+        }
 
     }); // end Main Function
 
@@ -896,7 +996,6 @@ $(document).ready(function() {
 
 });
 
-
 // Markup Tools open
 //=================================================================================>
 function toggleMarkupTools() {
@@ -908,16 +1007,13 @@ function toggleMarkupTools() {
     } else {
         $("#markupTool").fadeOut();
     }
-    $('#textSettings').hide();
+    $("#textSettings").hide();
 }
-
-
 
 function toggleSelectedButton(sender) {
-    $( ".btn-primary" ).removeClass("btn-primary");
+    $(".btn-primary").removeClass("btn-primary");
     $("#" + sender).addClass("btn-primary");
 }
-
 
 $(document).ready(function() {
 
@@ -926,8 +1022,8 @@ $(document).ready(function() {
     $("#markupTool").css("top", "55px");
     $("#markupOpen").click(function() {
         toggleMarkupTools();
-        $('#picker1').css("background-color", appConfig.defaultFillColor);//set default fill color
-        $('#picker2').css("background-color", appConfig.defaultOutlineColor);//set default outline color
+        $("#picker1").css("background-color", appConfig.defaultFillColor); //set default fill color
+        $("#picker2").css("background-color", appConfig.defaultOutlineColor); //set default outline color
     });
 
 });
