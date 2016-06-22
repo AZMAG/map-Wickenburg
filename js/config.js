@@ -160,11 +160,11 @@ var appConfig = new function() {
     this.streetsLayer = "http://server.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer";
     this.imageryLayer = "http://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer";
 
-    this.Version = "v3.7.5 | 02/26/2016";
+    this.Version = "v3.7.6 | 06/22/2016";
 
     this.emailLink = "https://www.azmag.gov/EmailPages/JasonHoward.asp";
 
-    this.MaricopaAssessor = "http://mcassessor.maricopa.gov/?s=";
+    this.MaricopaAssessor = "http://mcassessor.maricopa.gov/mcs.php?q=";
     this.YavapaiAssessor = "http://gis.yavapai.us/v4/print_parcel.aspx?qs=";
 
     this.MaricopaRecorder = "http://recorder.maricopa.gov/recdocdata/GetBookMap.aspx?docket=";
