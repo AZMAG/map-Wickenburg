@@ -1,5 +1,5 @@
 
-<img src="http://geo.azmag.gov/maps/wickenburg/img/townLogo_black.jpg" alt="wickenburg" height="100"/> ![](http://geo.azmag.gov/maps/readonaz/app/resources/img/maglogo_black.png)
+<img src="http://geo.azmag.gov/maps/wickenburg/img/townLogo_black.jpg" alt="wickenburg" height="100"/>  ![](http://geo.azmag.gov/maps/readonaz/app/resources/img/maglogo_black.png)
 
 # Town of Wickenburg Zoning Viewer #
 MAG mapping application for the town of Wickenburg showing zoning data
