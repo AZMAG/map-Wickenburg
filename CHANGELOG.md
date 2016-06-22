@@ -1,15 +1,30 @@
-CHANGELOG Wickenburg Zoning Website
-===================================
+# CHANGELOG #
+### Wickenburg Zoning Website ###
 
 [![Semver](http://img.shields.io/SemVer/2.0.0.png)](http://semver.org/spec/v2.0.0.html)
 
-`Major/Minor/Patch 0.0.0`
+All notable changes to this project will be documented in this file.
 
-### Outstanding Items
+Releases will be numbered with the following format:
+
+**`<major>.<minor>.<patch>`**
+
+And constructed with the following guidelines:
+
+1. **MAJOR** version when you make incompatible API changes **bumps the major** resets minor and patch
+2. **MINOR** version when you add functionality in a backwards-compatible manner **bumps the minor** resets patch
+3. **PATCH** version when you make backwards-compatible bug fixes and misc changes **bumps only the patch**
+=========================================================================================================
+
+## Outstanding Items
 * zoom issue with geocoder
 * turn off measurement tool when window closes
 
-### Version 3.7.5 (02/26/2016)
+## Version 3.7.6 | 06/22/2016
+
+* fix URL for Maricopa County Assessors Office
+
+## Version 3.7.5 | 02/26/2016
 
 * added basemap transparency slider
 * disabled basemaptoggle button
@@ -26,22 +41,22 @@ CHANGELOG Wickenburg Zoning Website
 * reordered layer options alphabetically
 * added link to Maricopa County Recorders office for MCR docs
 
-### Version 3.7.4 (02/08/2016)
+## Version 3.7.4 | 02/08/2016
 
 * updated PDF reports URL for employment
 * moved reports URL's from view to config
 * updated grunt files
 
-### Version 3.7.3 (01/08/2016)
+## Version 3.7.3 | 01/08/2016
 
 * changed the title on the reports window to `Wickenburg`
 
-### Version 3.7.2 (01/08/2015)
+## Version 3.7.2 | 01/08/2015
 
 * Changed multiple parcel selection feature
 * updated Employers to 2014 MAG employees from MAG employment database, +5 employees
 
-### Version 3.7.1 (10/27/2015)
+## Version 3.7.1 (10/27/2015)
 
 * fixed popup link so it shows only on parcels popup
 * added MPA boundary to map, layers and TOC
@@ -54,23 +69,23 @@ CHANGELOG Wickenburg Zoning Website
 * upgrade html5shiv to `v3.7.3` via CDN - [html5shiv] (https://cdnjs.com/libraries/html5shiv)
 * upgrade respond.js to `v1.4.2` via CDN - [respond.js] (https://cdnjs.com/libraries/respond.js)
 
-### Version 3.7.0 (08/03/2015)
+## Version 3.7.0 (08/03/2015)
 
 * added block group layer
 * added popup for block group layer
 
-### Version 3.6.0 (07/29/2015)
+## Version 3.6.0 (07/29/2015)
 
 * add pending floodplain data
 * fix flood zone TOC label
 * add popup for pending floodplain data
 
-### Version 3.5.1 (03/20/2015)
+## Version 3.5.1 (03/20/2015)
 
 * update of parcel layer
 * update of Zoning Layer
 
-### Version 3.5.0 (03/05/2015)
+## Version 3.5.0 (03/05/2015)
 
 * added code to hide popup when info not found
 * made changes to definitions table
@@ -78,13 +93,13 @@ CHANGELOG Wickenburg Zoning Website
 * updated MXD
 * updates to data - Zoning Info
 
-### Version 3.4.0 (07/22/2014)
+## Version 3.4.0 (07/22/2014)
 
 * changed size of search box (reduced)
 * changed lods to minZoom & maxZoom
 * fixed layer options to only display popup when layer is visible
 
-### Version 3.3.0 (06/30/2014)
+## Version 3.3.0 (06/30/2014)
 
 * changed size and location of basemap toggle
 * added version number and date to about.html - configurable in appConfig file
@@ -94,23 +109,23 @@ CHANGELOG Wickenburg Zoning Website
 * added source reference to employer data
 * made print legend static graphic to fit to size
 
-### Version 3.2.1 (06/04/2014)
+## Version 3.2.1 (06/04/2014)
 
 * added Wickenburg Employers, 5+ employees as a feature layer
 * added Google Analytics code to index files `UA-40006601-1`
 * added Google Webmaster Tools `google14c4dad344d14f91.html` file to root directory
 
-### Version 3.2.0 (05/27/2014)
+## Version 3.2.0 (05/27/2014)
 
 * moved `About` modal from index.html to views `about.html`
 * moved `Measurement` html from index.html to views `measureTool.html`
 * moved `Content` html from index.html to views `contents.html`
 
-### Version 3.1.0 (05/12/2014)
+## Version 3.1.0 (05/12/2014)
 
 * made changes to boundary and zoning
 
-### Version 3.0.0 (05/09/2014)
+## Version 3.0.0 (05/09/2014)
 
 * updating zoning - new annexation area
 * updating boundary - new annexation area
@@ -129,7 +144,7 @@ CHANGELOG Wickenburg Zoning Website
 * changed style color of `HomeButton` `LocateButton` `esriSimpleSlider` - `color: #fff` `background-color: #5b5b5`
 * removed 2 LOD levels to restrict zoom out
 
-### Version 2.4.0 (04/21/2014)
+## Version 2.4.0 (04/21/2014)
 
 * added measurement tool
 * added function to prevent popups when measure tool is active
@@ -140,19 +155,19 @@ CHANGELOG Wickenburg Zoning Website
 * switched geometry services from ESRI test to MAGs service
 * changed the default color of drop-down arrow in measurement tool
 
-### Version 2.3.0 (04/08/2014)
+## Version 2.3.0 (04/08/2014)
 
 * updated to ArcGIS JavaScript API 3.9
 * updated to jQuery 1.11.0
 * added basemap toggle to fix aerial image issue
 
-### Version 2.2.4 (04/04/2014)
+## Version 2.2.4 (04/04/2014)
 
 * fixed some css issues with popup
 * added bootstrapmap.css to concat.min.css
 * cleaned up some issues in index.html
 
-### Version 2.2.3 (03/24/2014)
+## Version 2.2.3 (03/24/2014)
 
 * removed Yavapi parcels rest end point
 * removed Maricopa parcels rest end point
@@ -164,7 +179,7 @@ CHANGELOG Wickenburg Zoning Website
 * concatenated normalize and main css files
 * minified main js file
 
-### Version 2.2.2 (03/19/2014)
+## Version 2.2.2 (03/19/2014)
 
 * linted index.html file and fixed errors
 * changed body background color
@@ -175,7 +190,7 @@ CHANGELOG Wickenburg Zoning Website
 * added .gitattributes file - Git
 * added .gitignore file - Git
 
-### Version 2.2.1 (03/07/2014)
+## Version 2.2.1 (03/07/2014)
 
 * changed maps extent
 * updated About menu items
@@ -190,7 +205,7 @@ CHANGELOG Wickenburg Zoning Website
 * added a help button to the contents menu
 * added a help model window
 
-### Version 2.2.0 (01/30/2014)
+## Version 2.2.0 (01/30/2014)
 
 * major change to bootstrap layout
 * added modal about window
@@ -199,12 +214,12 @@ CHANGELOG Wickenburg Zoning Website
 * added homebutton dijit
 * added geolocation button dijit
 
-### Version 2.0.0 (01/08/2014)
+## Version 2.0.0 (01/08/2014)
 
 * major change to format - change to kendo layout
 * update ESRI javascript API to version 3.8
 
-### Version 1.2.1 (12/05/2013)
+## Version 1.2.1 (12/05/2013)
 
 * added humans.txt file (html5 boilerplate)
 * added robots.txt file (html5 boilerplate)
@@ -218,7 +233,7 @@ CHANGELOG Wickenburg Zoning Website
 * updated ESRI javascript API from 3.4 to 3.7
 * updated jquery libary from 1.9.1 to 1.10.2
 
-### Version 1.2.0 (04/08/2013)
+## Version 1.2.0 (04/08/2013)
 
 * Added Google Analytics code ###(Wickenburg Zoning Viewer)-UA-40006601-1
 * Updated ESRI Javascript API from 3.2 to 3.4
@@ -226,7 +241,7 @@ CHANGELOG Wickenburg Zoning Website
 * Updated jquery from 1.8.3 to 1.9.1
 	* <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-### Version 1.0.0 (04/01/2013)
+## Version 1.0.0 (04/01/2013)
 
 * Posted to geo.azmag server
 * Used basic frame work from MAG EXLU Viewer
@@ -239,8 +254,6 @@ CHANGELOG Wickenburg Zoning Website
     * [Example] (https://developers.arcgis.com/javascript/jssamples/map_explicitlayerlist.html)
     * [Link] (http://forums.esri.com/Thread.asp?c=158&f=2396&t=261892)
     * [fiddle] (http://jsfiddle.net/blordcastillo/mULcz/)
-
-
 
 - ***TOC Examples***
 
