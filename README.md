@@ -68,7 +68,7 @@ THE FOREGOING WARRANTY IS EXCLUSIVE AND IN LIEU OF ALL OTHER WARRANTIES OF MERCH
 
  Please acknowledge the Town of Wickenburg GIS as the source when Map Server data is used in the preparation of reports, papers, publications, maps, or other products.
  
- ## Copyright and Licensing
+## Copyright and Licensing
 
 Code released under the MIT license.
 
