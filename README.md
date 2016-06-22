@@ -2,7 +2,7 @@
 <img src="http://geo.azmag.gov/maps/wickenburg/img/townLogo_black.jpg" alt="wickenburg" height="100"/>  ![](http://geo.azmag.gov/maps/readonaz/app/resources/img/maglogo_black.png)
 
 # Town of Wickenburg Zoning Viewer #
-MAG mapping application for the town of Wickenburg showing zoning data
+MAG mapping application for the Town of Wickenburg showing zoning data
 
 [![GitHub issues](https://img.shields.io/github/issues/AZMAG/map-Wickenburg.svg)](https://github.com/AZMAG/map-Wickenburg/issues)
 [![dependencies](https://david-dm.org/AZMAG/map-Wickenburg.png)](https://david-dm.org/AZMAG/map-Wickenburg)
