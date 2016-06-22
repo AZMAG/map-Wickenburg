@@ -1,3 +1,5 @@
+![](http://geo.azmag.gov/maps/wickenburg/img/townLogo_black.jpg)  
+![](http://geo.azmag.gov/maps/readonaz/app/resources/img/maglogo_black.png)
 # MAG-Wickenburg
 MAG Wickeburg Zoning Viewer
 
