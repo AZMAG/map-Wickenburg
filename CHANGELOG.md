@@ -20,6 +20,12 @@ And constructed with the following guidelines:
 * zoom issue with geocoder
 * turn off measurement tool when window closes
 
+## Version 3.7.7 | 09/16/2016
+
+* updates to Town Boundary
+* updates to Zoning
+* take zoning layer off of initial loading
+
 ## Version 3.7.6 | 06/22/2016
 
 * fix URL for Maricopa County Assessors Office
