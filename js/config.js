@@ -7,7 +7,7 @@ var appConfig = new function() {
         id: "wiZoning",
         url: this.mainURL + "/8",
         title: "Zoning",
-        visible: true,
+        visible: false,
         opacity: 0.6,
         showLegend: true,
         showCheckBox: true,
@@ -160,7 +160,7 @@ var appConfig = new function() {
     this.streetsLayer = "http://server.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer";
     this.imageryLayer = "http://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer";
 
-    this.Version = "v3.7.6 | 06/22/2016";
+    this.Version = "v3.7.7 | 09/16/2016";
 
     this.emailLink = "https://www.azmag.gov/EmailPages/JasonHoward.asp";
 

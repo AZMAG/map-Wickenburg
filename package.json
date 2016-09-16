@@ -1,7 +1,7 @@
 {
   "name": "Wickenburg-Project",
-  "version": "3.7.6",
-  "date": "06/22/2016",
+  "version": "3.7.7",
+  "date": "09/16/2016",
   "description": "Wickenburg Zoining Viewer",
   "keywords": ["zoning", "floodways", "parcles", "employeers", "Wickenburg", "town", "Yavapai", "Maricopa", "County", "Arizona", "MAG", "maps", "ESRI", "#MAGmaps"],
   "main": "index.js",
