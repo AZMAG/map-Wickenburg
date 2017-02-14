@@ -160,7 +160,7 @@ var appConfig = new function() {
     this.streetsLayer = "http://server.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer";
     this.imageryLayer = "http://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer";
 
-    this.Version = "v3.7.7 | 09/16/2016";
+    this.Version = "v3.7.8 | 02/14/2017";
 
     this.emailLink = "https://www.azmag.gov/EmailPages/JasonHoward.asp";
 
@@ -178,9 +178,9 @@ var appConfig = new function() {
     // "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task" // Esri test service
 
     // Demographic PDF report
-    this.demService = "http://geo.azmag.gov/services/Demographics/reports.html?city=Wickenburg";
+    this.demService = "http://geo.azmag.gov/services/demographics2014/reports.html?city=Wickenburg";
     // Employment PDF report
-    this.empService = "http://geo.azmag.gov/services/employment2014/reports.html?city=Wickenburg";
+    this.empService = "http://geo.azmag.gov/services/employment2015/reports.html?jurisdiction=Wickenburg";
 
     this.initExtent = {
         "xmin": -12570767,
