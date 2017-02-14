@@ -20,6 +20,12 @@ And constructed with the following guidelines:
 * zoom issue with geocoder
 * turn off measurement tool when window closes
 
+
+## Version 3.7.8 | 02/14/2017
+
+* updated link to employment viewer pdf data
+* updated link to demographic viewer pdf data
+
 ## Version 3.7.7 | 09/16/2016
 
 * updates to Town Boundary
