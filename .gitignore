@@ -220,3 +220,5 @@ pip-log.txt
 # workspace files are user-specific don't track
 *.sublime-workspace
 
+# http://www.patrickcatanzariti.com/2014/11/how-to-remove-node_modules-from-your-git-repo/
+node_modules/
