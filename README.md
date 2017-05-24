@@ -70,5 +70,7 @@ THE FOREGOING WARRANTY IS EXCLUSIVE AND IN LIEU OF ALL OTHER WARRANTIES OF MERCH
 ## Copyright and Licensing
 
 Code released under the MIT license.
-A copy of the license is available in the repository's [LICENSE](LICENSE) file.
 
+A copy of the license is available in the repository's `LICENSE` file.
+
+* [LICENSE](LICENSE)
