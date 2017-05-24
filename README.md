@@ -11,6 +11,7 @@ MAG mapping application for the town of Wickenburg showing zoning data
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![GitHub version](https://badge.fury.io/gh/AZMAG%2Fmap-Wickenburg.svg)](https://badge.fury.io/gh/AZMAG%2Fmap-Wickenburg)
 [![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg?label=my-website)](http://geo.azmag.gov/maps/wickenburg/)
+[![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg?label=my-website)](http://geo.azmag.gov/maps/test/wickenburg/)
 
 ****************************************************************************************
 
