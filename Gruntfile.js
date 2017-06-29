@@ -80,7 +80,9 @@ module.exports = function(grunt) {
             build: {
                 files: {
                     "dist/js/main.min.js": ["src/js/main.js"],
-                    "dist/js/vendor/bootstrapmap.min.js": ["src/js/vendor/bootstrapmap.js"]
+                    "dist/js/config.min.js": ["src/js/config.js"],
+                    "dist/js/vendor/bootstrapmap.min.js": ["src/js/vendor/bootstrapmap.js"],
+                    "dist/js/vendor/plugins.min.js": ["src/js/vendor/plugins.js"]
                 }
             }
         },
@@ -113,7 +115,10 @@ module.exports = function(grunt) {
         clean: {
             build: {
                 src: ["dist/"]
-            }
+            },
+            js: ["dist/js/*.js", "!dist/js/*.min.js"],
+            jsv: ["dist/js/vendor/*.js", "!dist/js/vendor/*.min.js"],
+            css: ["dist/css/*.css", "!dist/css/concat.min.css"]
         },
 
         copy: {
@@ -197,7 +202,7 @@ module.exports = function(grunt) {
     grunt.registerTask("buildjs", ["uglify"]);
 
     // grunt.registerTask("build", ["replace", "uglify", "cssmin", "concat"]);
-    grunt.registerTask("build", ["clean", "replace", "copy", "cssmin", "concat"]);
+    grunt.registerTask("build", ["clean:build", "replace", "uglify", "cssmin", "concat", "copy", "clean:js", "clean:jsv", "clean:css"]);
 
 
     // the default task can be run just by typing "grunt" on the command line
