@@ -191,6 +191,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask("check", ["versioncheck"]);
     grunt.registerTask("work", ["jshint"]);
+    grunt.registerTask("workcss", ["csslint"]);
 
     grunt.registerTask("buildcss", ["cssmin", "concat"]);
     grunt.registerTask("buildjs", ["uglify"]);
