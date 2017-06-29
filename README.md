@@ -9,6 +9,8 @@ MAG mapping application for the town of Wickenburg showing zoning data
 [![Semver](http://img.shields.io/SemVer/2.0.0.png)](http://semver.org/spec/v2.0.0.html)
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![GitHub version](https://badge.fury.io/gh/AZMAG%2Fmap-Wickenburg.svg)](https://badge.fury.io/gh/AZMAG%2Fmap-Wickenburg)
+[![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg?label=my-website)](http://geo.azmag.gov/maps/wickenburg/)
 
 ****************************************************************************************
 
@@ -20,7 +22,7 @@ This JavaScript web app viewer was developed by MAG staff for the Town of Wicken
 
 ## Version
 
-#### version 3.7.8 ####
+### version 3.7.8 ###
 
  `Updated: 02/14/2017`
 
@@ -38,17 +40,17 @@ And constructed with the following guidelines:
 
 ## Credits
 
-`Maricopa Association of Governments (MAG) and the MAG member agencies`
+* Maricopa Association of Governments (MAG) and the MAG member agencies
 
 ## Site URL's
 
-* [http://geo.azmag.gov/maps/wickenburg/] (http://geo.azmag.gov/maps/wickenburg/)
+* [http://geo.azmag.gov/maps/wickenburg/](http://geo.azmag.gov/maps/wickenburg/)
 
 ## Documentation
 
 A detailed list of the changes and fixes in each version update can be found in the `CHANGELOG.md`.
 
-* [CHANGELOG] (CHANGELOG.md)
+* [CHANGELOG](CHANGELOG.md)
 
 ## Resources
 
@@ -71,15 +73,10 @@ THE FOREGOING WARRANTY IS EXCLUSIVE AND IN LIEU OF ALL OTHER WARRANTIES OF MERCH
 
 Code released under the MIT license.
 
-* [LICENSE] (LICENSE.txt)
+A copy of the license is available in the repository's `LICENSE` file.
 
-Copyright (c) 2016 Maricopa Association of Governments
+* [LICENSE](LICENSE)
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 

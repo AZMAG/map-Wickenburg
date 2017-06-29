@@ -1,4 +1,14 @@
-/*! main.js | Wickenburg Zoning Website @ MAG */
+/* ========================================================================
+ * Maricopa Association of Governments
+ * JavaScript file for MAG Wickenburg Zoning Map Viewer
+ * @main.js
+ * http://geo.azmag.gov/maps/wickenburg/
+ * MAG Wickenburg Zoning Map Viewer
+ * ==========================================================================
+ * @Copyright 2017 MAG
+ * @License MIT
+ * ========================================================================== */
+
 var map, toolbar;
 var graphicsCollection = [];
 var fillColorSelection = {
