@@ -27,6 +27,7 @@ And constructed with the following guidelines:
 * updates to Gruntfiles
 * add dist/ folder for build
 * updated [ArcGIS API for JavaScript - v3.20](https://developers.arcgis.com/javascript/3/)
+* updates to about menu dates mostly
 
 ## Version 3.7.8 | 02/14/2017
 
