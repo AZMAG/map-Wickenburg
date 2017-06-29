@@ -20,6 +20,14 @@ And constructed with the following guidelines:
 * zoom issue with geocoder
 * turn off measurement tool when window closes
 
+## Version 3.8.0 | 06/29/2017
+
+* updates to data
+* updates to package.json
+* updates to Gruntfiles
+* add dist/ folder for build
+* updated [ArcGIS API for JavaScript - v3.20](https://developers.arcgis.com/javascript/3/)
+* updates to about menu dates mostly
 
 ## Version 3.7.8 | 02/14/2017
 
@@ -77,9 +85,9 @@ And constructed with the following guidelines:
 * moved zoning definitions from main navbar to contents panel.
 * added Flood Zone Definitions link to contents window when floodzone layer is chosen.
 * added reports button next to print button that links to wickenburg demographic and employment reporting.
-* upgrade modernizr to `v2.8.3` via CDN - [modernizr] (http://cdnjs.com/libraries/modernizr)
-* upgrade html5shiv to `v3.7.3` via CDN - [html5shiv] (https://cdnjs.com/libraries/html5shiv)
-* upgrade respond.js to `v1.4.2` via CDN - [respond.js] (https://cdnjs.com/libraries/respond.js)
+* upgrade modernizr to `v2.8.3` via CDN - [modernizr](http://cdnjs.com/libraries/modernizr)
+* upgrade html5shiv to `v3.7.3` via CDN - [html5shiv](https://cdnjs.com/libraries/html5shiv)
+* upgrade respond.js to `v1.4.2` via CDN - [respond.js](https://cdnjs.com/libraries/respond.js)
 
 ## Version 3.7.0 (08/03/2015)
 
@@ -144,12 +152,12 @@ And constructed with the following guidelines:
 * reordered zoning layer
 * use `<!doctype html>` instead of `<!DOCTYPE html>`
 * remove IE conditional classes per HTML5 Boilerplate
-* update to [HTML5 Boilerplate v4.3.0] (https://github.com/h5bp/html5-boilerplate) features
-* update to [Normalize.css v3.0.1] (https://github.com/h5bp/html5-boilerplate) per HTML5bp
-* update the [HTML5 Shiv] (https://github.com/aFarkas/html5shiv)
-* update the [respond.min.js] (https://github.com/scottjehl/Respond)
-* update to [jquery-1.11.0] (http://jquery.com/)
-* update to [Modernizr v2.7.1] (http://modernizr.com/)
+* update to [HTML5 Boilerplate v4.3.0](https://github.com/h5bp/html5-boilerplate) features
+* update to [Normalize.css v3.0.1](https://github.com/h5bp/html5-boilerplate) per HTML5bp
+* update the [HTML5 Shiv](https://github.com/aFarkas/html5shiv)
+* update the [respond.min.js](https://github.com/scottjehl/Respond)
+* update to [jquery-1.11.0](http://jquery.com/)
+* update to [Modernizr v2.7.1](http://modernizr.com/)
 * changed file structure
 * fixed scrollwheel issue - `https://github.com/Esri/bootstrap-map-js/issues/3`
 * changed title css to static color
@@ -262,10 +270,10 @@ And constructed with the following guidelines:
 
 - ***identifyParms Issue ***
 
-    * [Link] (https://geonet.esri.com/thread/44797)
-    * [Example] (https://developers.arcgis.com/javascript/jssamples/map_explicitlayerlist.html)
-    * [Link] (http://forums.esri.com/Thread.asp?c=158&f=2396&t=261892)
-    * [fiddle] (http://jsfiddle.net/blordcastillo/mULcz/)
+    * [Link](https://geonet.esri.com/thread/44797)
+    * [Example](https://developers.arcgis.com/javascript/jssamples/map_explicitlayerlist.html)
+    * [Link](http://forums.esri.com/Thread.asp?c=158&f=2396&t=261892)
+    * [fiddle](http://jsfiddle.net/blordcastillo/mULcz/)
 
 - ***TOC Examples***
 

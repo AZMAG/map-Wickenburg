@@ -1,12 +1,15 @@
 {
-  "name": "Wickenburg-Project",
-  "version": "3.7.8",
-  "date": "02/14/2017",
+  "name": "Wickenburg-App",
+  "version": "3.8.0",
+  "date": "06/29/2017",
+  "copyright": "2017",
   "description": "Wickenburg Zoining Viewer",
-  "keywords": ["zoning", "floodways", "parcles", "employeers", "Wickenburg", "town", "Yavapai", "Maricopa", "County", "Arizona", "MAG", "maps", "ESRI", "#MAGmaps"],
+  "keywords": ["zoning", "flood-ways", "parcels", "employers", "Wickenburg", "town", "Yavapai", "Maricopa", "County", "Arizona", "MAG", "maps", "ESRI", "#MAGmaps"],
   "main": "index.js",
   "homepage": "http://geo.azmag.gov/maps/wickenburg/",
-  "author": "Vern Wolfley <vwolfley@azmag.gov>",
+  "repository": "https://github.com/AZMAG/map-Wickenburg",
+  "repository-internal": "I:/Projects/Git_repos/wickenburg.git",
+  "author": "MAG Information Services (http://www.azmag.gov/Information_Services/default.asp)",
   "contributors": [{
     "name": "Vern Wolfley",
     "email": "vwolfley@azmag.gov"
@@ -15,10 +18,14 @@
     "email": "jfairfield@azmag.gov"
   }],
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+  },
   "devDependencies": {
+    "csslint-stylish": "0.0.6",
     "grunt": "1.0.1",
+    "grunt-contrib-clean": "1.1.0",
     "grunt-contrib-concat": "1.0.1",
+    "grunt-contrib-copy": "1.0.0",
     "grunt-contrib-csslint": "2.0.0",
     "grunt-contrib-cssmin": "2.2.0",
     "grunt-contrib-jshint": "1.1.0",
