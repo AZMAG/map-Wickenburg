@@ -20,7 +20,7 @@ And constructed with the following guidelines:
 * zoom issue with geocoder
 * turn off measurement tool when window closes
 
-## Version 3.8.0 | 06/29/2017
+## Version 3.8.0 | 2017-06-29
 
 * updates to data
 * updates to package.json

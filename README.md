@@ -24,9 +24,9 @@ This JavaScript web app viewer was developed by MAG staff for the Town of Wicken
 
 ### version 3.8.0 ###
 
- `Updated: 06/29/2017`
+ `Updated: 2017-06-29`
 
- `Created: 04/01/2013`
+ `Created: 2013-04-01`
 
 Releases will be numbered with the following format:
 
@@ -42,7 +42,7 @@ And constructed with the following guidelines:
 
 * Maricopa Association of Governments (MAG) and the MAG member agencies
 
-## Site URL's
+## Site URL
 
 * [http://geo.azmag.gov/maps/wickenburg/](http://geo.azmag.gov/maps/wickenburg/)
 
@@ -53,6 +53,10 @@ A detailed list of the changes and fixes in each version update can be found in 
 * [CHANGELOG](CHANGELOG.md)
 
 ## Resources
+
+## Dependencies
+
+* [git-labelmaker](https://github.com/himynameisdave/git-labelmaker?utm_source=hashnode.com)
 
 ## Legal Disclaimer
 

@@ -1,13 +1,13 @@
 {
   "name": "Wickenburg-App",
   "version": "3.8.0",
-  "date": "06/29/2017",
+  "date": "2017-06-29",
   "copyright": "2017",
   "description": "Wickenburg Zoining Viewer",
   "keywords": ["zoning", "flood-ways", "parcels", "employers", "Wickenburg", "town", "Yavapai", "Maricopa", "County", "Arizona", "MAG", "maps", "ESRI", "#MAGmaps"],
   "main": "index.js",
   "homepage": "http://geo.azmag.gov/maps/wickenburg/",
-  "repository": "https://github.com/AZMAG/map-Wickenburg",
+  "repository": "https://github.com/MaricopaAssociationofGovernments/map-Wickenburg",
   "repository-internal": "I:/Projects/Git_repos/wickenburg.git",
   "author": "MAG Information Services (http://www.azmag.gov/Information_Services/default.asp)",
   "contributors": [{

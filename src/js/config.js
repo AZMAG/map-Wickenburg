@@ -171,7 +171,7 @@ var appConfig = new function() {
     this.streetsLayer = "http://server.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer";
     this.imageryLayer = "http://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer";
 
-    this.Version = "v3.8.0 | 06/29/2017";
+    this.Version = "v3.8.0 | 2017-06-29";
 
     this.emailLink = "https://www.azmag.gov/EmailPages/JasonHoward.asp";
 
