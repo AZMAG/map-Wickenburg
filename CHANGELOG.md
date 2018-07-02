@@ -14,11 +14,26 @@ And constructed with the following guidelines:
 1. **MAJOR** version when you make incompatible API changes **bumps the major** resets minor and patch
 2. **MINOR** version when you add functionality in a backwards-compatible manner **bumps the minor** resets patch
 3. **PATCH** version when you make backwards-compatible bug fixes and misc changes **bumps only the patch**
-=========================================================================================================
+
+#### Types of Changes ####
+
+* `Added` for new features
+* `Changed` for changes in existing functionality
+* `Deprecated` for soon-to-be removed features
+* `Removed` for now removed features
+* `Fixed` for any bug fixes
+* `Security` in case of vulnerabilities
+
+[Source](http://keepachangelog.com/en/1.0.0/)
+
+***********************************************
 
 ## Outstanding Items
+
 * zoom issue with geocoder
 * turn off measurement tool when window closes
+
+***********************************************
 
 ## Version 3.8.0 | 2017-06-29
 
@@ -29,22 +44,22 @@ And constructed with the following guidelines:
 * updated [ArcGIS API for JavaScript - v3.20](https://developers.arcgis.com/javascript/3/)
 * updates to about menu dates mostly
 
-## Version 3.7.8 | 02/14/2017
+## Version 3.7.8 | 2017-02-14
 
 * updated link to employment viewer pdf data
 * updated link to demographic viewer pdf data
 
-## Version 3.7.7 | 09/16/2016
+## Version 3.7.7 | 2016-09-16
 
 * updates to Town Boundary
 * updates to Zoning
 * take zoning layer off of initial loading
 
-## Version 3.7.6 | 06/22/2016
+## Version 3.7.6 | 2016-06-22
 
 * fix URL for Maricopa County Assessors Office
 
-## Version 3.7.5 | 02/26/2016
+## Version 3.7.5 | 2016-02-26
 
 * added basemap transparency slider
 * disabled basemaptoggle button
