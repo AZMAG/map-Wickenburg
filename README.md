@@ -1,16 +1,16 @@
-<img src="http://geo.azmag.gov/maps/wickenburg/img/townLogo_black.jpg" alt="wickenburg" height="100"/>  ![](http://geo.azmag.gov/maps/readonaz/app/resources/img/maglogo_black.png)
+<img src="http://geo.azmag.gov/maps/wickenburg/img/townLogo_black.jpg" alt="wickenburg" height="80"/>  ![](http://geo.azmag.gov/maps/readonaz/app/resources/img/maglogo_black.png)
 
 # Town of Wickenburg Zoning Viewer #
 MAG mapping application for the town of Wickenburg showing zoning data
 
+[![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg?label=my-website)](http://geo.azmag.gov/maps/wickenburg/)
+[![GitHub version](https://badge.fury.io/gh/MaricopaAssociationofGovernments%2Fmap-Wickenburg.svg)](https://badge.fury.io/gh/MaricopaAssociationofGovernments%2Fmap-Wickenburg)
 [![GitHub issues](https://img.shields.io/github/issues/MaricopaAssociationofGovernments/map-Wickenburg.svg)](https://github.com/MaricopaAssociationofGovernments/map-Wickenburg/issues)
 [![dependencies](https://david-dm.org/MaricopaAssociationofGovernments/map-Wickenburg.png)](https://david-dm.org/MaricopaAssociationofGovernments/map-Wickenburg)
 [![devDependency Status](https://david-dm.org/MaricopaAssociationofGovernments/map-Wickenburg/dev-status.png)](https://david-dm.org/MaricopaAssociationofGovernments/map-Wickenburg)
 [![Semver](http://img.shields.io/SemVer/2.0.0.png)](http://semver.org/spec/v2.0.0.html)
-[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+[![Built with Grunt](http://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![GitHub version](https://badge.fury.io/gh/MaricopaAssociationofGovernments%2Fmap-Wickenburg.svg)](https://badge.fury.io/gh/MaricopaAssociationofGovernments%2Fmap-Wickenburg)
-[![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg?label=my-website)](http://geo.azmag.gov/maps/wickenburg/)
 
 ****************************************************************************************
 
