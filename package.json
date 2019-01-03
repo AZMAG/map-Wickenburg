@@ -34,7 +34,7 @@
     "grunt-text-replace": "0.4.0",
     "grunt-version-check": "0.3.7",
     "jshint-stylish-ex": "0.2.0",
-    "lodash": "4.17.4",
+    "lodash": ">=4.17.5",
     "matchdep": "1.0.1",
     "normalize.css": ">=7.0.0"
   },
