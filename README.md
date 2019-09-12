@@ -22,9 +22,9 @@ This JavaScript web app viewer was developed by MAG staff for the Town of Wicken
 
 ## Version
 
-### version 3.8.0 ###
+### version 3.8.1 ###
 
- `Updated: 2017-06-29`
+ `Updated: 2019-09-11`
 
  `Created: 2013-04-01`
 

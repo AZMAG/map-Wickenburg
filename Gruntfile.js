@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
     "use strict";
 
@@ -50,28 +50,6 @@ module.exports = function(grunt) {
             }
         },
 
-        csslint: {
-            options: {
-                csslintrc: ".csslintrc",
-                formatters: [{
-                    id: require("csslint-stylish"),
-                    dest: "tmp/csslint_stylish.xml"
-                }]
-            },
-            strict: {
-                options: {
-                    import: 2
-                },
-                src: ["src/css/main.css"]
-            },
-            lax: {
-                options: {
-                    import: false
-                },
-                src: ["src/css/main.css"]
-            }
-        },
-
         uglify: {
             options: {
                 // add banner to top of output file
@@ -79,10 +57,10 @@ module.exports = function(grunt) {
             },
             build: {
                 files: {
-                    "dist/js/main.min.js": ["src/js/main.js"],
-                    "dist/js/config.min.js": ["src/js/config.js"],
-                    "dist/js/vendor/bootstrapmap.min.js": ["src/js/vendor/bootstrapmap.js"],
-                    "dist/js/vendor/plugins.min.js": ["src/js/vendor/plugins.js"]
+                    "dist/js/main.min.js": ["dist/js/main.js"],
+                    "dist/js/config.min.js": ["dist/js/config.js"],
+                    "dist/js/vendor/bootstrapmap.min.js": ["dist/js/vendor/bootstrapmap.js"],
+                    "dist/js/vendor/plugins.min.js": ["dist/js/vendor/plugins.js"]
                 }
             }
         },
@@ -94,9 +72,9 @@ module.exports = function(grunt) {
                     banner: '/* <%= pkg.name %> - v<%= pkg.version %> | <%= grunt.template.today("mm-dd-yyyy") %> */\n'
                 },
                 files: {
-                    "dist/css/main.min.css": ["src/css/main.css"],
-                    "dist/css/normalize.min.css": ["src/css/normalize.css"],
-                    "dist/css/bootstrapmap.min.css": ["src/css/bootstrapmap.css"]
+                    "dist/css/main.min.css": ["dist/css/main.css"],
+                    "dist/css/normalize.min.css": ["dist/css/normalize.css"],
+                    "dist/css/bootstrapmap.min.css": ["dist/css/bootstrapmap.css"]
                 }
             }
         },
@@ -148,10 +126,22 @@ module.exports = function(grunt) {
             }
         },
 
+        toggleComments: {
+            customOptions: {
+                options: {
+                    removeCommands: true
+                },
+                files: {
+                    "dist/index.html": "src/index.html",
+                    "dist/js/main.js": "src/js/main.js"
+
+                }
+            }
+        },
+
         replace: {
             update_Meta: {
-                src: ["src/index.html", "src/js/config.js", "src/humans.txt", "README.md"], // source files array
-                // src: ["README.md"], // source files array
+                src: ["src/index.html", "src/js/config.js", "src/humans.txt", "README.md", "src/LICENSE", "LICENSE"],
                 overwrite: true, // overwrite matched source files
                 replacements: [{
                     // html pages
@@ -173,6 +163,10 @@ module.exports = function(grunt) {
                     // humans.txt
                     from: /(Last updated\: )[0-9]{4}-[0-9]{2}-[0-9]{2}/g,
                     to: "Last updated: " + '<%= pkg.date %>',
+                }, {
+                    // LICENSE
+                    from: /(Copyright \(c\) )[0-9]{4}/g,
+                    to: "Copyright (c) " + "<%= pkg.copyright %>",
                 }, {
                     // README.md
                     from: /(### version )([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))/g,
@@ -201,8 +195,9 @@ module.exports = function(grunt) {
     grunt.registerTask("buildcss", ["cssmin", "concat"]);
     grunt.registerTask("buildjs", ["uglify"]);
 
-    // grunt.registerTask("build", ["replace", "uglify", "cssmin", "concat"]);
-    grunt.registerTask("build", ["clean:build", "replace", "uglify", "cssmin", "concat", "copy", "clean:js", "clean:jsv", "clean:css"]);
+    grunt.registerTask("tg", ["toggleComments"]);
+
+     grunt.registerTask("build", ["clean:build", "replace", "copy", "toggleComments", "uglify", "cssmin", "concat", "clean:js", "clean:jsv", "clean:css"]);
 
 
     // the default task can be run just by typing "grunt" on the command line

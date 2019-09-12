@@ -1,19 +1,28 @@
 <!doctype html>
 <html class="no-js">
-  <head>
+
+<head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=9, IE=10">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>MAG|Wickenburg Zoning</title>
 
+    <!-- comments:uncomment-block html -->
+    <!-- <script type="text/javascript">
+        if (window.location.protocol !== 'https:') {
+            window.location = 'https://' + window.location.hostname + window.location.pathname + window.location.hash;
+        }
+    </script> -->
+    <!-- endcomments -->
+
     <meta name="description" content="Town of Wickengurg Online Mapping Service">
     <meta name="author" content="Maricopa Association of Governments">
-    <link type="text/plain" rel="author" href="http://geo.azmag.gov/maps/wickenburg/humans.txt">
+    <link type="text/plain" rel="author" href="https://geo.azmag.gov/maps/wickenburg/humans.txt">
     <meta name="contact" content="www.azmag.gov">
-    <meta name="url" content="http://geo.azmag.gov/maps/wickenburg/">
+    <meta name="url" content="https://geo.azmag.gov/maps/wickenburg/">
     <meta name="creation-date" content="2013-04-01">
-    <meta name="revision-date" content="2017-06-29">
-    <meta name="version" content="3.8.0">
+    <meta name="revision-date" content="2019-09-11">
+    <meta name="version" content="3.8.1">
 
     <!-- Apple-Specific Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -21,29 +30,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <link rel="apple-touch-icon" type="image/png" sizes="144x144" href="app/resources/img/magicon_144.png">
-    <link rel="apple-touch-icon" type="image/png" sizes="114x114" href="app/resources/img/magicon_114.png">
-    <link rel="apple-touch-icon" type="image/png" sizes="72x72" href="app/resources/img/magicon_72.png">
-    <link rel="apple-touch-icon" type="image/png" sizes="57x57" href="app/resources/img/magicon_57.png">
-    <link rel="shortcut icon" type="image-favorites-icon" href="app/resources/img/magfavicon.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="144x144" href="img/magicon_144.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="114x114" href="img/magicon_114.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="72x72" href="img/magicon_72.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="57x57" href="img/magicon_57.png">
+    <link rel="shortcut icon" type="image-favorites-icon" href="img/magfavicon.png">
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
     <!-- jQuery user interface CSS -->
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 
     <!-- ESRI core CSS -->
-    <link rel="stylesheet" href="https://js.arcgis.com/3.20/dijit/themes/tundra/tundra.css">
-    <link rel="stylesheet" href="https://js.arcgis.com/3.20/esri/css/esri.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/3.29/dijit/themes/tundra/tundra.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/3.29/esri/css/esri.css">
 
     <!-- CSS for debugging -->
-    <!-- <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/bootstrapmap.min.css">
-    <link rel="stylesheet" href="css/main.css"> -->
+    <!-- comments:comment html -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/bootstrapmap.css">
+    <link rel="stylesheet" href="css/main.css">
+    <!-- endcomments -->
 
-    <!-- Custom styles for this template -->
-    <link rel="stylesheet" href="css/concat.min.css">
+    <!-- Custom styles -->
+    <!-- comments:uncomment-block html -->
+    <!-- <link rel="stylesheet" href="css/concat.min.css"> -->
+    <!-- endcomments -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -52,53 +65,71 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <!-- Google Analytics -->
-    <script>
-      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-      e.src='//www.google-analytics.com/analytics.js';
-      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-      ga('create','UA-40006601-1');ga('send','pageview');
-    </script>
-  </head>
-  <body class="tundra">
+    <!-- comments:uncomment-block html -->
+    <!-- <script>
+        (function (b, o, i, l, e, r) {
+            b.GoogleAnalyticsObject = l;
+            b[l] || (b[l] =
+                function () {
+                    (b[l].q = b[l].q || []).push(arguments)
+                });
+            b[l].l = +new Date;
+            e = o.createElement(i);
+            r = o.getElementsByTagName(i)[0];
+            e.src = '//www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e, r)
+        }(window, document, 'script', 'ga'));
+        ga('create', 'UA-40006601-1');
+        ga('send', 'pageview');
+    </script> -->
+    <!-- endcomments -->
+</head>
+
+<body class="tundra">
     <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-<!-- NAVBAR -->
-<!--==============================================================-->
+    <!-- NAVBAR -->
+    <!--==============================================================-->
     <div id="navBar" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#"><img class="navbar-brand-image" src="img/townLogo_white_xsmall.png" title="zoning">Zoning</a>
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><img class="navbar-brand-image" src="img/townLogo_white_xsmall.png"
+                        title="zoning">Zoning</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="" role="button"><a href="https://www.ci.wickenburg.az.us/" title="home">Home</a></li>
+                    <li id="contentsOpen" class="" role="button"><a href="#" title="contents">Contents</a></li>
+                    <li id="measureOpen" class="" role="button" data-target="#mTool"><a href="#"
+                            title="Measurement">Measurement</a></li>
+                    <li id="markupOpen" class="" role="button" data-target="#markupTool"><a href="#"
+                            title="Markup Tools">Markup Tools</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="searchDiv">
+                        <div id="search"></div>
+                    </li>
+                    <li id="reportOpen" class="btn-group toolicon glyphicon glyphicon-list-alt">
+                        <ul class="">
+                        </ul>
+                    </li>
+                    <li id="printOpen" role="button" data-target="#printTool"
+                        class="btn-group toolicon glyphicon glyphicon-print"></li>
+                    <li class="" role="button" data-toggle="modal" data-target="#aboutModal"><a href="#"
+                            title="About">About</a></li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
         </div>
-        <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="" role="button"><a href="http://www.ci.wickenburg.az.us/" title="home">Home</a></li>
-            <li id="contentsOpen" class="" role="button"><a href="#" title="contents">Contents</a></li>
-            <li id="measureOpen" class="" role="button" data-target="#mTool"><a href="#" title="Measurement">Measurement</a></li>
-            <li id="markupOpen" class="" role="button" data-target="#markupTool"><a href="#" title="Markup Tools">Markup Tools</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-          <li class="searchDiv">
-            <div id="search"></div>
-          </li>
-            <li id="reportOpen" class="btn-group toolicon glyphicon glyphicon-list-alt">
-              <ul class="">
-              </ul>
-            </li>
-            <li id="printOpen" role="button" data-target="#printTool" class="btn-group toolicon glyphicon glyphicon-print"></li>
-            <li class="" role="button" data-toggle="modal" data-target="#aboutModal"><a href="#" title="About">About</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </div><!--/end navbar -->
+    </div>
+    <!--/end navbar -->
 
 
     <!-- Bootstrap-map-js -->
@@ -106,133 +137,147 @@
     <div id="tail">Click anywhere on the map to start adding a graphic.</div>
 
 
-<!-- About Modal -->
-<!--==============================================================-->
-<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div id="aboutInfo" class="modal-content modal-style"></div>
-  </div><!-- /.modal-dialog -->
-</div><!-- /end Modal -->
+    <!-- About Modal -->
+    <!--==============================================================-->
+    <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div id="aboutInfo" class="modal-content modal-style"></div>
+        </div><!-- /.modal-dialog -->
+    </div><!-- /end Modal -->
 
-<!-- Reports Modal -->
-<!--==============================================================-->
-<div id="reportsModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div id="reportWindow" class="modal-content"></div>
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    <!-- Reports Modal -->
+    <!--==============================================================-->
+    <div id="reportsModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div id="reportWindow" class="modal-content"></div>
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
-<!-- Legal Disclaimer Modal -->
-<!--==============================================================-->
-<div id="legalModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div id="legalDisclaimer" class="modal-content"></div>
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    <!-- Legal Disclaimer Modal -->
+    <!--==============================================================-->
+    <div id="legalModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div id="legalDisclaimer" class="modal-content"></div>
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
-<!-- Zoning Descriptions Modal -->
-<!--==============================================================-->
-<div id="defModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div id="defModalCon" class="modal-dialog modal-lg">
-    <div id="definitions" class="modal-content modal-style"></div>
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    <!-- Zoning Descriptions Modal -->
+    <!--==============================================================-->
+    <div id="defModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div id="defModalCon" class="modal-dialog modal-lg">
+            <div id="definitions" class="modal-content modal-style"></div>
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
-<!-- Zoning Descriptions Modal -->
-<!--==============================================================-->
-<div id="defFloodModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div id="defModalCon" class="modal-dialog modal-lg">
-    <div id="floodDefinitions" class="modal-content modal-style"></div>
-  </div>
-</div>
+    <!-- Zoning Descriptions Modal -->
+    <!--==============================================================-->
+    <div id="defFloodModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div id="defModalCon" class="modal-dialog modal-lg">
+            <div id="floodDefinitions" class="modal-content modal-style"></div>
+        </div>
+    </div>
 
-<!-- Content -->
-<!--==============================================================-->
-<div id="legend" class="panel panel-default modal-style"></div><!-- /end legend panel-->
+    <!-- Content -->
+    <!--==============================================================-->
+    <div id="legend" class="panel panel-default modal-style"></div><!-- /end legend panel-->
 
-<!-- Help Modal for contents panel -->
-<!--==============================================================-->
-<div id="helpModalContent" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div id="helpModalCon" class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close closeX" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h2 class="modal-title" id=""><strong>Contents Help</strong></h2>
-      </div>
-      <div id="helpContent" class="modal-body modal-style"></div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    <!-- Help Modal for contents panel -->
+    <!--==============================================================-->
+    <div id="helpModalContent" class="modal fade bs-modal-lg" tabindex="-1" role="dialog"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div id="helpModalCon" class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close closeX" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title" id=""><strong>Contents Help</strong></h2>
+                </div>
+                <div id="helpContent" class="modal-body modal-style"></div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
-<!-- Measurement Tool -->
-<!--==============================================================-->
-<div id="mTool" class="panel panel-default modal-style"></div>
+    <!-- Measurement Tool -->
+    <!--==============================================================-->
+    <div id="mTool" class="panel panel-default modal-style"></div>
 
-<!-- Help Modal for measurement tool-->
-<div id="helpModalTool" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div id="" class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close closeX" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h2 class="modal-title" id=""><strong>Measurement Tool Help</strong></h2>
-      </div>
-      <div id="helpTool" class="modal-body modal-style"></div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    <!-- Help Modal for measurement tool-->
+    <div id="helpModalTool" class="modal fade bs-modal-lg" tabindex="-1" role="dialog"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div id="" class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close closeX" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title" id=""><strong>Measurement Tool Help</strong></h2>
+                </div>
+                <div id="helpTool" class="modal-body modal-style"></div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
-<!-- Help Modal for measurement tool-->
-<div id="helpModalMarkupTool" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div id="" class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close closeX" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h2 class="modal-title" id=""><strong>Markup Tools Help</strong></h2>
-      </div>
-      <div id="helpMarkup" class="modal-body modal-style"></div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    <!-- Help Modal for measurement tool-->
+    <div id="helpModalMarkupTool" class="modal fade bs-modal-lg" tabindex="-1" role="dialog"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div id="" class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close closeX" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title" id=""><strong>Markup Tools Help</strong></h2>
+                </div>
+                <div id="helpMarkup" class="modal-body modal-style"></div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
-<!-- Print Tool -->
-<!--==============================================================-->
-<div id="printTool" class="panel panel-default modal-style"></div>
+    <!-- Print Tool -->
+    <!--==============================================================-->
+    <div id="printTool" class="panel panel-default modal-style"></div>
 
-<!-- Help Modal for print tool-->
-<div id="helpModalPrint" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div id="" class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close closeX" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h2 class="modal-title" id=""><strong>Print Tool Help</strong></h2>
-      </div>
-      <div id="helpPrint" class="modal-body modal-style"></div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    <!-- Help Modal for print tool-->
+    <div id="helpModalPrint" class="modal fade bs-modal-lg" tabindex="-1" role="dialog"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div id="" class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close closeX" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title" id=""><strong>Print Tool Help</strong></h2>
+                </div>
+                <div id="helpPrint" class="modal-body modal-style"></div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
-<!-- Reports Window -->
-<!--==============================================================-->
-<div id="reportTool" class="panel panel-default modal-style"></div>
+    <!-- Reports Window -->
+    <!--==============================================================-->
+    <div id="reportTool" class="panel panel-default modal-style"></div>
 
-<!-- MarkupTool Window -->
-<!--==============================================================-->
-<div id="markupTool" class="panel panel-default modal-style"></div>
+    <!-- MarkupTool Window -->
+    <!--==============================================================-->
+    <div id="markupTool" class="panel panel-default modal-style"></div>
 
-<!-- Core JavaScript -->
-<!-- JavaScript / Placed at the end of the document so the pages load faster -->
-<!--============================================================================================================-->
-  <!-- Global script definitions. -->
-  <script src="http://js.arcgis.com/3.20/"></script>
-  <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-  <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <script src="js/vendor/jqColorPicker.min.js"></script>
+    <!-- Core JavaScript -->
+    <!-- JavaScript / Placed at the end of the document so the pages load faster -->
+    <!--============================================================================================================-->
+    <!-- Global script definitions. -->
+    <script src="https://js.arcgis.com/3.29/"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="js/vendor/jqColorPicker.min.js"></script>
 
-<!-- Custom JavaScript -->
-  <!-- <script src="js/config.js"></script> -->
-  <!-- // <script src="js/main.js"></script> -->
-  <script src="js/config.min.js"></script>
-  <script src="js/main.min.js"></script>
-  </body>
+    <!-- Custom JavaScript -->
+    <!-- comments:comment html -->
+    <script src="js/config.js"></script>
+    <script src="js/main.js"></script>
+    <!-- endcomments -->
+    <!-- comments:uncomment html -->
+    <!-- <script src="js/config.min.js"></script> -->
+    <!-- <script src="js/main.min.js"></script> -->
+    <!-- endcomments -->
+</body>
+
 </html>

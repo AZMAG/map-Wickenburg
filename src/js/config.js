@@ -11,7 +11,7 @@
 
 var appConfig = new function() {
 
-    this.mainURL = "http://geo.azmag.gov/gismag/rest/services/maps/WickenburgData/MapServer";
+    this.mainURL = "https://geo.azmag.gov/arcgis/rest/services/maps/WickenburgData/MapServer";
 
     this.layerInfo = [{
         layerNum: 0,
@@ -168,30 +168,32 @@ var appConfig = new function() {
         mapOrder: 3
     }];
 
-    this.streetsLayer = "http://server.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer";
-    this.imageryLayer = "http://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer";
+    this.streetsLayer = "https://server.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer";
+    this.imageryLayer = "https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer";
 
-    this.Version = "v3.8.0 | 2017-06-29";
+    this.Version = "v3.8.1 | 2019-09-11";
+
+    this.copyright = "2019";
 
     this.emailLink = "https://www.azmag.gov/EmailPages/JasonHoward.asp";
 
-    this.MaricopaAssessor = "http://mcassessor.maricopa.gov/mcs.php?q=";
-    this.YavapaiAssessor = "http://gis.yavapai.us/v4/print_parcel.aspx?qs=";
+    this.MaricopaAssessor = "https://mcassessor.maricopa.gov/mcs.php?q=";
+    this.YavapaiAssessor = "https://gis.yavapai.us/v4/print_parcel.aspx?qs=";
 
-    this.MaricopaRecorder = "http://recorder.maricopa.gov/recdocdata/GetBookMap.aspx?docket=";
+    this.MaricopaRecorder = "https://recorder.maricopa.gov/recdocdata/GetBookMap.aspx?docket=";
 
-    // this.GeometryService = "http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer"; // Esri test service
-    this.GeometryService = "http://geo.azmag.gov/gismag/rest/services/Utilities/Geometry/GeometryServer"; // MAGs service
+    this.GeometryService = "https://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer"; // Esri test service
+    // this.GeometryService = "https://geo.azmag.gov/gismag/rest/services/Utilities/Geometry/GeometryServer"; // MAGs service
 
     this.LocatorService = "//geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer";
 
-    this.printUrl = "http://geo.azmag.gov/gismag/rest/services/gp/Wickenburg_Print/GPServer/Export%20Web%20Map"; // MAG Wickenburg Print service
-    // "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task" // Esri test service
+    // this.printUrl = "https://geo.azmag.gov/gismag/rest/services/gp/Wickenburg_Print/GPServer/Export%20Web%20Map"; // MAG Wickenburg Print service
+    this.printUrl = "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task"; // Esri test service
 
     // Demographic PDF report
-    this.demService = "http://geo.azmag.gov/services/demographics2015/reports.html?city=Wickenburg";
+    this.demService = "https://geo.azmag.gov/services/demographics2015/reports.html?city=Wickenburg";
     // Employment PDF report
-    this.empService = "http://geo.azmag.gov/services/employment2016/reports.html?jurisdiction=Wickenburg";
+    this.empService = "https://geo.azmag.gov/services/employment2016/reports.html?jurisdiction=Wickenburg";
 
     this.initExtent = {
         "xmin": -12570767,
