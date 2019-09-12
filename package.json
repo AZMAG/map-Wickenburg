@@ -1,32 +1,52 @@
 {
   "name": "Wickenburg-App",
-  "version": "3.8.0",
-  "date": "2017-06-29",
-  "copyright": "2017",
-  "description": "Wickenburg Zoining Viewer",
-  "keywords": ["zoning", "flood-ways", "parcels", "employers", "Wickenburg", "town", "Yavapai", "Maricopa", "County", "Arizona", "MAG", "maps", "ESRI", "#MAGmaps"],
+  "version": "3.8.1",
+  "date": "2019-09-11",
+  "copyright": "2019",
+  "description": "Wickenburg Zoning Viewer",
+  "keywords": [
+    "zoning",
+    "flood-ways",
+    "parcels",
+    "employers",
+    "Wickenburg",
+    "town",
+    "Yavapai",
+    "Maricopa",
+    "County",
+    "Arizona",
+    "MAG",
+    "maps",
+    "ESRI",
+    "#MAGmaps"
+  ],
   "main": "index.js",
-  "homepage": "http://geo.azmag.gov/maps/wickenburg/",
-  "repository": "https://github.com/MaricopaAssociationofGovernments/map-Wickenburg",
-  "repository-internal": "I:/Projects/Git_repos/wickenburg.git",
-  "author": "MAG Information Services (http://www.azmag.gov/Information_Services/default.asp)",
-  "contributors": [{
-    "name": "Vern Wolfley",
-    "email": "vwolfley@azmag.gov"
-  }, {
-    "name": "Jack Fairfield",
-    "email": "jfairfield@azmag.gov"
-  }],
+  "homepage": "https://geo.azmag.gov/maps/wickenburg/",
+  "repository": [
+    {
+      "type": "git",
+      "url": "https://github.com/MaricopaAssociationofGovernments/map-Wickenburg"
+    }
+  ],
+  "author": "MAG Regional Analytics (https://www.azmag.gov/)",
+  "contributors": [
+    {
+      "name": "Vern Wolfley",
+      "email": "vwolfley@azmag.gov"
+    },
+    {
+      "name": "Jack Fairfield",
+      "email": "jfairfield@azmag.gov"
+    }
+  ],
   "private": true,
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "csslint-stylish": ">=0.0.6",
     "grunt": ">=1.0.3",
+    "grunt-comment-toggler": "^0.2.2",
     "grunt-contrib-clean": ">=2.0.0",
     "grunt-contrib-concat": ">=1.0.1",
     "grunt-contrib-copy": ">=1.0.0",
-    "grunt-contrib-csslint": ">=2.0.0",
     "grunt-contrib-cssmin": ">=3.0.0",
     "grunt-contrib-jshint": ">=2.0.0",
     "grunt-contrib-uglify": ">=4.0.0",
@@ -38,6 +58,14 @@
     "matchdep": ">=2.0.0",
     "normalize.css": ">=8.0.1"
   },
+  "engines": {
+    "node": ">=10.14.2",
+    "npm": ">=6.4.1"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
   "license": "MIT"
 }
-
