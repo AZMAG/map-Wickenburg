@@ -77,12 +77,17 @@ require([
         "esri/request",
         "esri/config",
 
+        // <!-- comments:comment // -->
+        "js/vendor/bootstrapmap.js",
+        // <!-- endcomments -->
+        // <!-- comments:uncomment // -->
+        // "js/vendor/bootstrapmap.min.js",
+        // <!-- endcomments -->
 
-        "js/vendor/bootstrapmap.min.js",
         "dojo/domReady!"
     ],
 
-    function(dc, dom, domStyle, Draw, Edit, on, parser, connect, query, keys, has, Map, Measurement, Scalebar, HomeButton, LocateButton,
+    function (dc, dom, domStyle, Draw, Edit, on, parser, connect, query, keys, has, Map, Measurement, Scalebar, HomeButton, LocateButton,
         Graphic, Extent, Multipoint, PictureMarkerSymbol, SimpleFillSymbol, SimpleLineSymbol, TextSymbol, IdentifyTask, IdentifyParameters, Popup, arrayUtils, Color, event, LayerDrawingOptions, SimpleRenderer, ImageParameters, Search, Locator, Legend, CheckBox, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, BasemapToggle, FeatureLayer, ArcGISDynamicMapServiceLayer, ArcGISTiledMapServiceLayer, PopupTemplate, InfoTemplate, SimpleMarkerSymbol, Print, PrintTemplate, esriRequest, esriConfig, BootstrapMap) {
 
         parser.parse();
@@ -92,6 +97,7 @@ require([
 
         // add version and date to about.html, changed in config.js
         dom.byId("version").innerHTML = appConfig.Version;
+        $(".copyright").text(appConfig.copyright);
 
         // add pdf links to window
         dom.byId("demLink").setAttribute("href", appConfig.demService);
@@ -161,7 +167,7 @@ require([
         search.startup();
 
         var newpopup;
-        connect.connect(popup, "onClearFeatures", function() {
+        connect.connect(popup, "onClearFeatures", function () {
             newpopup = popup;
         });
 
@@ -169,18 +175,18 @@ require([
 
         $("#highlight").hide();
 
-        $("#multiple").click(function() {
+        $("#multiple").click(function () {
             $(this).data("clicked", true);
             multiple = true;
         });
 
         var single = $("#single");
 
-        single.click(function() {
+        single.click(function () {
             multiple = false;
         });
 
-        $("#clearHighlights").click(function() {
+        $("#clearHighlights").click(function () {
             multiple = false;
             map.graphics.clear();
 
@@ -219,7 +225,7 @@ require([
             id: "LocateButton"
         }, "mapDiv", "last"));
 
-        geoLocateButton.on("locate", function(evt) {
+        geoLocateButton.on("locate", function (evt) {
             disablepopup();
         });
         geoLocateButton.startup();
@@ -264,7 +270,7 @@ require([
         function handlePrintInfo(resp) {
             var layoutTemplate, templateNames, mapOnlyIndex, templates;
 
-            layoutTemplate = arrayUtils.filter(resp.parameters, function(param, idx) {
+            layoutTemplate = arrayUtils.filter(resp.parameters, function (param, idx) {
                 return param.name === "Layout_Template";
             });
 
@@ -281,7 +287,7 @@ require([
             }
 
             // create a print template for each choice
-            templates = arrayUtils.map(templateNames, function(ch) {
+            templates = arrayUtils.map(templateNames, function (ch) {
                 var plate = new PrintTemplate();
                 plate.layout = plate.label = ch;
                 plate.format = "PDF";
@@ -365,11 +371,11 @@ require([
             map: map,
             lineSymbol: sfs
         }, dom.byId("measurementDiv"));
-        measurement.on("measure-start", function(evt) {
+        measurement.on("measure-start", function (evt) {
             map.setInfoWindowOnClick(false);
             //disablepopup();
         });
-        measurement.on("measure-end", function(evt) {
+        measurement.on("measure-end", function (evt) {
             map.setInfoWindowOnClick(true);
         });
         measurement.startup();
@@ -408,13 +414,13 @@ require([
         legend.startup();
 
         //add check boxes
-        arrayUtils.forEach(tocLayers, function(layer) {
+        arrayUtils.forEach(tocLayers, function (layer) {
             var layerName = layer.title;
             var checkBox = new CheckBox({
                 name: "checkBox" + layer.layer.id,
                 value: layer.layer.id,
                 checked: layer.layer.visible,
-                onChange: function() {
+                onChange: function () {
                     var clayer = map.getLayer(this.value);
                     clayer.setVisibility(!clayer.visible);
                     if (this.value === "tParcels") {
@@ -462,7 +468,7 @@ require([
             intermediateChanges: true,
             discreteValues: 11,
             style: "width:250px;",
-            onChange: function(value1) {
+            onChange: function (value1) {
                 map.getLayer("wiFlood").setOpacity(value1);
             }
         }, "slider1");
@@ -476,7 +482,7 @@ require([
             intermediateChanges: true,
             discreteValues: 11,
             style: "width:250px;",
-            onChange: function(value2) {
+            onChange: function (value2) {
                 map.getLayer("wiZoning").setOpacity(value2);
             }
         }, "slider2");
@@ -490,7 +496,7 @@ require([
             intermediateChanges: true,
             discreteValues: 11,
             style: "width:250px;",
-            onChange: function(value4) {
+            onChange: function (value4) {
                 // console.log("value4: " + value4);
                 // console.log(map.getLayer(map.basemapLayerIds).layerInfos[0].name);
                 var baseLayerName = map.getLayer(map.basemapLayerIds).layerInfos[0].name;
@@ -539,7 +545,7 @@ require([
             intermediateChanges: true,
             discreteValues: 11,
             style: "width:250px;",
-            onChange: function(value3) {
+            onChange: function (value3) {
                 updateParcelThickness(value3);
             }
         }, "slider3");
@@ -576,7 +582,7 @@ require([
             "href": "javascript: void(0);"
         }, query(".actionList", map.infoWindow.domNode)[0]);
 
-        on(alink, "click", function() {
+        on(alink, "click", function () {
             var feature = map.infoWindow.getSelectedFeature();
             console.log(feature);
             var url = window.location;
@@ -599,7 +605,7 @@ require([
             "href": "javascript: void(0);"
         }, query(".actionList", map.infoWindow.domNode)[0]);
 
-        on(rlink, "click", function() {
+        on(rlink, "click", function () {
             var feature = map.infoWindow.getSelectedFeature();
             console.log(feature);
             var url = window.location;
@@ -613,7 +619,7 @@ require([
          * @param  {[type]} ) {var graphic [description]
          * @return {[type]}   returns action link in popup
          */
-        connect.connect(popup, "onSelectionChange", function() {
+        connect.connect(popup, "onSelectionChange", function () {
             var graphic = popup.getSelectedFeature();
             // console.log(graphic);
             if (graphic) {
@@ -642,7 +648,7 @@ require([
             $("#btnAdd").click(addBtnClick);
             $("#markupDropdown").change(dropdownChanged);
             $(".color").colorPicker({
-                renderCallback: function($elm, toggled) {
+                renderCallback: function ($elm, toggled) {
                     if (toggled === false) {
                         if (editToolbar._graphic) {
                             if ($elm[0].id === "picker1") {
@@ -655,7 +661,7 @@ require([
                 }
             });
 
-            $("body").on("mousemove", function(e) {
+            $("body").on("mousemove", function (e) {
                 $("#tail").css({
                     left: e.pageX + 20,
                     top: e.pageY
@@ -691,7 +697,7 @@ require([
             editToolbar = new Edit(map);
 
             //Activate the toolbar when you click on a graphic
-            map.graphics.on("click", function(evt) {
+            map.graphics.on("click", function (evt) {
 
                 if ($("#btnEdit").hasClass("btn-primary")) {
                     event.stop(evt);
@@ -703,7 +709,7 @@ require([
                 }
             });
             //deactivate the toolbar when you click outside a graphic
-            map.on("click", function(evt) {
+            map.on("click", function (evt) {
                 editToolbar.deactivate();
             });
         }
@@ -831,7 +837,7 @@ require([
         function hexToRgb(hex) {
             // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
             var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-            hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+            hex = hex.replace(shorthandRegex, function (m, r, g, b) {
                 return r + r + g + g + b + b;
             });
 
@@ -890,7 +896,7 @@ require([
                 sortOrder = -1;
                 property = property.substr(1);
             }
-            return function(a, b) {
+            return function (a, b) {
                 var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
                 return result * sortOrder;
             };
@@ -913,7 +919,7 @@ function toggleContent() {
     }
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     $("#contentsOpen").fadeTo("slow");
     $("#legend").fadeTo("slow");
     $("#legend").draggable({
@@ -921,7 +927,7 @@ $(document).ready(function() {
     });
     contentsOpen = $("#contentsOpen").height();
     $("#legend").css("top", "55px");
-    $("#contentsOpen").click(function() {
+    $("#contentsOpen").click(function () {
         toggleContent();
     });
 });
@@ -946,18 +952,18 @@ function toggleMTool() {
     }
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     $("#measureOpen").fadeTo("slow");
     $("#mTool").fadeTo("slow");
     measureOpen = $("#measureOpen").height();
     $("#mTool").css("top", "55px");
-    $("#measureOpen").click(function() {
+    $("#measureOpen").click(function () {
         toggleMTool();
     });
 });
 
 //sets original position of dropdown for measurement tool
-$(document).ready(function() {
+$(document).ready(function () {
     $("#mTool").hide();
 });
 
@@ -989,18 +995,18 @@ function toggleReportWindow() {
     }
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     $("#printOpen").fadeTo("slow");
     $("#printTool").fadeTo("slow");
     printOpen = $("#printOpen").height();
     $("#printTool").css("top", "55px");
-    $("#printOpen").click(function() {
+    $("#printOpen").click(function () {
         togglePrint();
     });
     $("#reportOpen").fadeTo("slow");
     $("#reportTool").fadeTo("slow");
     reportOpen = $("#reportOpen").height();
-    $("#reportOpen").click(function() {
+    $("#reportOpen").click(function () {
         toggleReportWindow();
     });
 
@@ -1025,12 +1031,12 @@ function toggleSelectedButton(sender) {
     $("#" + sender).addClass("btn-primary");
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
 
     $("#markupOpen").fadeTo("slow");
     $("#markupTool").fadeTo("slow");
     $("#markupTool").css("top", "55px");
-    $("#markupOpen").click(function() {
+    $("#markupOpen").click(function () {
         toggleMarkupTools();
         $("#picker1").css("background-color", appConfig.defaultFillColor); //set default fill color
         $("#picker2").css("background-color", appConfig.defaultOutlineColor); //set default outline color
@@ -1039,7 +1045,7 @@ $(document).ready(function() {
 });
 
 //sets original position of dropdown for Print and Report tools
-$(document).ready(function() {
+$(document).ready(function () {
     $("#printTool").hide();
     $("#reportTool").hide();
     $("#markupTool").hide();
@@ -1047,7 +1053,7 @@ $(document).ready(function() {
 // Bindings
 //=================================================================================>
 //
-$(document).ready(function() {
+$(document).ready(function () {
     //*** Content binding
     $("#legend").load("views/contents.html");
     //*** Content Help modal binding

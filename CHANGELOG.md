@@ -35,6 +35,12 @@ And constructed with the following guidelines:
 
 ***********************************************
 
+## Version 3.8.1 | 2019-09-11
+
+* Fixed service URL
+* Fixed logo urls
+* Added toggle npm to help build process
+
 ## Version 3.8.0 | 2017-06-29
 
 * updates to data
