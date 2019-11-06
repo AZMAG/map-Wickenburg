@@ -65,7 +65,7 @@ var appConfig = new function() {
         showLegend: true,
         showCheckBox: true,
         popupHeader: "Parcels",
-        popupBody: "County: ${COUNTY}<br>" + "Parcel: ${PARCEL_APN_LABEL}<br>" + "Address: ${P_ADDRESS}",
+        popupBody: "County: ${COUNTY}<br>" + "Parcel: ${PARCEL}<br>" + "Address: ${ADDRESS}",
         tocOrder: 4,
         legendOrder: 4,
         mapOrder: 4
@@ -171,7 +171,7 @@ var appConfig = new function() {
     this.streetsLayer = "https://server.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer";
     this.imageryLayer = "https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer";
 
-    this.Version = "v3.8.1 | 2019-09-11";
+    this.Version = "v3.9.0 | 2019-11-06";
 
     this.copyright = "2019";
 
