@@ -35,6 +35,10 @@ And constructed with the following guidelines:
 
 ***********************************************
 
+## Version 3.9.0 | 2019-11-06
+
+* Changed field names in Parcel Layer (PARCEL_APN_LABEL to PARCEL, P_ADDRESS to ADDRESS)
+
 ## Version 3.8.1 | 2019-09-11
 
 * Fixed service URL

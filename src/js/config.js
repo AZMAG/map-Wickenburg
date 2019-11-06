@@ -65,7 +65,7 @@ var appConfig = new function() {
         showLegend: true,
         showCheckBox: true,
         popupHeader: "Parcels",
-        popupBody: "County: ${COUNTY}<br>" + "Parcel: ${PARCEL_APN_LABEL}<br>" + "Address: ${P_ADDRESS}",
+        popupBody: "County: ${COUNTY}<br>" + "Parcel: ${PARCEL}<br>" + "Address: ${ADDRESS}",
         tocOrder: 4,
         legendOrder: 4,
         mapOrder: 4
