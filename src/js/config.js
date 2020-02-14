@@ -166,12 +166,26 @@ var appConfig = new function() {
         tocOrder: 3,
         legendOrder: 5,
         mapOrder: 3
+    }, {
+        layerNum: 11,
+        id: "wiOpportunityZones",
+        url: this.mainURL + "/11",
+        title: "Opportunity Zones",
+        visible: false,
+        opacity: 1,
+        showLegend: true,
+        showCheckBox: true,
+        popupHeader: "${NAMELSAD10}",
+        popupBody: "<hr class='pLine'> Name:  ${NAME10}<br> SQMI: ${SQMI}",
+        tocOrder: 0,
+        legendOrder: 12,
+        mapOrder: 12
     }];
 
     this.streetsLayer = "https://server.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer";
     this.imageryLayer = "https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer";
 
-    this.Version = "v3.9.0 | 2019-11-06";
+    this.Version = "v3.9.1 | 2020-02-14";
 
     this.copyright = "2019";
 

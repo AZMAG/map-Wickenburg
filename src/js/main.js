@@ -588,11 +588,11 @@ require([
             var url = window.location;
 
             var alink = "";
-            if (feature.attributes.COUNTYFP10 === "013") {
-                alink = appConfig.MaricopaAssessor + feature.attributes.PARCEL_APN;
+            if (feature.attributes.COUNTY === "Maricopa") {
+                alink = appConfig.MaricopaAssessor + feature.attributes.PARCEL;
                 window.open(alink);
-            } else if (feature.attributes.COUNTYFP10 === "025") {
-                alink = appConfig.YavapaiAssessor + feature.attributes.PARCEL_APN;
+            } else if (feature.attributes.COUNTY === "Yavapai") {
+                alink = appConfig.YavapaiAssessor + feature.attributes.PARCEL;
                 window.open(alink);
             }
         });
@@ -624,7 +624,7 @@ require([
             // console.log(graphic);
             if (graphic) {
                 // console.log(graphic);
-                if (graphic.attributes.PARCEL_APN) {
+                if (graphic.attributes.PARCEL) {
                     $("#aInfoLink").show();
                     $("#rInfoLink").hide();
                 } else if (graphic.attributes.MCR) {

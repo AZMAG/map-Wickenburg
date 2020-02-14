@@ -35,6 +35,10 @@ And constructed with the following guidelines:
 
 ***********************************************
 
+## Version 3.9.1 | 2020-02-14
+
+* Added Opportunity Zones to map
+
 ## Version 3.9.0 | 2019-11-06
 
 * Changed field names in Parcel Layer (PARCEL_APN_LABEL to PARCEL, P_ADDRESS to ADDRESS)
