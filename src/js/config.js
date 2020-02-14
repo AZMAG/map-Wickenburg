@@ -185,7 +185,7 @@ var appConfig = new function() {
     this.streetsLayer = "https://server.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer";
     this.imageryLayer = "https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer";
 
-    this.Version = "v3.9.0 | 2019-11-06";
+    this.Version = "v3.9.1 | 2020-02-14";
 
     this.copyright = "2019";
 
