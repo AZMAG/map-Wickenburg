@@ -9,7 +9,7 @@
  * @License MIT
  * ========================================================================== */
 
-var appConfig = new function() {
+var appConfig = new function () {
 
     this.mainURL = "https://geo.azmag.gov/arcgis/rest/services/maps/WickenburgData/MapServer";
 
@@ -185,9 +185,9 @@ var appConfig = new function() {
     this.streetsLayer = "https://server.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer";
     this.imageryLayer = "https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer";
 
-    this.Version = "v3.9.1 | 2020-02-14";
+    this.Version = "v3.9.2 | 2020-05-07";
 
-    this.copyright = "2019";
+    this.copyright = "2020";
 
     this.emailLink = "https://www.azmag.gov/EmailPages/JasonHoward.asp";
 
@@ -205,7 +205,7 @@ var appConfig = new function() {
     this.printUrl = "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task"; // Esri test service
 
     // Demographic PDF report
-    this.demService = "https://geo.azmag.gov/services/demographics2015/reports.html?city=Wickenburg";
+    this.demService = "https://geo.azmag.gov/services/demographics2018/Reports.html?layer=Places&ids=0482740";
     // Employment PDF report
     this.empService = "https://geo.azmag.gov/services/employment2016/reports.html?jurisdiction=Wickenburg";
 
@@ -226,8 +226,7 @@ var appConfig = new function() {
     // ------------------------------
 
     // Specify the Markup / drawing tools.
-    this.markupToolTreeNodes =
-        [{
+    this.markupToolTreeNodes = [{
         id: 1,
         text: "Polygon",
         DisplayText: "Polygon",
