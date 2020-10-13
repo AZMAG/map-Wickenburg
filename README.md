@@ -18,13 +18,13 @@ This JavaScript web app viewer was developed by MAG staff for the Town of Wicken
 
 ## Keywords
 
-`Zoning` `Flood Areas` `Parcels` `Employers` `Wickenburg` `Town` `Maricopa County` `Yavapai County` `Maps` `MAG` `ESRI` `#MAGmaps`
+`Zoning` `Flood Areas` `Parcels` `Employers` `Wickenburg` `Town` `Maricopa County` `Yavapai County` `Maps` `MAG` `MPO` `COG` `ESRI` `#MAGmaps`
 
 ## Version
 
-### version 3.9.2 ###
+### version 3.9.3 ###
 
- `Updated: 2020-05-07`
+ `Updated: 2020-10-13`
 
  `Created: 2013-04-01`
 
