@@ -909,9 +909,9 @@ require([
 function toggleContent() {
     if ($("#legend").is(":hidden")) {
         $("#legend").fadeIn();
-        $("#legend").draggable({
-            containment: "#mapDiv"
-        });
+        // $("#legend").draggable({
+        //     containment: "#mapDiv"
+        // });
         $("#contentsOpen");
     } else {
         $("#legend").fadeOut();
@@ -922,9 +922,9 @@ function toggleContent() {
 $(document).ready(function () {
     $("#contentsOpen").fadeTo("slow");
     $("#legend").fadeTo("slow");
-    $("#legend").draggable({
-        containment: "#mapDiv"
-    });
+    // $("#legend").draggable({
+    //     containment: "#mapDiv"
+    // });
     contentsOpen = $("#contentsOpen").height();
     $("#legend").css("top", "55px");
     $("#contentsOpen").click(function () {
@@ -942,9 +942,9 @@ $(document).ready(function () {
 function toggleMTool() {
     if ($("#mTool").is(":hidden")) {
         $("#mTool").fadeIn();
-        $("#mTool").draggable({
-            containment: "#mapDiv"
-        });
+        // $("#mTool").draggable({
+        //     containment: "#mapDiv"
+        // });
         $("#measureOpen");
     } else {
         $("#mTool").fadeOut();
@@ -972,9 +972,9 @@ $(document).ready(function () {
 function togglePrint() {
     if ($("#printTool").is(":hidden")) {
         $("#printTool").fadeIn();
-        $("#printTool").draggable({
-            containment: "#mapDiv"
-        });
+        // $("#printTool").draggable({
+        //     containment: "#mapDiv"
+        // });
         $("#printOpen");
     } else {
         $("#printTool").fadeOut();
@@ -986,9 +986,9 @@ function togglePrint() {
 function toggleReportWindow() {
     if ($("#reportTool").is(":hidden")) {
         $("#reportTool").fadeIn();
-        $("#reportTool").draggable({
-            containment: "#mapDiv"
-        });
+        // $("#reportTool").draggable({
+        //     containment: "#mapDiv"
+        // });
     } else {
         $("#reportTool").fadeOut();
         $("#reportOpen");
@@ -1017,9 +1017,9 @@ $(document).ready(function () {
 function toggleMarkupTools() {
     if ($("#markupTool").is(":hidden")) {
         $("#markupTool").fadeIn();
-        $("#markupTool").draggable({
-            containment: "#mapDiv"
-        });
+        // $("#markupTool").draggable({
+        //     containment: "#mapDiv"
+        // });
     } else {
         $("#markupTool").fadeOut();
     }
