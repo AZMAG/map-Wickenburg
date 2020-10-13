@@ -29,7 +29,8 @@
     "url": "https://github.com/MaricopaAssociationofGovernments/map-Wickenburg"
   },
   "author": "MAG Regional Analytics (https://www.azmag.gov/)",
-  "contributors": [{
+  "contributors": [
+    {
       "name": "Vern Wolfley",
       "email": "vwolfley@azmag.gov"
     },
